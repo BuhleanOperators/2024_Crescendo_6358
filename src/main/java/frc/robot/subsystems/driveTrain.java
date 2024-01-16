@@ -10,11 +10,14 @@ import edu.wpi.first.wpilibj.ADIS16448_IMU;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
 public class driveTrain extends SubsystemBase {
   /** Creates a new driveTrain. */
@@ -35,12 +38,12 @@ public class driveTrain extends SubsystemBase {
 
   private ADIS16448_IMU m_gyro;
   public driveTrain() {
-    rightLead = new CANSparkMax(Constants.DriveConstants.rightLeadID, kBrushless);
-    rightFollow = new CANSparkMax(Constants.DriveConstants.rightFollowID, kBrushless);
+    rightLead = new CANSparkMax(Constants.DriveConstants.rightLeadID, MotorType.kBrushless);
+    rightFollow = new CANSparkMax(Constants.DriveConstants.rightFollowID, MotorType.kBrushless);
     rightFollow.follow(rightLead);
 
-    leftLead = new CANSparkMax(Constants.DriveConstants.leftLeadID, kBrushless);
-    leftFollow = new CANSparkMax(Constants.DriveConstants.leftFollowID, kBrushless);
+    leftLead = new CANSparkMax(Constants.DriveConstants.leftLeadID, MotorType.kBrushless);
+    leftFollow = new CANSparkMax(Constants.DriveConstants.leftFollowID, MotorType.kBrushless);
     leftFollow.follow(leftLead);
 
     leftPidController = new PIDController(Constants.DriveConstants.lP, Constants.DriveConstants.lI, Constants.DriveConstants.lD);
@@ -82,13 +85,11 @@ public class driveTrain extends SubsystemBase {
   }
 
   public void drive(double xSpeed, double rot){
-    var wheelSpeeds = m_kinematics.toWheelSpeeds(new ChassisSpeeds
-  public void drive(double xSpeed, double rot){
-    var wheelSpeeds = m_kinematics.toWheelSpeeds(new ChasisSpeed(xSpeed, 0.0, rot));
+    var wheelSpeeds = m_kinematics.toWheelSpeeds(new ChassisSpeeds(xSpeed, 0.0, rot));
     setSpeeds(wheelSpeeds);
   }
 
   public void updateOdometry(){
-    m_odometry.update(new 2dRotation(m_gyro), leftEncoderDistance(), rightEncoderDistance());
+    m_odometry.update(new Rotation2d(m_gyro.getGyroAngleX()), leftEncoderDistance(), rightEncoderDistance());
   }
 }
