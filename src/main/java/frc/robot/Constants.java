@@ -4,6 +4,11 @@
 
 package frc.robot;
 
+import com.revrobotics.CANSparkBase;
+import com.revrobotics.CANSparkBase.IdleMode;
+
+import edu.wpi.first.math.util.Units;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -15,5 +20,45 @@ package frc.robot;
 public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
+    public static final double deadbandCutoffDrive = 0.2;
+    public static final double deadbandCutoffRot = 0.1;
+  }
+  public static class DriveConstants{
+    //TODO set all values
+    //! Odomotry Values
+    public static final double trackWidth = Units.inchesToMeters(22.5); //meters
+    public static final double wheelRadius = Units.inchesToMeters(3); //meters
+    public static final double maxSpeed = 5; //meters per second
+    public static final double maxAngularSpeed = 2 * Math.PI; //one rotation per second
+    public static final int slotID = 0;
+
+    //~ Drive Values
+    public static final int rightLeadID = 0;
+    public static final int rightFollowID = 0;
+    public static final int leftLeadID = 0;
+    public static final int leftFollowID = 0;
+
+    public static final int smartCurrentLimit = 40; //amps
+    public static final boolean rightLeadInvert = false;
+    public static final boolean rightFollowInvert = false;
+    public static final boolean leftLeadInvert = false;
+    public static final boolean leftFollowInvert = false;
+    public static final CANSparkBase.IdleMode idleMode = IdleMode.kBrake;
+
+    //& Encoder Values
+    public static final int countsPerRev = 42;
+    
+    //* PID Controller Values
+    //FF values are feedForwards
+    //FF = 0.5 on tile and 0.95 on carpet
+    public static final double rightP = 0;
+    public static final double rightI = 0;
+    public static final double rightD = 0;
+    public static final double rightFF = 0.95;
+
+    public static final double leftP = 0;
+    public static final double leftI = 0;
+    public static final double leftD = 0;
+    public static final double leftFF = 0.95;
   }
 }
