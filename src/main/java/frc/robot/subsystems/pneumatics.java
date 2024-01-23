@@ -4,14 +4,23 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class pneumatics extends SubsystemBase {
   /** Creates a new pneumatics. */
-  public pneumatics() {}
+  private Compressor mCompressor;
+  public pneumatics() {
+    mCompressor = new Compressor(PneumaticsModuleType.CTREPCM);
+  }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }
+  
+  public void enableCompressor(){
+    mCompressor.enableAnalog(0, 0);
   }
 }
