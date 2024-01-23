@@ -30,7 +30,7 @@ public class arcadeDrive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_DriveTrain.arcadeDrive(m_xSpeed.getAsDouble() * DriveConstants.maxSpeed, m_rot.getAsDouble() * DriveConstants.maxAngularSpeed);
+    m_DriveTrain.arcadeDrive(m_xSpeed.getAsDouble(), m_rot.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.

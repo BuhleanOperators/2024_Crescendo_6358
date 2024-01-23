@@ -28,19 +28,19 @@ public final class Constants {
     //! Odomotry Values
     public static final double trackWidth = Units.inchesToMeters(22.5); //meters
     public static final double wheelRadius = Units.inchesToMeters(3); //meters
-    public static final double maxSpeed = 5; //meters per second
+    public static final double maxSpeed = 2; //meters per second
     public static final double maxAngularSpeed = 2 * Math.PI; //one rotation per second
     public static final int slotID = 0;
 
     //~ Drive Values
-    public static final int rightLeadID = 0;
-    public static final int rightFollowID = 0;
-    public static final int leftLeadID = 0;
-    public static final int leftFollowID = 0;
+    public static final int rightLeadID = 3;
+    public static final int rightFollowID = 9;
+    public static final int leftLeadID = 7;
+    public static final int leftFollowID = 4;
 
     public static final int smartCurrentLimit = 40; //amps
-    public static final boolean rightLeadInvert = false;
-    public static final boolean rightFollowInvert = false;
+    public static final boolean rightLeadInvert = true;
+    public static final boolean rightFollowInvert = true;
     public static final boolean leftLeadInvert = false;
     public static final boolean leftFollowInvert = false;
     public static final CANSparkBase.IdleMode idleMode = IdleMode.kBrake;
@@ -51,7 +51,7 @@ public final class Constants {
     //* PID Controller Values
     //FF values are feedForwards
     //FF = 0.5 on tile and 0.95 on carpet
-    public static final double rightP = 0;
+    public static final double rightP = 1;
     public static final double rightI = 0;
     public static final double rightD = 0;
     public static final double rightFF = 0.95;
