@@ -46,19 +46,21 @@ public final class Constants {
     public static final CANSparkBase.IdleMode idleMode = IdleMode.kBrake;
 
     //& Encoder Values
-    public static final int countsPerRev = 42;
+    //? Change to 4096?
+    //Was 42
+    public static final int countsPerRev = 4096;
     
     //* PID Controller Values
     //FF values are feedForwards
     //FF = 0.5 on tile and 0.95 on carpet
-    public static final double rightP = 1;
+    public static final double rightP = 0;
     public static final double rightI = 0;
     public static final double rightD = 0;
-    public static final double rightFF = 0.95;
+    public static final double rightFF = 0;
 
     public static final double leftP = 0;
     public static final double leftI = 0;
     public static final double leftD = 0;
-    public static final double leftFF = 0.95;
+    public static final double leftFF = 0;
   }
 }

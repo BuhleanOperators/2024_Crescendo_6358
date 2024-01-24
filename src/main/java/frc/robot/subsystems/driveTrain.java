@@ -63,9 +63,12 @@ public class driveTrain extends SubsystemBase {
     leftFollow.burnFlash();
 
     //& Configure Encoders
-    rightEncoder = rightLead.getEncoder(com.revrobotics.SparkRelativeEncoder.Type.kHallSensor, DriveConstants.countsPerRev);
+    //? Default Constructor instead?
+    rightEncoder = rightLead.getEncoder();
+    leftEncoder = leftLead.getEncoder();
+    // rightEncoder = rightLead.getEncoder(com.revrobotics.SparkRelativeEncoder.Type.kHallSensor, DriveConstants.countsPerRev);
 
-    leftEncoder = leftLead.getEncoder(com.revrobotics.SparkRelativeEncoder.Type.kHallSensor, DriveConstants.countsPerRev);
+    // leftEncoder = leftLead.getEncoder(com.revrobotics.SparkRelativeEncoder.Type.kHallSensor, DriveConstants.countsPerRev);
 
     //* Configure PID controllers
     rightPID = rightLead.getPIDController();
@@ -75,7 +78,7 @@ public class driveTrain extends SubsystemBase {
     rightPID.setFF(DriveConstants.rightFF);
     rightPID.setFeedbackDevice(rightEncoder);
     //^ Smart Motion Values
-    rightPID.setSmartMotionMaxVelocity(DriveConstants.maxSpeed, DriveConstants.slotID);
+    //rightPID.setSmartMotionMaxVelocity(DriveConstants.maxSpeed, DriveConstants.slotID);
     
     leftPID = leftLead.getPIDController();
     leftPID.setP(DriveConstants.leftP);
@@ -84,7 +87,7 @@ public class driveTrain extends SubsystemBase {
     leftPID.setFF(DriveConstants.leftFF);
     leftPID.setFeedbackDevice(leftEncoder);
     //^ Smart Motion Values
-    leftPID.setSmartMotionMaxVelocity(DriveConstants.maxSpeed, DriveConstants.slotID);
+    //leftPID.setSmartMotionMaxVelocity(DriveConstants.maxSpeed, DriveConstants.slotID);
 
     //? Configure Kinematics
     m_kinematics = new DifferentialDriveKinematics(DriveConstants.trackWidth);
@@ -103,6 +106,7 @@ public class driveTrain extends SubsystemBase {
   }
 
 //^ Drive Methods
+//?Is this the best way to do this?
   public void setSpeeds(DifferentialDriveWheelSpeeds speeds){
     rightPID.setReference(speeds.rightMetersPerSecond, CANSparkBase.ControlType.kVelocity);
     leftPID.setReference(speeds.leftMetersPerSecond, CANSparkBase.ControlType.kVelocity);
