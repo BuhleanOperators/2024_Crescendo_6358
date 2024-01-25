@@ -5,14 +5,20 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.PneumaticsConstants;
 
-public class pneumatics extends SubsystemBase {
+public class Pneumatics extends SubsystemBase {
   /** Creates a new pneumatics. */
   private Compressor mCompressor;
-  public pneumatics() {
+  private DoubleSolenoid firstSolenoid;
+  private DoubleSolenoid secondSolenoid;
+  public Pneumatics() {
     mCompressor = new Compressor(PneumaticsModuleType.CTREPCM);
+    firstSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, PneumaticsConstants.PISTON_FIRST_FORWARD, PneumaticsConstants.PISTON_FIRST_BACK);
+    secondSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, PneumaticsConstants.PISTON_SECOND_FORWARD, PneumaticsConstants.PISTON_SECOND_BACK);
   }
 
   @Override
@@ -20,7 +26,21 @@ public class pneumatics extends SubsystemBase {
     // This method will be called once per scheduler run
   }
   
-  public void enableCompressor(){
-    mCompressor.enableAnalog(0, 0);
+  public DoubleSolenoid getFirstSolenoid(){
+    return firstSolenoid;
+  }
+  public DoubleSolenoid getSecondSolenoid(){
+    return secondSolenoid;
+  }
+
+  public void fireSolenoid(DoubleSolenoid piston){
+    piston.set(DoubleSolenoid.Value.kForward);
+  }
+  public void retractSolenoid(DoubleSolenoid piston){
+    piston.set(DoubleSolenoid.Value.kReverse);
+  }
+
+  public void toggleSolenoid(DoubleSolenoid piston){
+    piston.toggle();
   }
 }

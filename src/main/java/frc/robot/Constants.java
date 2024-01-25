@@ -16,4 +16,10 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+  public static class PneumaticsConstants {
+    public static final int PISTON_FIRST_FORWARD = 0;
+    public static final int PISTON_FIRST_BACK = 1;
+    public static final int PISTON_SECOND_FORWARD = 2;
+    public static final int PISTON_SECOND_BACK = 3;
+  }
 }
