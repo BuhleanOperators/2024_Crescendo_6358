@@ -10,12 +10,12 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.PneumaticsConstants;
 
-public class Pneumatics extends SubsystemBase {
+public class pneumatics extends SubsystemBase {
   /** Creates a new pneumatics. */
   private Compressor mCompressor;
   private DoubleSolenoid firstSolenoid;
   private DoubleSolenoid secondSolenoid;
-  public Pneumatics() {
+  public pneumatics() {
     mCompressor = new Compressor(PneumaticsModuleType.CTREPCM);
     firstSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, PneumaticsConstants.PISTON_FIRST_FORWARD, PneumaticsConstants.PISTON_FIRST_BACK);
     secondSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, PneumaticsConstants.PISTON_SECOND_FORWARD, PneumaticsConstants.PISTON_SECOND_BACK);
