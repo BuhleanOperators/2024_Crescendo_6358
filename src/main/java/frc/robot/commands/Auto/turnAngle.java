@@ -2,43 +2,39 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.Auto;
 
-import edu.wpi.first.wpilibj.ADIS16448_IMU;
-import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj2.command.PIDCommand;
+import frc.robot.Constants.AutoContants;
 import frc.robot.subsystems.driveTrain;
 
-public class turnAngle extends Command {
-  /** Creates a new trunAngle. */
-  private double m_angle;
-  private driveTrain m_driveTrain;
-  private ADIS16448_IMU m_gyro = m_driveTrain.getGyro();
-  public turnAngle(double angle, driveTrain subsystem) {
+// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
+// information, see:
+// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
+public class turnAngle extends PIDCommand {
+  /** Creates a new turnAngle. */
+  public turnAngle(double targetAngle, driveTrain drive) {
+    super(
+        // The controller that the command will use
+        new PIDController(AutoContants.TURN_P, AutoContants.TURN_I, AutoContants.TURN_D),
+        // This should return the measurement
+        () -> drive.getHeading(),
+        // This should return the setpoint (can also be a constant)
+        () -> targetAngle,
+        // This uses the output
+        output -> {
+          drive.arcadeDrive(0, output);
+        }, drive);
     // Use addRequirements() here to declare subsystem dependencies.
-    m_angle = angle;
-    m_driveTrain = subsystem;
-    addRequirements(m_driveTrain);
+    // Configure additional PID options by calling `getController` here.
+    getController().enableContinuousInput(-180, 180);
+    getController().setTolerance(AutoContants.TURN_turnToleranceDeg, AutoContants.TURN_turnRateToleranceDegPerSec);
   }
-
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    double goal = m_gyro.getGyroAngleX() + m_angle;
-  }
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    
-  }
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return getController().atSetpoint();
   }
 }

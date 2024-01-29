@@ -5,12 +5,10 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.arcadeDrive;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.driveTrain;
-import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.DriveConstants;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -68,7 +66,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return frc.robot.commands.Auto.Autos.exampleAuto(m_exampleSubsystem);
   }
 
   private void smartDashboard(){

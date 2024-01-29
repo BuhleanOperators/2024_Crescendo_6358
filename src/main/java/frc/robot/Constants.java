@@ -63,4 +63,18 @@ public final class Constants {
     public static final double leftD = 0;
     public static final double leftFF = 0.95;
   }
+  public static class AutoContants{
+    public static final double TURN_P = 0;
+    public static final double TURN_I = 0;
+    public static final double TURN_D = 0;
+    public static final double TURN_turnToleranceDeg = 0;
+    public static final double TURN_turnRateToleranceDegPerSec = 0;
+
+    public static final double DIST_P = 0;
+    public static final double DIST_I = 0;
+    public static final double DIST_D = 0;
+    public static final double DIST_distanceToleranceMeter = 0;
+    public static final double DIST_velocityTolerance = 0;
+
+  }
 }
