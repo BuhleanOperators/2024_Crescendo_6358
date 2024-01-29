@@ -39,7 +39,7 @@ public class RobotContainer {
     configureBindings();
     smartDashboard();
     
-    m_DriveTrain.setDefaultCommand(new arcadeDrive(() -> deadband(getXDriver().getLeftY(), OperatorConstants.deadbandCutoffDrive), () -> deadband(getXDriver().getRightX(), OperatorConstants.deadbandCutoffRot), m_DriveTrain));
+    m_DriveTrain.setDefaultCommand(new arcadeDrive(() -> deadband(getXDriver().getLeftY() * Constants.DriveConstants.maxSpeed, OperatorConstants.deadbandCutoffDrive), () -> deadband(getXDriver().getRightX() * Constants.DriveConstants.maxAngularSpeed, OperatorConstants.deadbandCutoffRot), m_DriveTrain));
   }
 
   /**

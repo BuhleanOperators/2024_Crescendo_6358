@@ -28,8 +28,8 @@ public final class Constants {
     //! Odomotry Values
     public static final double trackWidth = Units.inchesToMeters(22.5); //meters
     public static final double wheelRadius = Units.inchesToMeters(3); //meters
-    public static final double maxSpeed = 2; //meters per second
-    public static final double maxAngularSpeed = 2 * Math.PI; //one rotation per second
+    public static final double maxSpeed = 6; //volts per second
+    public static final double maxAngularSpeed = 2 * Math.PI * maxSpeed; //one rotation per second
     public static final int slotID = 0;
 
     //~ Drive Values
@@ -48,19 +48,19 @@ public final class Constants {
     //& Encoder Values
     //? Change to 4096?
     //Was 42
-    public static final int countsPerRev = 4096;
+    public static final int countsPerRev = 42;
     
     //* PID Controller Values
     //FF values are feedForwards
     //FF = 0.5 on tile and 0.95 on carpet
-    public static final double rightP = 0.5;
+    public static final double rightP = 0.15;
     public static final double rightI = 0;
     public static final double rightD = 0;
-    public static final double rightFF = 0;
+    public static final double rightFF = 0.95;
 
-    public static final double leftP = 0.5;
+    public static final double leftP = 0.15;
     public static final double leftI = 0;
     public static final double leftD = 0;
-    public static final double leftFF = 0;
+    public static final double leftFF = 0.95;
   }
 }
