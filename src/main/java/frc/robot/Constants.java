@@ -23,7 +23,7 @@ public final class Constants {
     public static final double deadbandCutoffDrive = 0.2;
     public static final double deadbandCutoffRot = 0.1;
 
-    public static final int intakeButton = 0;
+    public static final int intakeButton = 1;
   }
   public static class DriveConstants{
     //TODO set all values
@@ -66,13 +66,13 @@ public final class Constants {
     public static final double leftFF = 0.95;
   }
   public static class ShooterConstants{
-    public static final int rightMotorID = 0;
-    public static final int leftMotorID = 0;
+    public static final int rightMotorID = 1;
+    public static final int leftMotorID = 2;
 
     public static final int currentLimit = 40;
-    public static final boolean setRightInverted = false;
+    public static final boolean setRightInverted = true;
     public static final boolean setLeftInverted = false;
-    public static final IdleMode idleMode = IdleMode.kBrake;
+    public static final IdleMode idleMode = IdleMode.kCoast;
 
     public static final double speed = 1;
   }

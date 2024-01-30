@@ -20,7 +20,7 @@ public class shooterSystem extends SubsystemBase {
     rightMotor = new CANSparkMax(ShooterConstants.rightMotorID, MotorType.kBrushless);
     rightMotor.setSmartCurrentLimit(ShooterConstants.currentLimit);
     rightMotor.setInverted(ShooterConstants.setRightInverted);
-    leftMotor.setIdleMode(ShooterConstants.idleMode);
+    rightMotor.setIdleMode(ShooterConstants.idleMode);
     rightMotor.burnFlash();
 
     leftMotor = new CANSparkMax(ShooterConstants.leftMotorID, MotorType.kBrushless);

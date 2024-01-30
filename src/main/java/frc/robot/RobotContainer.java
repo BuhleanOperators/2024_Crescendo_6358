@@ -8,10 +8,10 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.arcadeDrive;
+// import frc.robot.commands.arcadeDrive;
 import frc.robot.commands.shooterRun;
 import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.driveTrain;
+// import frc.robot.subsystems.driveTrain;
 import frc.robot.subsystems.shooterSystem;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.DriveConstants;
@@ -30,7 +30,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final driveTrain m_DriveTrain = new driveTrain();
+  //private final driveTrain m_DriveTrain = new driveTrain();
   private final shooterSystem m_ShooterSystem = new shooterSystem();
 
   private double deadbandreturn;
@@ -44,7 +44,7 @@ public class RobotContainer {
     configureBindings();
     smartDashboard();
     
-    m_DriveTrain.setDefaultCommand(new arcadeDrive(() -> deadband(getXDriver().getLeftY() * Constants.DriveConstants.maxSpeed, OperatorConstants.deadbandCutoffDrive), () -> deadband(getXDriver().getRightX() * Constants.DriveConstants.maxAngularSpeed, OperatorConstants.deadbandCutoffRot), m_DriveTrain));
+    // m_DriveTrain.setDefaultCommand(new arcadeDrive(() -> deadband(getXDriver().getLeftY() * Constants.DriveConstants.maxSpeed, OperatorConstants.deadbandCutoffDrive), () -> deadband(getXDriver().getRightX() * Constants.DriveConstants.maxAngularSpeed, OperatorConstants.deadbandCutoffRot), m_DriveTrain));
   }
 
   /**
@@ -61,9 +61,9 @@ public class RobotContainer {
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
 
-    new JoystickButton(xDriver, OperatorConstants.intakeButton).toggleOnTrue(new shooterRun(ShooterConstants.speed, m_ShooterSystem));
-    // new JoystickButton(xDriver, OperatorConstants.intakeButton).onTrue(new shooterRun(ShooterConstants.speed, m_ShooterSystem))
-    //   .onFalse(new shooterRun(0, m_ShooterSystem));
+    //new JoystickButton(xDriver, OperatorConstants.intakeButton).toggleOnTrue(new shooterRun(ShooterConstants.speed, m_ShooterSystem));
+    new JoystickButton(xDriver, OperatorConstants.intakeButton).onTrue(new shooterRun(ShooterConstants.speed, m_ShooterSystem))
+      .onFalse(new shooterRun(0, m_ShooterSystem));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
