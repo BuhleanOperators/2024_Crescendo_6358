@@ -23,7 +23,11 @@ public final class Constants {
     public static final double deadbandCutoffDrive = 0.2;
     public static final double deadbandCutoffRot = 0.1;
 
-    public static final int intakeButton = 1;
+    public static final int BUTTON_shooter = 1;
+    public static final int BUTTON_togglePiston = 0;
+    public static final int BUTTON_extendPiston = 0;
+    public static final int BUTTON_retractPiston = 0;
+
   }
   public static class DriveConstants{
     //TODO set all values

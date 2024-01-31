@@ -6,18 +6,20 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.Constants.OperatorConstants;
+// import frc.robot.Constants.DriveConstants;
+
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.arcadeDrive;
+// import frc.robot.commands.arcadeDrive;
 import frc.robot.commands.shooterRun;
 import frc.robot.commands.Pneumatics.ToggleSolenoid;
+
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.pneumatics;
-import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.subsystems.driveTrain;
+// import frc.robot.subsystems.driveTrain;
 import frc.robot.subsystems.shooterSystem;
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.Constants.DriveConstants;
+
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -33,11 +35,11 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final driveTrain m_DriveTrain = new driveTrain();
+  // private final driveTrain m_DriveTrain = new driveTrain();
   private final shooterSystem m_ShooterSystem = new shooterSystem();
+  private final pneumatics m_pneumatics = new pneumatics();
 
   private double deadbandreturn;
-  private final pneumatics m_pneumatics = new pneumatics();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final XboxController xDriver = new XboxController(OperatorConstants.kDriverControllerPort);
@@ -48,7 +50,7 @@ public class RobotContainer {
     configureBindings();
     smartDashboard();
     
-    m_DriveTrain.setDefaultCommand(new arcadeDrive(() -> deadband(getXDriver().getLeftY() * Constants.DriveConstants.maxSpeed, OperatorConstants.deadbandCutoffDrive), () -> deadband(getXDriver().getRightX() * Constants.DriveConstants.maxAngularSpeed, OperatorConstants.deadbandCutoffRot), m_DriveTrain));
+    // m_DriveTrain.setDefaultCommand(new arcadeDrive(() -> deadband(getXDriver().getLeftY() * Constants.DriveConstants.maxSpeed, OperatorConstants.deadbandCutoffDrive), () -> deadband(getXDriver().getRightX() * Constants.DriveConstants.maxAngularSpeed, OperatorConstants.deadbandCutoffRot), m_DriveTrain));
   }
 
   /**
@@ -66,12 +68,12 @@ public class RobotContainer {
         .onTrue(new ExampleCommand(m_exampleSubsystem));
 
     //new JoystickButton(xDriver, OperatorConstants.intakeButton).toggleOnTrue(new shooterRun(ShooterConstants.speed, m_ShooterSystem));
-    new JoystickButton(xDriver, OperatorConstants.intakeButton).onTrue(new shooterRun(ShooterConstants.speed, m_ShooterSystem))
+    new JoystickButton(xDriver, OperatorConstants.BUTTON_shooter).onTrue(new shooterRun(ShooterConstants.speed, m_ShooterSystem))
       .onFalse(new shooterRun(0, m_ShooterSystem));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-   new JoystickButton(xDriver, 0).onTrue(new ToggleSolenoid(m_pneumatics.getFirstSolenoid(), m_pneumatics));
+   new JoystickButton(xDriver, OperatorConstants.BUTTON_togglePiston).onTrue(new ToggleSolenoid(m_pneumatics.getFirstSolenoid(), m_pneumatics));
   }
 
   /**
