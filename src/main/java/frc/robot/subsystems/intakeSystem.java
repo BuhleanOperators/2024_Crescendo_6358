@@ -7,27 +7,16 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
 
 public class intakeSystem extends SubsystemBase {
   /** Creates a new intakeSystem. */
-  //! Assumed to be SparkMaxes Not for sure
-  private CANSparkMax rightIntake;
-  private CANSparkMax leftIntake;
+  private Spark intake;
 
   public intakeSystem() {
-    rightIntake = new CANSparkMax(IntakeConstants.rightIntakeID, MotorType.kBrushless);
-    rightIntake.setInverted(IntakeConstants.rightIntakeInverted);
-    rightIntake.setSmartCurrentLimit(IntakeConstants.smartCurrentLimit);
-    rightIntake.setIdleMode(IntakeConstants.idleMode);
-    rightIntake.burnFlash();
-
-    leftIntake = new CANSparkMax(IntakeConstants.leftIntakeID, MotorType.kBrushless);
-    leftIntake.setInverted(IntakeConstants.leftIntakeInverted);
-    leftIntake.setSmartCurrentLimit(IntakeConstants.smartCurrentLimit);
-    leftIntake.setIdleMode(IntakeConstants.idleMode);
-    leftIntake.burnFlash();
+    intake = new Spark(3);
   }
 
   @Override
@@ -36,7 +25,6 @@ public class intakeSystem extends SubsystemBase {
   }
 
   public void setSpeeds(double speed){
-    rightIntake.set(speed);
-    leftIntake.set(speed);
+    intake.set(speed);
   }
 }
