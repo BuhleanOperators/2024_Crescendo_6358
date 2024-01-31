@@ -16,7 +16,7 @@ public class intakeSystem extends SubsystemBase {
   private Spark intake;
 
   public intakeSystem() {
-    intake = new Spark(3);
+    intake = new Spark(2);
   }
 
   @Override

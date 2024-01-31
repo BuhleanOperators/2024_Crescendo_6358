@@ -63,7 +63,7 @@ public class RobotContainer {
         .onTrue(new ExampleCommand(m_exampleSubsystem));
     
     JoystickButton intake = new JoystickButton(xDriver, OperatorConstants.intakeButton);
-    intake.onTrue(new runIntake(0, m_IntakeSystem));
+    intake.onTrue(new runIntake(1, m_IntakeSystem)).onFalse(new runIntake(0, m_IntakeSystem));
   }
 
   /**
