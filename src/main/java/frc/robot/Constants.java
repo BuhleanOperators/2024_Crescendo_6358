@@ -23,7 +23,8 @@ public final class Constants {
     public static final double deadbandCutoffDrive = 0.2;
     public static final double deadbandCutoffRot = 0.1;
 
-    public static final int intakeButton = 1;
+    public static final int intakeIn = 6;
+    public static final int intakeOut = 5;
   }
   public static class DriveConstants{
     //TODO set all values
@@ -31,7 +32,7 @@ public final class Constants {
     public static final double trackWidth = Units.inchesToMeters(22.5); //meters
     public static final double wheelRadius = Units.inchesToMeters(3); //meters
     public static final double maxSpeed = 6; //volts per second
-    public static final double maxAngularSpeed = 2 * Math.PI * maxSpeed; //one rotation per second
+    public static final double maxAngularSpeed = Math.PI * maxSpeed; //one rotation per second
     public static final int slotID = 0;
 
     //~ Drive Values

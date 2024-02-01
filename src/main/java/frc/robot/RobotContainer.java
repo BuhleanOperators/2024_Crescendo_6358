@@ -62,8 +62,10 @@ public class RobotContainer {
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
     
-    JoystickButton intake = new JoystickButton(xDriver, OperatorConstants.intakeButton);
-    intake.onTrue(new runIntake(1, m_IntakeSystem)).onFalse(new runIntake(0, m_IntakeSystem));
+    JoystickButton intakeIn = new JoystickButton(xDriver, OperatorConstants.intakeIn);
+    JoystickButton intakeOut = new JoystickButton(xDriver, OperatorConstants.intakeOut);
+    intakeIn.onTrue(new runIntake(0.75, m_IntakeSystem)).onFalse(new runIntake(0, m_IntakeSystem));
+    intakeOut.onTrue(new runIntake(-0.75, m_IntakeSystem)).onFalse(new runIntake(0, m_IntakeSystem));
   }
 
   /**
