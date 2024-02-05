@@ -23,10 +23,11 @@ public final class Constants {
     public static final double deadbandCutoffDrive = 0.2;
     public static final double deadbandCutoffRot = 0.1;
 
-    public static final int BUTTON_shooter = 1;
-    public static final int BUTTON_togglePiston = 2;
-    public static final int BUTTON_extendPiston = 3;
-    public static final int BUTTON_retractPiston = 4;
+    public static final int BUTTON_shooterSpeaker = 1;
+    public static final int BUTTON_shooterAmp = 2;
+    // public static final int BUTTON_togglePiston = 2;
+    // public static final int BUTTON_extendPiston = 3;
+    // public static final int BUTTON_retractPiston = 4;
 
   }
   public static class DriveConstants{
@@ -78,7 +79,8 @@ public final class Constants {
     public static final boolean setLeftInverted = false;
     public static final IdleMode idleMode = IdleMode.kCoast;
 
-    public static final double speed = 1;
+    public static final double speakerSpeed = 0.85;
+    public static final double ampSpeed = 0.2;
   }
   public static class PneumaticsConstants {
     public static final int PISTON_FIRST_FORWARD = 0;
