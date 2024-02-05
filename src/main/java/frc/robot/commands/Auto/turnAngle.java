@@ -24,12 +24,18 @@ public class turnAngle extends PIDCommand {
         () -> targetAngle,
         // This uses the output
         output -> {
-          drive.arcadeDrive(0, output);
+          if (output > 0){
+            drive.arcadeDrive(0, output + AutoContants.TURN_FF);
+          }else if (output < 0){
+            drive.arcadeDrive(0, output - AutoContants.TURN_FF);
+          }else{
+            drive.arcadeDrive(0, output);
+          }
         }, drive);
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
     getController().enableContinuousInput(-180, 180);
-    getController().setTolerance(AutoContants.TURN_turnToleranceDeg, AutoContants.TURN_turnRateToleranceDegPerSec);
+    getController().setTolerance(AutoContants.TURN_turnTolerance, AutoContants.TURN_turnRateTolerance);
   }
 
   // Returns true when the command should end.

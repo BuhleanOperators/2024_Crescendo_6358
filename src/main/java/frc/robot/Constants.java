@@ -64,13 +64,14 @@ public final class Constants {
     public static final double leftFF = 0.95;
   }
   public static class AutoContants{
-    public static final double TURN_P = 0;
+    public static final double TURN_P = 1;
     public static final double TURN_I = 0;
     public static final double TURN_D = 0;
-    public static final double TURN_turnTolerance = 0; //Degrees
-    public static final double TURN_turnRateTolerance = 0; //Degrees per second
-    public static final double TURN_maxTurnRate = 0; //Degrees per second
-    public static final double TURN_maxTurnAcceleration = 0; //Degrees Per Second^2
+    public static final double TURN_FF = 0;
+    public static final double TURN_turnTolerance = 5; //Degrees
+    public static final double TURN_turnRateTolerance = 10; //Degrees per second
+    public static final double TURN_maxTurnRate = 100; //Degrees per second
+    public static final double TURN_maxTurnAcceleration = 300; //Degrees Per Second^2
 
     public static final double DIST_P = 0;
     public static final double DIST_I = 0;
