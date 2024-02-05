@@ -66,7 +66,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return frc.robot.commands.Auto.Autos.exampleAuto(m_exampleSubsystem);
+    return frc.robot.commands.Auto.Autos.turnAuto(m_DriveTrain);
   }
 
   private void smartDashboard(){

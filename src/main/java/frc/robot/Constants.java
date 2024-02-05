@@ -67,13 +67,15 @@ public final class Constants {
     public static final double TURN_P = 0;
     public static final double TURN_I = 0;
     public static final double TURN_D = 0;
-    public static final double TURN_turnToleranceDeg = 0;
-    public static final double TURN_turnRateToleranceDegPerSec = 0;
+    public static final double TURN_turnTolerance = 0; //Degrees
+    public static final double TURN_turnRateTolerance = 0; //Degrees per second
+    public static final double TURN_maxTurnRate = 0; //Degrees per second
+    public static final double TURN_maxTurnAcceleration = 0; //Degrees Per Second^2
 
     public static final double DIST_P = 0;
     public static final double DIST_I = 0;
     public static final double DIST_D = 0;
-    public static final double DIST_distanceToleranceMeter = 0;
+    public static final double DIST_distanceTolerance = 0; //Meter
     public static final double DIST_velocityTolerance = 0;
 
   }

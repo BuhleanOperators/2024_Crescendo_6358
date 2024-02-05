@@ -22,6 +22,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.ADIS16448_IMU;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 
@@ -115,6 +116,13 @@ public class driveTrain extends SubsystemBase {
   }
   public void resetHeading(){
     m_gyro.reset();
+  }
+  public Command resetHeadingCommand(){
+    return runOnce(
+      () -> {
+        m_gyro.reset();
+      }
+    );
   }
   public double getTurnRate(){
     return m_gyro.getRate();
