@@ -21,7 +21,7 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
     public static final double deadbandCutoffDrive = 0.2;
-    public static final double deadbandCutoffRot = 0.1;
+    public static final double deadbandCutoffRot = 0.5;
 
     public static final int intakeIn = 6;
     public static final int intakeOut = 5;
