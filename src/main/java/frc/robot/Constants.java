@@ -92,11 +92,8 @@ public final class Constants {
     public static final int PISTON_SECOND_FORWARD = 2;
     public static final int PISTON_SECOND_BACK = 3;
   }
-  public static class PhaseTwoConstants {
+  public static class IntakeConstants{
     public static final int motorID = 0;
     public static final double speed = 0;
-  }
-  public static class IntakeConstants{
-
   }
 }

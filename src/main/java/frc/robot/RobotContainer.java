@@ -5,21 +5,18 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.Constants.PhaseTwoConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.OperatorConstants;
 // import frc.robot.Constants.DriveConstants;
 
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.phase2;
 // import frc.robot.commands.arcadeDrive;
 import frc.robot.commands.shooterRun;
+import frc.robot.commands.Intake.runBelts;
+import frc.robot.commands.Intake.runFlyWheels;
 import frc.robot.commands.Pneumatics.ToggleSolenoid;
-import frc.robot.commands.runIntake;
-
 import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.phaseTwoSystem;
 import frc.robot.subsystems.pneumatics;
 // import frc.robot.subsystems.driveTrain;
 import frc.robot.subsystems.intakeSystem;
@@ -45,7 +42,6 @@ public class RobotContainer {
   // private final driveTrain m_DriveTrain = new driveTrain();
   private final shooterSystem m_ShooterSystem = new shooterSystem();
   private final pneumatics m_pneumatics = new pneumatics();
-  private final phaseTwoSystem m_PhaseTwoSystem = new phaseTwoSystem();
   private final intakeSystem m_IntakeSystem = new intakeSystem();
 
   private double deadbandreturn;
@@ -78,8 +74,8 @@ public class RobotContainer {
     
     JoystickButton intakeIn = new JoystickButton(xDriver, OperatorConstants.intakeIn);
     JoystickButton intakeOut = new JoystickButton(xDriver, OperatorConstants.intakeOut);
-    intakeIn.onTrue(new runIntake(0.75, m_IntakeSystem)).onFalse(new runIntake(0, m_IntakeSystem));
-    intakeOut.onTrue(new runIntake(-0.75, m_IntakeSystem)).onFalse(new runIntake(0, m_IntakeSystem));
+    intakeIn.onTrue(new runFlyWheels(0.75, m_IntakeSystem)).onFalse(new runFlyWheels(0, m_IntakeSystem));
+    intakeOut.onTrue(new runFlyWheels(-0.75, m_IntakeSystem)).onFalse(new runFlyWheels(0, m_IntakeSystem));
 
     //new JoystickButton(xDriver, OperatorConstants.intakeButton).toggleOnTrue(new shooterRun(ShooterConstants.speed, m_ShooterSystem));
     new JoystickButton(xDriver, OperatorConstants.BUTTON_shooterSpeaker).onTrue(new shooterRun(ShooterConstants.speakerSpeed, m_ShooterSystem))
@@ -87,8 +83,8 @@ public class RobotContainer {
     new JoystickButton(xDriver, OperatorConstants.BUTTON_shooterAmp).onTrue(new shooterRun(ShooterConstants.ampSpeed, m_ShooterSystem))
       .onFalse(new shooterRun(0, m_ShooterSystem));
 
-    new JoystickButton(xDriver, OperatorConstants.BUTTON_belts).onTrue(new phase2(PhaseTwoConstants.speed, m_PhaseTwoSystem))
-      .onFalse(new phase2(0, m_PhaseTwoSystem));
+    new JoystickButton(xDriver, OperatorConstants.BUTTON_belts).onTrue(new runBelts(IntakeConstants.speed, m_IntakeSystem))
+      .onFalse(new runBelts(0, m_IntakeSystem));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
