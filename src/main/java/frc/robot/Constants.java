@@ -64,7 +64,7 @@ public final class Constants {
     public static final double leftFF = 0.95;
   }
   public static class AutoContants{
-    public static final double TURN_P = 1;
+    public static final double TURN_P = 0.1;
     public static final double TURN_I = 0;
     public static final double TURN_D = 0;
     public static final double TURN_FF = 0;

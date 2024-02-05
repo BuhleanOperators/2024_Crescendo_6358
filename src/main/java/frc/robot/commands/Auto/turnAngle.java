@@ -24,13 +24,14 @@ public class turnAngle extends PIDCommand {
         () -> targetAngle,
         // This uses the output
         output -> {
-          if (output > 0){
-            drive.arcadeDrive(0, output + AutoContants.TURN_FF);
-          }else if (output < 0){
-            drive.arcadeDrive(0, output - AutoContants.TURN_FF);
-          }else{
-            drive.arcadeDrive(0, output);
-          }
+          // if (output > 0){
+          //   drive.arcadeDrive(0, output + AutoContants.TURN_FF);
+          // }else if (output < 0){
+          //   drive.arcadeDrive(0, output - AutoContants.TURN_FF);
+          // }else{
+          //   drive.arcadeDriveAuto(0, output);
+          // }
+          drive.arcadeDrive(0, output);
         }, drive);
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.

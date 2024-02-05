@@ -16,7 +16,7 @@ public final class Autos {
     return Commands.sequence(subsystem.exampleMethodCommand(), new ExampleCommand(subsystem));
   }
   public static Command turnAuto(driveTrain drive){
-    return Commands.sequence(drive.resetHeadingCommand(), new turnAngle(90, drive));
+    return Commands.sequence(drive.resetHeadingCommand(), new turnToAngle(90));
   }
 
   private Autos() {
