@@ -16,15 +16,17 @@ import frc.robot.commands.phase2;
 // import frc.robot.commands.arcadeDrive;
 import frc.robot.commands.shooterRun;
 import frc.robot.commands.Pneumatics.ToggleSolenoid;
+import frc.robot.commands.runIntake;
 
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.phaseTwoSystem;
 import frc.robot.subsystems.pneumatics;
 // import frc.robot.subsystems.driveTrain;
+import frc.robot.subsystems.intakeSystem;
 import frc.robot.subsystems.shooterSystem;
 
-import java.lang.management.OperatingSystemMXBean;
-
+import frc.robot.Constants.IntakeConstants;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -44,6 +46,7 @@ public class RobotContainer {
   private final shooterSystem m_ShooterSystem = new shooterSystem();
   private final pneumatics m_pneumatics = new pneumatics();
   private final phaseTwoSystem m_PhaseTwoSystem = new phaseTwoSystem();
+  private final intakeSystem m_IntakeSystem = new intakeSystem();
 
   private double deadbandreturn;
 
@@ -72,6 +75,11 @@ public class RobotContainer {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
+    
+    JoystickButton intakeIn = new JoystickButton(xDriver, OperatorConstants.intakeIn);
+    JoystickButton intakeOut = new JoystickButton(xDriver, OperatorConstants.intakeOut);
+    intakeIn.onTrue(new runIntake(0.75, m_IntakeSystem)).onFalse(new runIntake(0, m_IntakeSystem));
+    intakeOut.onTrue(new runIntake(-0.75, m_IntakeSystem)).onFalse(new runIntake(0, m_IntakeSystem));
 
     //new JoystickButton(xDriver, OperatorConstants.intakeButton).toggleOnTrue(new shooterRun(ShooterConstants.speed, m_ShooterSystem));
     new JoystickButton(xDriver, OperatorConstants.BUTTON_shooterSpeaker).onTrue(new shooterRun(ShooterConstants.speakerSpeed, m_ShooterSystem))
