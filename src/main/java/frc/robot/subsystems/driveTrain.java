@@ -69,6 +69,7 @@ public class driveTrain extends SubsystemBase {
 
     //& Configure Encoders
     rightEncoder = rightLead.getEncoder();
+    rightEncoder.setPositionConversionFactor(DriveConstants.gearRatio * DriveConstants.wheelRadius);
     leftEncoder = leftLead.getEncoder();
   
     //* Configure PID controllers
@@ -122,6 +123,7 @@ public class driveTrain extends SubsystemBase {
         m_gyro.reset();
       }
     );
+  
   }
   public double getTurnRate(){
     return m_gyro.getRate();

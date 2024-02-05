@@ -31,6 +31,7 @@ public final class Constants {
     public static final double maxSpeed = 6; //volts per second
     public static final double maxAngularSpeed = 2 * Math.PI * maxSpeed; //one rotation per second
     public static final int slotID = 0;
+    public static final double gearRatio = 0;
 
     //~ Drive Values
     public static final int rightLeadID = 7;//3
