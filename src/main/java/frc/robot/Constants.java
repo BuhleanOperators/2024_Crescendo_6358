@@ -25,6 +25,7 @@ public final class Constants {
 
     public static final int BUTTON_shooterSpeaker = 1;
     public static final int BUTTON_shooterAmp = 2;
+    public static final int BUTTON_belts = 3;
     // public static final int BUTTON_togglePiston = 2;
     // public static final int BUTTON_extendPiston = 3;
     // public static final int BUTTON_retractPiston = 4;
@@ -87,5 +88,9 @@ public final class Constants {
     public static final int PISTON_FIRST_BACK = 1;
     public static final int PISTON_SECOND_FORWARD = 2;
     public static final int PISTON_SECOND_BACK = 3;
+  }
+  public static class PhaseTwoConstants {
+    public static final int motorID = 0;
+    public static final double speed = 0;
   }
 }

@@ -5,20 +5,25 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.Constants.PhaseTwoConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.OperatorConstants;
 // import frc.robot.Constants.DriveConstants;
 
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.phase2;
 // import frc.robot.commands.arcadeDrive;
 import frc.robot.commands.shooterRun;
 import frc.robot.commands.Pneumatics.ToggleSolenoid;
 
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.phaseTwoSystem;
 import frc.robot.subsystems.pneumatics;
 // import frc.robot.subsystems.driveTrain;
 import frc.robot.subsystems.shooterSystem;
+
+import java.lang.management.OperatingSystemMXBean;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -38,6 +43,7 @@ public class RobotContainer {
   // private final driveTrain m_DriveTrain = new driveTrain();
   private final shooterSystem m_ShooterSystem = new shooterSystem();
   private final pneumatics m_pneumatics = new pneumatics();
+  private final phaseTwoSystem m_PhaseTwoSystem = new phaseTwoSystem();
 
   private double deadbandreturn;
 
@@ -72,6 +78,9 @@ public class RobotContainer {
       .onFalse(new shooterRun(0, m_ShooterSystem));
     new JoystickButton(xDriver, OperatorConstants.BUTTON_shooterAmp).onTrue(new shooterRun(ShooterConstants.ampSpeed, m_ShooterSystem))
       .onFalse(new shooterRun(0, m_ShooterSystem));
+
+    new JoystickButton(xDriver, OperatorConstants.BUTTON_belts).onTrue(new phase2(PhaseTwoConstants.speed, m_PhaseTwoSystem))
+      .onFalse(new phase2(0, m_PhaseTwoSystem));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
