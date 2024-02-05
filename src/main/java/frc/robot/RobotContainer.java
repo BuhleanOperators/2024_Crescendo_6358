@@ -82,9 +82,11 @@ public class RobotContainer {
       .onFalse(new shooterRun(0, m_ShooterSystem));
     new JoystickButton(xDriver, OperatorConstants.BUTTON_shooterAmp).onTrue(new shooterRun(ShooterConstants.ampSpeed, m_ShooterSystem))
       .onFalse(new shooterRun(0, m_ShooterSystem));
+    new JoystickButton(xDriver, OperatorConstants.BUTTON_shooterAmpSlow).onTrue(new shooterRun(ShooterConstants.ampSpeedSlow, m_ShooterSystem))
+      .onFalse(new shooterRun(0, m_ShooterSystem));
 
-    new JoystickButton(xDriver, OperatorConstants.BUTTON_belts).onTrue(new runBelts(IntakeConstants.speed, m_IntakeSystem))
-      .onFalse(new runBelts(0, m_IntakeSystem));
+    // new JoystickButton(xDriver, OperatorConstants.BUTTON_belts).onTrue(new runBelts(IntakeConstants.speed, m_IntakeSystem))
+    //   .onFalse(new runBelts(0, m_IntakeSystem));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
