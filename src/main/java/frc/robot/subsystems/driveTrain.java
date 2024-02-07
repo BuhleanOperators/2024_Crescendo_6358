@@ -21,6 +21,8 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.ADIS16448_IMU;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
@@ -38,6 +40,7 @@ public class driveTrain extends SubsystemBase {
   private DifferentialDriveKinematics m_kinematics;
   private DifferentialDriveOdometry m_odomotry;
   private ADIS16448_IMU m_gyro;
+  private DifferentialDrive m_drive;
 
   public driveTrain() {
     //~ Configure SparkMaxs
@@ -70,7 +73,9 @@ public class driveTrain extends SubsystemBase {
     //& Configure Encoders
     rightEncoder = rightLead.getEncoder();
     rightEncoder.setPositionConversionFactor(DriveConstants.gearRatio * DriveConstants.wheelRadius);
+
     leftEncoder = leftLead.getEncoder();
+    leftEncoder.setPositionConversionFactor(DriveConstants.gearRatio * DriveConstants.wheelRadius);
   
     //* Configure PID controllers
     rightPID = rightLead.getPIDController();
@@ -95,6 +100,8 @@ public class driveTrain extends SubsystemBase {
 
     //! Odomotry
     m_odomotry = new DifferentialDriveOdometry(new Rotation2d(m_gyro.getGyroAngleX()), 0, 0);
+
+    m_drive = new DifferentialDrive(leftLead, rightLead);
   }
 
   @Override
@@ -123,10 +130,12 @@ public class driveTrain extends SubsystemBase {
         m_gyro.reset();
       }
     );
-  
   }
   public double getTurnRate(){
     return m_gyro.getRate();
+  } 
+  public double getAverageDistance(){
+      return rightEncoder.getPosition();
   }
 
 //^ Drive Methods
@@ -141,8 +150,16 @@ public class driveTrain extends SubsystemBase {
   public void stop(){
     arcadeDrive(0, 0);
   }
+  public void autoDrive(double xSpeed, double rot){
+    m_drive.arcadeDrive(xSpeed, rot);
+  }
 //^ Odomotry Methods
   public void updateOdomotry(){
     m_odomotry.update(new Rotation2d(m_gyro.getGyroAngleX()), getLeftEncoder().getPosition(), getRightEncoder().getPosition());
+  }
+//^ Other Methods
+  public void resetEncoders(){
+    rightEncoder.setPosition(0);
+    leftEncoder.setPosition(0);
   }
 }

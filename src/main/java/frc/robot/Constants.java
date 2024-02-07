@@ -31,7 +31,7 @@ public final class Constants {
     public static final double maxSpeed = 6; //volts per second
     public static final double maxAngularSpeed = 2 * Math.PI * maxSpeed; //one rotation per second
     public static final int slotID = 0;
-    public static final double gearRatio = 0;
+    public static final double gearRatio = 8.45; //8.45 to 1
 
     //~ Drive Values
     public static final int rightLeadID = 7;//3
@@ -74,10 +74,10 @@ public final class Constants {
     public static final double TURN_maxTurnRate = 100; //Degrees per second
     public static final double TURN_maxTurnAcceleration = 300; //Degrees Per Second^2
 
-    public static final double DIST_P = 0;
+    public static final double DIST_P = 1;
     public static final double DIST_I = 0;
     public static final double DIST_D = 0;
-    public static final double DIST_distanceTolerance = 0; //Meter
+    public static final double DIST_distanceTolerance = 1; //Meter
     public static final double DIST_velocityTolerance = 0;
 
   }

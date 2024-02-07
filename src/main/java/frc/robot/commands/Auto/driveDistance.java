@@ -14,14 +14,16 @@ import frc.robot.subsystems.driveTrain;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class driveDistance extends PIDCommand {
   /** Creates a new driveDistance. */
-  public driveDistance(double distance, driveTrain drive) {
+  private final driveTrain driveTrain;
+  private final double target;
+  public driveDistance(double distance, double current, driveTrain drive) {
     super(
         // The controller that the command will use
         new PIDController(AutoContants.DIST_P, AutoContants.DIST_I, AutoContants.DIST_D),
         // This should return the measurement
-        () -> drive.getRightEncoder().getPosition(),
+        () -> drive.getAverageDistance(),
         // This should return the setpoint (can also be a constant)
-        () -> distance,
+        () -> current + distance,
         // This uses the output
         output -> {
           drive.arcadeDrive(output, 0);
@@ -29,6 +31,8 @@ public class driveDistance extends PIDCommand {
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
     getController().setTolerance(AutoContants.DIST_distanceTolerance, AutoContants.DIST_velocityTolerance);
+    this.driveTrain = drive;
+    this.target = current + distance;
   }
 
   // Returns true when the command should end.

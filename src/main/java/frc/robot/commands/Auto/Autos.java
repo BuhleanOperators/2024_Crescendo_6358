@@ -18,6 +18,9 @@ public final class Autos {
   public static Command turnAuto(driveTrain drive){
     return Commands.sequence(drive.resetHeadingCommand(), new turnToAngle(90));
   }
+  public static Command driveDist(driveTrain drive){
+    return Commands.sequence(new driveDistance_7587(drive, 3, drive.getAverageDistance()));
+  }
 
   private Autos() {
     throw new UnsupportedOperationException("This is a utility class!");
