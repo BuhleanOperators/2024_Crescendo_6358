@@ -33,6 +33,7 @@ public class driveTrain extends SubsystemBase {
   private RelativeEncoder rightEncoder;
   private RelativeEncoder leftEncoder;
   private DifferentialDriveKinematics m_kinematics;
+  private DifferentialDrive m_Drive;
 
   public driveTrain() {
     //~ Configure SparkMaxs
@@ -75,26 +76,28 @@ public class driveTrain extends SubsystemBase {
     // leftEncoder = leftLead.getEncoder(com.revrobotics.SparkRelativeEncoder.Type.kHallSensor, DriveConstants.countsPerRev);
 
     //* Configure PID controllers
-    rightPID = rightLead.getPIDController();
-    rightPID.setP(DriveConstants.rightP);
-    rightPID.setI(DriveConstants.rightI);
-    rightPID.setD(DriveConstants.rightD);
-    rightPID.setFF(DriveConstants.rightFF);
-    rightPID.setFeedbackDevice(rightEncoder);
+    // rightPID = rightLead.getPIDController();
+    // rightPID.setP(DriveConstants.rightP);
+    // rightPID.setI(DriveConstants.rightI);
+    // rightPID.setD(DriveConstants.rightD);
+    // rightPID.setFF(DriveConstants.rightFF);
+    // rightPID.setFeedbackDevice(rightEncoder);
     //^ Smart Motion Values
     //rightPID.setSmartMotionMaxVelocity(DriveConstants.maxSpeed, DriveConstants.slotID);
     
-    leftPID = leftLead.getPIDController();
-    leftPID.setP(DriveConstants.leftP);
-    leftPID.setI(DriveConstants.leftI);
-    leftPID.setD(DriveConstants.leftD);
-    leftPID.setFF(DriveConstants.leftFF);
-    leftPID.setFeedbackDevice(leftEncoder);
+    // leftPID = leftLead.getPIDController();
+    // leftPID.setP(DriveConstants.leftP);
+    // leftPID.setI(DriveConstants.leftI);
+    // leftPID.setD(DriveConstants.leftD);
+    // leftPID.setFF(DriveConstants.leftFF);
+    // leftPID.setFeedbackDevice(leftEncoder);
     //^ Smart Motion Values
     //leftPID.setSmartMotionMaxVelocity(DriveConstants.maxSpeed, DriveConstants.slotID);
 
     //? Configure Kinematics
     m_kinematics = new DifferentialDriveKinematics(DriveConstants.trackWidth);
+
+    m_Drive = new DifferentialDrive(leftLead, rightLead);
   }
 
   @Override
@@ -108,16 +111,22 @@ public class driveTrain extends SubsystemBase {
   public RelativeEncoder getLeftEncoder(){
     return leftEncoder;
   }
+  public double getAverageDistance(){
+    return (leftEncoder.getPosition() + rightEncoder.getPosition()) / 2;
+  }
 
 //^ Drive Methods
 //?Is this the best way to do this?
-  public void setSpeeds(DifferentialDriveWheelSpeeds speeds){
-    rightPID.setReference(speeds.rightMetersPerSecond, CANSparkBase.ControlType.kVoltage);
-    leftPID.setReference(speeds.leftMetersPerSecond, CANSparkBase.ControlType.kVoltage);
-  }
-  public void arcadeDrive(double xSpeed, double rot){
-    var wheelSpeeds = m_kinematics.toWheelSpeeds(new ChassisSpeeds(xSpeed, 0.0, rot));
-    setSpeeds(wheelSpeeds);
+  // public void setSpeeds(DifferentialDriveWheelSpeeds speeds){
+  //   rightPID.setReference(speeds.rightMetersPerSecond, CANSparkBase.ControlType.kVoltage);
+  //   leftPID.setReference(speeds.leftMetersPerSecond, CANSparkBase.ControlType.kVoltage);
+  // }
+  // public void arcadeDrive(double xSpeed, double rot){
+  //   var wheelSpeeds = m_kinematics.toWheelSpeeds(new ChassisSpeeds(xSpeed, 0.0, rot));
+  //   setSpeeds(wheelSpeeds);
+  // }
+  public void newDrive(double xSpeed, double rot){
+    m_Drive.arcadeDrive(xSpeed, rot);
   }
   // public void arcadeDrive(double xSpeed, double rot){
   //   DifferentialDrive.arcadeDriveIK(xSpeed, rot, false);

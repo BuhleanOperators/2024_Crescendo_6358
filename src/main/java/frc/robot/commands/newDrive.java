@@ -8,19 +8,18 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.driveTrain;
-import frc.robot.Constants.DriveConstants;;
 
-public class arcadeDrive extends Command {
-  /** Creates a new arcadeDrive. */
+public class newDrive extends Command {
+  /** Creates a new newDrive. */
   private DoubleSupplier m_xSpeed;
   private DoubleSupplier m_rot;
-  private driveTrain m_DriveTrain;
-  public arcadeDrive(DoubleSupplier xSpeed, DoubleSupplier rot, driveTrain subsystem) {
-    // Use addRequirements() here to declare subsystem dependencies.
+  private driveTrain m_Drive;
+  public newDrive(DoubleSupplier xSpeed, DoubleSupplier rot) {
     m_xSpeed = xSpeed;
     m_rot = rot;
-    m_DriveTrain = subsystem;
-    addRequirements(m_DriveTrain);
+    m_Drive =  new driveTrain();
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(m_Drive);
   }
 
   // Called when the command is initially scheduled.
@@ -30,13 +29,13 @@ public class arcadeDrive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //m_DriveTrain.arcadeDrive(m_xSpeed.getAsDouble(), m_rot.getAsDouble());
+    m_Drive.newDrive(m_xSpeed.getAsDouble(), m_rot.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    //m_DriveTrain.arcadeDrive(0, 0);
+    m_Drive.newDrive(0, 0);
   }
 
   // Returns true when the command should end.

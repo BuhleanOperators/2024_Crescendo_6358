@@ -4,7 +4,9 @@
 
 package frc.robot.commands;
 
+import frc.robot.commands.Auto.driveDistance;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.driveTrain;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 
