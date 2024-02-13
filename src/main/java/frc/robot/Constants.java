@@ -20,8 +20,8 @@ import edu.wpi.first.math.util.Units;
 public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
-    public static final double deadbandCutoffDrive = 0.2;
-    public static final double deadbandCutoffRot = 0.1;
+    public static final double deadbandCutoffDrive = 0.3; //0.2
+    public static final double deadbandCutoffRot = 0.2; //0.1
   }
   public static class DriveConstants{
     //TODO set all values
@@ -39,8 +39,8 @@ public final class Constants {
     public static final int leftFollowID = 9;//4
 
     public static final int smartCurrentLimit = 40; //amps
-    public static final boolean rightLeadInvert = true;
-    public static final boolean rightFollowInvert = true;
+    public static final boolean rightLeadInvert = false;
+    public static final boolean rightFollowInvert = false;
     public static final boolean leftLeadInvert = false;
     public static final boolean leftFollowInvert = false;
     public static final CANSparkBase.IdleMode idleMode = IdleMode.kBrake;
@@ -53,14 +53,14 @@ public final class Constants {
     //* PID Controller Values
     //FF values are feedForwards
     //FF = 0.5 on tile and 0.95 on carpet
-    public static final double rightP = 0.15;
-    public static final double rightI = 0;
-    public static final double rightD = 0;
-    public static final double rightFF = 0.95;
+    public static final double rightP = 0;//0.15
+    public static final double rightI = 0; //0
+    public static final double rightD = 0; //0 
+    public static final double rightFF = 0; //0.95
 
-    public static final double leftP = 0.15;
-    public static final double leftI = 0;
-    public static final double leftD = 0;
-    public static final double leftFF = 0.95;
+    public static final double leftP = 0; //0.15
+    public static final double leftI = 0; //0
+    public static final double leftD = 0; //0
+    public static final double leftFF = 0; //0.95
   }
 }

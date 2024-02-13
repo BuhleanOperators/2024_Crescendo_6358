@@ -14,10 +14,10 @@ public class newDrive extends Command {
   private DoubleSupplier m_xSpeed;
   private DoubleSupplier m_rot;
   private driveTrain m_Drive;
-  public newDrive(DoubleSupplier xSpeed, DoubleSupplier rot) {
+  public newDrive(DoubleSupplier xSpeed, DoubleSupplier rot, driveTrain subsytem) {
     m_xSpeed = xSpeed;
     m_rot = rot;
-    m_Drive =  new driveTrain();
+    m_Drive =  subsytem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_Drive);
   }

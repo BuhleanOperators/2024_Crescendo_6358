@@ -38,14 +38,14 @@ public class driveTrain extends SubsystemBase {
   public driveTrain() {
     //~ Configure SparkMaxs
     rightLead = new CANSparkMax(DriveConstants.rightLeadID, MotorType.kBrushless);
-    //rightLead.restoreFactoryDefaults();
+    rightLead.restoreFactoryDefaults();
     rightLead.setSmartCurrentLimit(DriveConstants.smartCurrentLimit);
     rightLead.setInverted(DriveConstants.rightLeadInvert);
     rightLead.setIdleMode(DriveConstants.idleMode);
     rightLead.burnFlash();
 
     rightFollow = new CANSparkMax(DriveConstants.rightFollowID, MotorType.kBrushless);
-    //rightFollow.restoreFactoryDefaults();
+    rightFollow.restoreFactoryDefaults();
     rightFollow.setSmartCurrentLimit(DriveConstants.smartCurrentLimit);
     rightFollow.setInverted(DriveConstants.rightFollowInvert);
     rightFollow.setIdleMode(DriveConstants.idleMode);
@@ -53,14 +53,14 @@ public class driveTrain extends SubsystemBase {
     rightFollow.burnFlash();
 
     leftLead = new CANSparkMax(DriveConstants.leftLeadID, MotorType.kBrushless);
-    //leftLead.restoreFactoryDefaults();
+    leftLead.restoreFactoryDefaults();
     leftLead.setSmartCurrentLimit(DriveConstants.smartCurrentLimit);
     leftLead.setInverted(DriveConstants.leftLeadInvert);
     leftLead.setIdleMode(DriveConstants.idleMode);
     leftLead.burnFlash();
 
     leftFollow = new CANSparkMax(DriveConstants.leftFollowID, MotorType.kBrushless);
-    //leftFollow.restoreFactoryDefaults();
+    leftFollow.restoreFactoryDefaults();
     leftFollow.setSmartCurrentLimit(DriveConstants.smartCurrentLimit);
     leftFollow.setInverted(DriveConstants.leftFollowInvert);
     leftFollow.setIdleMode(DriveConstants.idleMode);
@@ -117,14 +117,14 @@ public class driveTrain extends SubsystemBase {
 
 //^ Drive Methods
 //?Is this the best way to do this?
-  // public void setSpeeds(DifferentialDriveWheelSpeeds speeds){
-  //   rightPID.setReference(speeds.rightMetersPerSecond, CANSparkBase.ControlType.kVoltage);
-  //   leftPID.setReference(speeds.leftMetersPerSecond, CANSparkBase.ControlType.kVoltage);
-  // }
-  // public void arcadeDrive(double xSpeed, double rot){
-  //   var wheelSpeeds = m_kinematics.toWheelSpeeds(new ChassisSpeeds(xSpeed, 0.0, rot));
-  //   setSpeeds(wheelSpeeds);
-  // }
+  public void setSpeeds(DifferentialDriveWheelSpeeds speeds){
+    rightPID.setReference(speeds.rightMetersPerSecond, CANSparkBase.ControlType.kVoltage);
+    leftPID.setReference(speeds.leftMetersPerSecond, CANSparkBase.ControlType.kVoltage);
+  }
+  public void arcadeDrive(double xSpeed, double rot){
+    var wheelSpeeds = m_kinematics.toWheelSpeeds(new ChassisSpeeds(xSpeed, 0.0, rot));
+    setSpeeds(wheelSpeeds);
+  }
   public void newDrive(double xSpeed, double rot){
     m_Drive.arcadeDrive(xSpeed, rot);
   }
