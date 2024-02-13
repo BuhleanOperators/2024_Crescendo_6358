@@ -7,23 +7,25 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.OperatorConstants;
-// import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.DriveConstants;
 
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.arcadeDrive;
 import frc.robot.commands.Intake.runBelts;
 import frc.robot.commands.Intake.runFlyWheels;
 import frc.robot.commands.Pneumatics.ToggleSolenoid;
 import frc.robot.commands.Shooter.shooterRun;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.pneumatics;
-// import frc.robot.subsystems.driveTrain;
+import frc.robot.subsystems.driveTrain;
 import frc.robot.subsystems.intakeSystem;
 import frc.robot.subsystems.shooterSystem;
 
 import frc.robot.Constants.IntakeConstants;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -38,7 +40,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  // private final driveTrain m_DriveTrain = new driveTrain();
+  private final driveTrain m_DriveTrain = new driveTrain();
   private final shooterSystem m_ShooterSystem = new shooterSystem();
   private final pneumatics m_pneumatics = new pneumatics();
   private final intakeSystem m_IntakeSystem = new intakeSystem();
@@ -54,7 +56,7 @@ public class RobotContainer {
     configureBindings();
     smartDashboard();
     
-    // m_DriveTrain.setDefaultCommand(new arcadeDrive(() -> deadband(getXDriver().getLeftY() * Constants.DriveConstants.maxSpeed, OperatorConstants.deadbandCutoffDrive), () -> deadband(getXDriver().getRightX() * Constants.DriveConstants.maxAngularSpeed, OperatorConstants.deadbandCutoffRot), m_DriveTrain));
+    m_DriveTrain.setDefaultCommand(new arcadeDrive(() -> deadband(getXDriver().getLeftY() * Constants.DriveConstants.maxSpeed, OperatorConstants.deadbandCutoffDrive), () -> deadband(getXDriver().getRightX() * Constants.DriveConstants.maxAngularSpeed, OperatorConstants.deadbandCutoffRot), m_DriveTrain));
   }
 
   /**
@@ -103,7 +105,7 @@ public class RobotContainer {
   }
 
   private void smartDashboard(){
-
+    SmartDashboard.putNumber("Shooter RPM", m_ShooterSystem.getShooterRPM());
   }
 
   public XboxController getXDriver(){
