@@ -20,8 +20,8 @@ import edu.wpi.first.math.util.Units;
 public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
-    public static final double deadbandCutoffDrive = 0.3; //0.2
-    public static final double deadbandCutoffRot = 0.2; //0.1
+    public static final double deadbandCutoffDrive = 0.2; //0.2
+    public static final double deadbandCutoffRot = 0.1; //0.1
   }
   public static class DriveConstants{
     //TODO set all values
@@ -33,14 +33,14 @@ public final class Constants {
     public static final int slotID = 0;
 
     //~ Drive Values
-    public static final int rightLeadID = 7;//3
-    public static final int rightFollowID = 4;//9
-    public static final int leftLeadID = 3;//7
-    public static final int leftFollowID = 9;//4
+    public static final int rightLeadID = 7;//7
+    public static final int rightFollowID = 4;//4
+    public static final int leftLeadID = 3;//3
+    public static final int leftFollowID = 9;//9
 
     public static final int smartCurrentLimit = 40; //amps
-    public static final boolean rightLeadInvert = false;
-    public static final boolean rightFollowInvert = false;
+    public static final boolean rightLeadInvert = true;
+    public static final boolean rightFollowInvert = true;
     public static final boolean leftLeadInvert = false;
     public static final boolean leftFollowInvert = false;
     public static final CANSparkBase.IdleMode idleMode = IdleMode.kBrake;
@@ -49,6 +49,8 @@ public final class Constants {
     //? Change to 4096?
     //Was 42
     public static final int countsPerRev = 42;
+    public static final double rightPostionConversionFactor = -4.815;
+    public static final double leftPositionConversionFactor = 4.731;
     
     //* PID Controller Values
     //FF values are feedForwards

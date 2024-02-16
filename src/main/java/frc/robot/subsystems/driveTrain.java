@@ -30,22 +30,23 @@ public class driveTrain extends SubsystemBase {
   private CANSparkMax leftFollow;
   private SparkPIDController rightPID;
   private SparkPIDController leftPID;
-  private RelativeEncoder rightEncoder;
-  private RelativeEncoder leftEncoder;
+  private static RelativeEncoder rightEncoder;
+  private static RelativeEncoder leftEncoder;
   private DifferentialDriveKinematics m_kinematics;
   private DifferentialDrive m_Drive;
 
   public driveTrain() {
     //~ Configure SparkMaxs
+    //! Auto is duplicating the right lead regardless of motor controller
     rightLead = new CANSparkMax(DriveConstants.rightLeadID, MotorType.kBrushless);
-    rightLead.restoreFactoryDefaults();
+    // rightLead.restoreFactoryDefaults();
     rightLead.setSmartCurrentLimit(DriveConstants.smartCurrentLimit);
     rightLead.setInverted(DriveConstants.rightLeadInvert);
     rightLead.setIdleMode(DriveConstants.idleMode);
     rightLead.burnFlash();
 
     rightFollow = new CANSparkMax(DriveConstants.rightFollowID, MotorType.kBrushless);
-    rightFollow.restoreFactoryDefaults();
+    // rightFollow.restoreFactoryDefaults();
     rightFollow.setSmartCurrentLimit(DriveConstants.smartCurrentLimit);
     rightFollow.setInverted(DriveConstants.rightFollowInvert);
     rightFollow.setIdleMode(DriveConstants.idleMode);
@@ -53,14 +54,14 @@ public class driveTrain extends SubsystemBase {
     rightFollow.burnFlash();
 
     leftLead = new CANSparkMax(DriveConstants.leftLeadID, MotorType.kBrushless);
-    leftLead.restoreFactoryDefaults();
+    // leftLead.restoreFactoryDefaults();
     leftLead.setSmartCurrentLimit(DriveConstants.smartCurrentLimit);
     leftLead.setInverted(DriveConstants.leftLeadInvert);
     leftLead.setIdleMode(DriveConstants.idleMode);
     leftLead.burnFlash();
 
     leftFollow = new CANSparkMax(DriveConstants.leftFollowID, MotorType.kBrushless);
-    leftFollow.restoreFactoryDefaults();
+    // leftFollow.restoreFactoryDefaults();
     leftFollow.setSmartCurrentLimit(DriveConstants.smartCurrentLimit);
     leftFollow.setInverted(DriveConstants.leftFollowInvert);
     leftFollow.setIdleMode(DriveConstants.idleMode);
@@ -70,27 +71,33 @@ public class driveTrain extends SubsystemBase {
     //& Configure Encoders
     //? Default Constructor instead?
     rightEncoder = rightLead.getEncoder();
+   // rightEncoder.setInverted(true);
+    // rightEncoder.setPositionConversionFactor(-4);
+    // rightLead.burnFlash();
+
     leftEncoder = leftLead.getEncoder();
+    // leftEncoder.setPositionConversionFactor(1);
+    // leftLead.burnFlash();
     // rightEncoder = rightLead.getEncoder(com.revrobotics.SparkRelativeEncoder.Type.kHallSensor, DriveConstants.countsPerRev);
 
     // leftEncoder = leftLead.getEncoder(com.revrobotics.SparkRelativeEncoder.Type.kHallSensor, DriveConstants.countsPerRev);
 
     //* Configure PID controllers
-    // rightPID = rightLead.getPIDController();
-    // rightPID.setP(DriveConstants.rightP);
-    // rightPID.setI(DriveConstants.rightI);
-    // rightPID.setD(DriveConstants.rightD);
-    // rightPID.setFF(DriveConstants.rightFF);
-    // rightPID.setFeedbackDevice(rightEncoder);
+    rightPID = rightLead.getPIDController();
+    rightPID.setP(DriveConstants.rightP);
+    rightPID.setI(DriveConstants.rightI);
+    rightPID.setD(DriveConstants.rightD);
+    rightPID.setFF(DriveConstants.rightFF);
+    rightPID.setFeedbackDevice(rightEncoder);
     //^ Smart Motion Values
     //rightPID.setSmartMotionMaxVelocity(DriveConstants.maxSpeed, DriveConstants.slotID);
     
-    // leftPID = leftLead.getPIDController();
-    // leftPID.setP(DriveConstants.leftP);
-    // leftPID.setI(DriveConstants.leftI);
-    // leftPID.setD(DriveConstants.leftD);
-    // leftPID.setFF(DriveConstants.leftFF);
-    // leftPID.setFeedbackDevice(leftEncoder);
+    leftPID = leftLead.getPIDController();
+    leftPID.setP(DriveConstants.leftP);
+    leftPID.setI(DriveConstants.leftI);
+    leftPID.setD(DriveConstants.leftD);
+    leftPID.setFF(DriveConstants.leftFF);
+    leftPID.setFeedbackDevice(leftEncoder);
     //^ Smart Motion Values
     //leftPID.setSmartMotionMaxVelocity(DriveConstants.maxSpeed, DriveConstants.slotID);
 
@@ -98,6 +105,7 @@ public class driveTrain extends SubsystemBase {
     m_kinematics = new DifferentialDriveKinematics(DriveConstants.trackWidth);
 
     m_Drive = new DifferentialDrive(leftLead, rightLead);
+    m_Drive.setSafetyEnabled(false);
   }
 
   @Override
@@ -110,6 +118,16 @@ public class driveTrain extends SubsystemBase {
   }
   public RelativeEncoder getLeftEncoder(){
     return leftEncoder;
+  }
+  public static void resetEncoders(){
+    rightEncoder.setPosition(0);
+    leftEncoder.setPosition(0);
+  }
+  public double getRightEncoderDistance(){
+    return rightEncoder.getPosition();
+  }
+  public double getLeftEncoderDistance(){
+    return leftEncoder.getPosition();
   }
   public double getAverageDistance(){
     return (leftEncoder.getPosition() + rightEncoder.getPosition()) / 2;
@@ -127,6 +145,10 @@ public class driveTrain extends SubsystemBase {
   }
   public void newDrive(double xSpeed, double rot){
     m_Drive.arcadeDrive(xSpeed, rot);
+  }
+  public void stop(){
+    rightLead.set(0);
+    leftLead.set(0);
   }
   // public void arcadeDrive(double xSpeed, double rot){
   //   DifferentialDrive.arcadeDriveIK(xSpeed, rot, false);
