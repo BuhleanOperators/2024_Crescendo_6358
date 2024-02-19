@@ -55,14 +55,14 @@ public final class Constants {
     //* PID Controller Values
     //FF values are feedForwards
     //FF = 0.5 on tile and 0.95 on carpet
-    public static final double rightP = 0;//0.15
+    public static final double rightP = 0.5;
     public static final double rightI = 0; //0
     public static final double rightD = 0; //0 
-    public static final double rightFF = 0; //0.95
+    public static final double rightFF = 0.95; //0.95
 
-    public static final double leftP = 0; //0.15
+    public static final double leftP = 0.5; //0.15
     public static final double leftI = 0; //0
     public static final double leftD = 0; //0
-    public static final double leftFF = 0; //0.95
+    public static final double leftFF = 0.95; //0.95
   }
 }

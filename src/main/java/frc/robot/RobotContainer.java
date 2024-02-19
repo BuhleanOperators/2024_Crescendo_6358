@@ -9,6 +9,7 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.arcadeDrive;
 import frc.robot.commands.newDrive;
+import frc.robot.commands.Auto.driveDistancePID;
 import frc.robot.commands.Auto.driveDistance_4;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.driveTrain;
@@ -71,8 +72,8 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    // return Autos.exampleAuto(m_exampleSubsystem);
-    return new driveDistance_4(-0.5, -2, m_DriveTrain);
+    // return new driveDistance_4(-0.5, -2, m_DriveTrain);
+    return new driveDistancePID(-2, m_DriveTrain);
   }
 
   private void smartDashboard(){

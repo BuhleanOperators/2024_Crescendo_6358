@@ -37,7 +37,6 @@ public class driveTrain extends SubsystemBase {
 
   public driveTrain() {
     //~ Configure SparkMaxs
-    //! Auto is duplicating the right lead regardless of motor controller
     rightLead = new CANSparkMax(DriveConstants.rightLeadID, MotorType.kBrushless);
     // rightLead.restoreFactoryDefaults();
     rightLead.setSmartCurrentLimit(DriveConstants.smartCurrentLimit);
@@ -135,13 +134,18 @@ public class driveTrain extends SubsystemBase {
 
 //^ Drive Methods
 //?Is this the best way to do this?
-  public void setSpeeds(DifferentialDriveWheelSpeeds speeds){
+  public void setDriveSpeeds(DifferentialDriveWheelSpeeds speeds){
     rightPID.setReference(speeds.rightMetersPerSecond, CANSparkBase.ControlType.kVoltage);
     leftPID.setReference(speeds.leftMetersPerSecond, CANSparkBase.ControlType.kVoltage);
   }
   public void arcadeDrive(double xSpeed, double rot){
     var wheelSpeeds = m_kinematics.toWheelSpeeds(new ChassisSpeeds(xSpeed, 0.0, rot));
-    setSpeeds(wheelSpeeds);
+    setDriveSpeeds(wheelSpeeds);
+  }
+  public void setAutoSpeeds(double distance){
+    //? voltage or duty cycle
+    rightPID.setReference(distance, CANSparkBase.ControlType.kDutyCycle);
+    leftPID.setReference(distance, CANSparkBase.ControlType.kDutyCycle);
   }
   public void newDrive(double xSpeed, double rot){
     m_Drive.arcadeDrive(xSpeed, rot);
