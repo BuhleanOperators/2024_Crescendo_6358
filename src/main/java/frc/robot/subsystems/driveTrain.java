@@ -17,6 +17,7 @@ import com.revrobotics.SparkAbsoluteEncoder.Type;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.ADIS16448_IMU;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -34,6 +35,7 @@ public class driveTrain extends SubsystemBase {
   private static RelativeEncoder leftEncoder;
   private DifferentialDriveKinematics m_kinematics;
   private DifferentialDrive m_Drive;
+  private ADIS16448_IMU m_gyro;
 
   public driveTrain() {
     //~ Configure SparkMaxs
@@ -105,6 +107,7 @@ public class driveTrain extends SubsystemBase {
 
     m_Drive = new DifferentialDrive(leftLead, rightLead);
     m_Drive.setSafetyEnabled(false);
+    m_gyro = new ADIS16448_IMU();
   }
 
   @Override
@@ -131,6 +134,12 @@ public class driveTrain extends SubsystemBase {
   public double getAverageDistance(){
     return (leftEncoder.getPosition() + rightEncoder.getPosition()) / 2;
   }
+  public double getAngle(){
+    return m_gyro.getGyroAngleZ();
+  }
+  public void resetGyro(){
+    m_gyro.reset();
+  }
 
 //^ Drive Methods
 //?Is this the best way to do this?
@@ -146,6 +155,10 @@ public class driveTrain extends SubsystemBase {
     //? voltage or duty cycle
     rightPID.setReference(distance, CANSparkBase.ControlType.kDutyCycle);
     leftPID.setReference(distance, CANSparkBase.ControlType.kDutyCycle);
+  }
+  public void setAutoTurnSpeeds(double speeds){
+    rightPID.setReference(speeds, CANSparkBase.ControlType.kVoltage);
+    leftPID.setReference(-speeds, CANSparkBase.ControlType.kVoltage);
   }
   public void newDrive(double xSpeed, double rot){
     m_Drive.arcadeDrive(xSpeed, rot);
