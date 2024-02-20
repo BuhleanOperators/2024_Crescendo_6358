@@ -5,13 +5,13 @@
 package frc.robot.commands.Shooter;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.shooterSystem;
+import frc.robot.subsystems.shooterSubsystem;
 
 public class shooterRun extends Command {
   /** Creates a new shooterRun. */
   private double m_speed;
-  private shooterSystem m_shooterSystem;
-  public shooterRun(double speed, shooterSystem subsystem) {
+  private shooterSubsystem m_shooterSystem;
+  public shooterRun(double speed, shooterSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_speed = speed;
     m_shooterSystem = subsystem;

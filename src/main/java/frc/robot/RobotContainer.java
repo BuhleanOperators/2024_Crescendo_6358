@@ -12,9 +12,10 @@ import frc.robot.commands.Intake.fullIntake;
 import frc.robot.commands.Intake.runFlyWheels;
 import frc.robot.commands.Shooter.shooterRun;
 import frc.robot.subsystems.pneumaticSubsystem;
+import frc.robot.subsystems.beltSubsystem;
 import frc.robot.subsystems.driveSubsystem;
-import frc.robot.subsystems.intakeSystem;
-import frc.robot.subsystems.shooterSystem;
+import frc.robot.subsystems.intakeSubsystem;
+import frc.robot.subsystems.shooterSubsystem;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -32,9 +33,10 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final driveSubsystem m_DriveTrain = new driveSubsystem();
-  private final shooterSystem m_ShooterSystem = new shooterSystem();
+  private final shooterSubsystem m_ShooterSystem = new shooterSubsystem();
   private final pneumaticSubsystem m_pneumatics = new pneumaticSubsystem();
-  private final intakeSystem m_IntakeSystem = new intakeSystem();
+  private final intakeSubsystem m_IntakeSystem = new intakeSubsystem();
+  private final beltSubsystem m_BeltSubsystem = new beltSubsystem();
 
   private double deadbandreturn;
 
@@ -68,7 +70,7 @@ public class RobotContainer {
     JoystickButton intakeOut = new JoystickButton(xDriver, OperatorConstants.intakeOut);
     // intakeIn.onTrue(new runFlyWheels(0.75, m_IntakeSystem)).onFalse(new runFlyWheels(0, m_IntakeSystem));
     intakeOut.onTrue(new runFlyWheels(-0.75, m_IntakeSystem)).onFalse(new runFlyWheels(0, m_IntakeSystem));
-    intakeIn.onTrue(new fullIntake(0.75, 1, m_IntakeSystem)).onFalse(new fullIntake(0, 0, m_IntakeSystem));
+    intakeIn.onTrue(new fullIntake(0.75, 1, m_IntakeSystem, m_BeltSubsystem)).onFalse(new fullIntake(0, 0, m_IntakeSystem, m_BeltSubsystem));
 
     //new JoystickButton(xDriver, OperatorConstants.intakeButton).toggleOnTrue(new shooterRun(ShooterConstants.speed, m_ShooterSystem));
     new JoystickButton(xDriver, OperatorConstants.BUTTON_shooterSpeaker).onTrue(new shooterRun(ShooterConstants.speakerSpeed, m_ShooterSystem))

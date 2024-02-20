@@ -6,16 +6,16 @@ package frc.robot.commands.Intake;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.intakeSystem;
+import frc.robot.subsystems.intakeSubsystem;
 
 public class runFlyWheelsTime extends Command {
   /** Creates a new runFlyWheelsTime. */
-  private intakeSystem m_IntakeSystem;
+  private intakeSubsystem m_IntakeSystem;
   private Timer timer;
   private double m_time;
   private double m_speed;
   public runFlyWheelsTime(double speed, double time) {
-    m_IntakeSystem = new intakeSystem();
+    m_IntakeSystem = new intakeSubsystem();
     addRequirements(m_IntakeSystem);
     m_time = time;
     m_speed = speed;
