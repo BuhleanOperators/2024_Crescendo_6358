@@ -14,12 +14,12 @@ import frc.robot.Constants.IntakeConstants;
 
 public class intakeSystem extends SubsystemBase {
   /** Creates a new intakeSystem. */
-  private Spark intake;
-  private VictorSP motor;
+  private VictorSP intake;
+  private VictorSP belt;
 
   public intakeSystem() {
-    intake = new Spark(2);
-    motor = new VictorSP(IntakeConstants.motorID);
+    intake = new VictorSP(IntakeConstants.intakeID);
+    belt = new VictorSP(IntakeConstants.beltID);
   }
 
   @Override
@@ -31,6 +31,6 @@ public class intakeSystem extends SubsystemBase {
     intake.set(speed);
   }
   public void setBeltSpeeds(double speed){
-    motor.set(speed);
+    belt.set(speed);
   }
 }

@@ -45,10 +45,10 @@ public final class Constants {
     public static final int slotID = 0;
 
     //~ Drive Values
-    public static final int rightLeadID = 7;//3
-    public static final int rightFollowID = 4;//9
-    public static final int leftLeadID = 3;//7
-    public static final int leftFollowID = 9;//4
+    public static final int rightLeadID = 1; //Bolt: 7
+    public static final int rightFollowID = 2; //Bolt: 4
+    public static final int leftLeadID = 3; //Bolt 3
+    public static final int leftFollowID = 4; //Bolt: 9
 
     public static final int smartCurrentLimit = 40; //amps
     public static final boolean rightLeadInvert = true;
@@ -76,8 +76,8 @@ public final class Constants {
     public static final double leftFF = 0.95;
   }
   public static class ShooterConstants{
-    public static final int rightMotorID = 1;
-    public static final int leftMotorID = 2;
+    public static final int rightMotorID = 5;
+    public static final int leftMotorID = 6;
 
     public static final int currentLimit = 40;
     public static final boolean setRightInverted = true;
@@ -97,7 +97,7 @@ public final class Constants {
     public static final int PISTON_SECOND_BACK = 3;
   }
   public static class IntakeConstants{
-    public static final int motorID = 0;
-    public static final double speed = 0;
+    public static final int intakeID = 7;
+    public static final int beltID = 9;
   }
 }
