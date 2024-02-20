@@ -7,15 +7,14 @@ package frc.robot.commands;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.driveTrain;
-import frc.robot.Constants.DriveConstants;;
+import frc.robot.subsystems.driveSubsystem;
 
 public class arcadeDrive extends Command {
   /** Creates a new arcadeDrive. */
   private DoubleSupplier m_xSpeed;
   private DoubleSupplier m_rot;
-  private driveTrain m_DriveTrain;
-  public arcadeDrive(DoubleSupplier xSpeed, DoubleSupplier rot, driveTrain subsystem) {
+  private driveSubsystem m_DriveTrain;
+  public arcadeDrive(DoubleSupplier xSpeed, DoubleSupplier rot, driveSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_xSpeed = xSpeed;
     m_rot = rot;

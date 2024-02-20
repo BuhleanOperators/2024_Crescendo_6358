@@ -6,13 +6,9 @@ package frc.robot.commands.Shooter;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
-import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.Intake.runBelts;
 import frc.robot.commands.Intake.runFlyWheels;
-import frc.robot.subsystems.driveTrain;
 import frc.robot.subsystems.intakeSystem;
 import frc.robot.subsystems.shooterSystem;
 

@@ -4,19 +4,16 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.PneumaticsConstants;
 
-public class pneumatics extends SubsystemBase {
+public class pneumaticSubsystem extends SubsystemBase {
   /** Creates a new pneumatics. */
-  private Compressor mCompressor;
   private DoubleSolenoid firstSolenoid;
   private DoubleSolenoid secondSolenoid;
-  public pneumatics() {
-    mCompressor = new Compressor(PneumaticsModuleType.CTREPCM);
+  public pneumaticSubsystem() {
     firstSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, PneumaticsConstants.PISTON_FIRST_FORWARD, PneumaticsConstants.PISTON_FIRST_BACK);
     secondSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, PneumaticsConstants.PISTON_SECOND_FORWARD, PneumaticsConstants.PISTON_SECOND_BACK);
   }

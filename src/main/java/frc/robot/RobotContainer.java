@@ -6,25 +6,16 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.ShooterConstants;
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.Constants.DriveConstants;
 
-import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.arcadeDrive;
 import frc.robot.commands.Intake.fullIntake;
-import frc.robot.commands.Intake.runBelts;
 import frc.robot.commands.Intake.runFlyWheels;
-import frc.robot.commands.Pneumatics.ToggleSolenoid;
 import frc.robot.commands.Shooter.shooterRun;
-import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.pneumatics;
-import frc.robot.subsystems.driveTrain;
+import frc.robot.subsystems.pneumaticSubsystem;
+import frc.robot.subsystems.driveSubsystem;
 import frc.robot.subsystems.intakeSystem;
 import frc.robot.subsystems.shooterSystem;
 
-import frc.robot.Constants.IntakeConstants;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -40,10 +31,9 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final driveTrain m_DriveTrain = new driveTrain();
+  private final driveSubsystem m_DriveTrain = new driveSubsystem();
   private final shooterSystem m_ShooterSystem = new shooterSystem();
-  private final pneumatics m_pneumatics = new pneumatics();
+  private final pneumaticSubsystem m_pneumatics = new pneumaticSubsystem();
   private final intakeSystem m_IntakeSystem = new intakeSystem();
 
   private double deadbandreturn;
@@ -71,8 +61,8 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
+    // new Trigger(m_exampleSubsystem::exampleCondition)
+    //     .onTrue(new ExampleCommand(m_exampleSubsystem));
     
     JoystickButton intakeIn = new JoystickButton(xDriver, OperatorConstants.intakeIn);
     JoystickButton intakeOut = new JoystickButton(xDriver, OperatorConstants.intakeOut);
@@ -103,7 +93,8 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    // return Autos.exampleAuto(m_exampleSubsystem);
+    return null;
   }
 
   private void smartDashboard(){
