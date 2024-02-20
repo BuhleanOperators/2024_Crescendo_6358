@@ -12,6 +12,7 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.arcadeDrive;
+import frc.robot.commands.Intake.fullIntake;
 import frc.robot.commands.Intake.runBelts;
 import frc.robot.commands.Intake.runFlyWheels;
 import frc.robot.commands.Pneumatics.ToggleSolenoid;
@@ -75,8 +76,9 @@ public class RobotContainer {
     
     JoystickButton intakeIn = new JoystickButton(xDriver, OperatorConstants.intakeIn);
     JoystickButton intakeOut = new JoystickButton(xDriver, OperatorConstants.intakeOut);
-    intakeIn.onTrue(new runFlyWheels(0.75, m_IntakeSystem)).onFalse(new runFlyWheels(0, m_IntakeSystem));
+    // intakeIn.onTrue(new runFlyWheels(0.75, m_IntakeSystem)).onFalse(new runFlyWheels(0, m_IntakeSystem));
     intakeOut.onTrue(new runFlyWheels(-0.75, m_IntakeSystem)).onFalse(new runFlyWheels(0, m_IntakeSystem));
+    intakeIn.onTrue(new fullIntake(0.75, 1, m_IntakeSystem)).onFalse(new fullIntake(0, 0, m_IntakeSystem));
 
     //new JoystickButton(xDriver, OperatorConstants.intakeButton).toggleOnTrue(new shooterRun(ShooterConstants.speed, m_ShooterSystem));
     new JoystickButton(xDriver, OperatorConstants.BUTTON_shooterSpeaker).onTrue(new shooterRun(ShooterConstants.speakerSpeed, m_ShooterSystem))
@@ -86,8 +88,8 @@ public class RobotContainer {
     new JoystickButton(xDriver, OperatorConstants.BUTTON_shooterAmpSlow).onTrue(new shooterRun(ShooterConstants.ampSpeedSlow, m_ShooterSystem))
       .onFalse(new shooterRun(0, m_ShooterSystem));
 
-    // new JoystickButton(xDriver, OperatorConstants.BUTTON_belts).onTrue(new runBelts(IntakeConstants.speed, m_IntakeSystem))
-    //   .onFalse(new runBelts(0, m_IntakeSystem));
+    // new JoystickButton(xDriver, OperatorConstants.BUTTON_belts).onTrue(new runBelts(1, m_IntakeSystem))
+      // .onFalse(new runBelts(0, m_IntakeSystem));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
