@@ -41,7 +41,7 @@ public class RobotContainer {
   private double deadbandreturn;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final XboxController xDriver = new XboxController(OperatorConstants.kDriverControllerPort);
+  private final static XboxController xDriver = new XboxController(OperatorConstants.kDriverControllerPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -103,7 +103,7 @@ public class RobotContainer {
     SmartDashboard.putNumber("Shooter RPM", m_ShooterSystem.getShooterRPM());
   }
 
-  public XboxController getXDriver(){
+  public static XboxController getXDriver(){
     return xDriver;
   }
 
