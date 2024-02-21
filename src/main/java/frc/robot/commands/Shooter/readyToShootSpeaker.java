@@ -26,14 +26,12 @@ public class readyToShootSpeaker extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new runBelts(1, m_BeltSubsystem),
-      new WaitCommand(0),
-      new runBelts(-0.5, m_BeltSubsystem),
-      new WaitCommand(0),
-      new runFlyWheels(0, m_IntakeSystem).until(() -> (m_ShooterSystem.getShooterRPM() >= ShooterConstants.fullRPM)),
+      new runBelts(1, m_BeltSubsystem).withTimeout(2),
+      new runBelts(-0.5, m_BeltSubsystem).withTimeout(0.5),
+      new runFlyWheels(ShooterConstants.speakerSpeed, m_IntakeSystem).until(() -> (m_ShooterSystem.getShooterRPM() >= ShooterConstants.fullRPM)),
       new ParallelCommandGroup(
-        new runFlyWheels(ShooterConstants.ampSpeed, m_IntakeSystem),
-        new runBelts(0, m_BeltSubsystem)
+        new runFlyWheels(ShooterConstants.speakerSpeed, m_IntakeSystem),
+        new runBelts(1, m_BeltSubsystem)
       )
     );
   }

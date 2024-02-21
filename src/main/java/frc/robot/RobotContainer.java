@@ -9,11 +9,12 @@ import frc.robot.Constants.ShooterConstants;
 
 import frc.robot.commands.arcadeDrive;
 import frc.robot.commands.Intake.fullIntake;
+import frc.robot.commands.Intake.runBelts;
 import frc.robot.commands.Intake.runFlyWheels;
 import frc.robot.commands.Shooter.shooterRun;
 import frc.robot.subsystems.pneumaticSubsystem;
 import frc.robot.subsystems.beltSubsystem;
-import frc.robot.subsystems.driveSubsystem;
+import frc.robot.subsystems.driveTrain;
 import frc.robot.subsystems.intakeSubsystem;
 import frc.robot.subsystems.shooterSubsystem;
 
@@ -32,7 +33,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final driveSubsystem m_DriveTrain = new driveSubsystem();
+  private final driveTrain m_DriveTrain = new driveTrain();
   private final shooterSubsystem m_ShooterSystem = new shooterSubsystem();
   private final pneumaticSubsystem m_pneumatics = new pneumaticSubsystem();
   private final intakeSubsystem m_IntakeSystem = new intakeSubsystem();
@@ -79,6 +80,8 @@ public class RobotContainer {
       .onFalse(new shooterRun(0, m_ShooterSystem));
     new JoystickButton(xDriver, OperatorConstants.BUTTON_shooterAmpSlow).onTrue(new shooterRun(ShooterConstants.ampSpeedSlow, m_ShooterSystem))
       .onFalse(new shooterRun(0, m_ShooterSystem));
+    new JoystickButton(xDriver, OperatorConstants.BUTTON_beltsOut).onTrue(new runBelts(1, m_BeltSubsystem))
+      .onFalse(new runBelts(0, m_BeltSubsystem));
 
     // new JoystickButton(xDriver, OperatorConstants.BUTTON_belts).onTrue(new runBelts(1, m_IntakeSystem))
       // .onFalse(new runBelts(0, m_IntakeSystem));

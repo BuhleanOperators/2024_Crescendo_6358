@@ -29,7 +29,7 @@ public final class Constants {
     public static final int BUTTON_shooterSpeaker = 1;
     public static final int BUTTON_shooterAmp = 2;
     public static final int BUTTON_shooterAmpSlow = 3;
-    public static final int BUTTON_belts = 4;
+    public static final int BUTTON_beltsOut = 4;
     // public static final int BUTTON_togglePiston = 2;
     // public static final int BUTTON_extendPiston = 3;
     // public static final int BUTTON_retractPiston = 4;
@@ -88,7 +88,7 @@ public final class Constants {
     public static final double ampSpeed = 0.35;
     public static final double ampSpeedSlow = 0.2;
 
-    public static final double fullRPM = 0;
+    public static final double fullRPM = 4500;
   }
   public static class PneumaticsConstants {
     public static final int PISTON_FIRST_FORWARD = 0;

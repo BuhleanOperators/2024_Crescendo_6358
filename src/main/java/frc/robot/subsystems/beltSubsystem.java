@@ -4,14 +4,22 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.IntakeConstants;
 
 public class beltSubsystem extends SubsystemBase {
   /** Creates a new beltSubsystem. */
-  public beltSubsystem() {}
+  private VictorSP belts;
+  public beltSubsystem() {
+    belts = new VictorSP(IntakeConstants.beltID);
+  }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }
+  public void setBeltSpeeds(double speed){
+    belts.set(speed);
   }
 }

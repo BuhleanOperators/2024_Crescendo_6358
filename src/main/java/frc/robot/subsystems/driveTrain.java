@@ -16,7 +16,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 
-public class driveSubsystem extends SubsystemBase {
+public class driveTrain extends SubsystemBase {
   /** Creates a new driveTrain. */
   private CANSparkMax rightLead;
   private CANSparkMax rightFollow;
@@ -28,7 +28,7 @@ public class driveSubsystem extends SubsystemBase {
   private RelativeEncoder leftEncoder;
   private DifferentialDriveKinematics m_kinematics;
 
-  public driveSubsystem() {
+  public driveTrain() {
     //~ Configure SparkMaxs
     rightLead = new CANSparkMax(DriveConstants.rightLeadID, MotorType.kBrushless);
     //rightLead.restoreFactoryDefaults();

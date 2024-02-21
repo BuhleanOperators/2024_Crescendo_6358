@@ -8,14 +8,12 @@ import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
 
-public class intakeSystem extends SubsystemBase {
+public class intakeSubsystem extends SubsystemBase {
   /** Creates a new intakeSystem. */
   private VictorSP intake;
-  private VictorSP belt;
 
-  public intakeSystem() {
+  public intakeSubsystem() {
     intake = new VictorSP(IntakeConstants.intakeID);
-    belt = new VictorSP(IntakeConstants.beltID);
   }
 
   @Override
@@ -25,8 +23,5 @@ public class intakeSystem extends SubsystemBase {
 
   public void setFlyWheelSpeeds(double speed){
     intake.set(speed);
-  }
-  public void setBeltSpeeds(double speed){
-    belt.set(speed);
   }
 }

@@ -6,15 +6,16 @@ package frc.robot.commands;
 
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.driveSubsystem;
+import frc.robot.subsystems.driveTrain;
 
 public class arcadeDrive extends Command {
   /** Creates a new arcadeDrive. */
   private DoubleSupplier m_xSpeed;
   private DoubleSupplier m_rot;
-  private driveSubsystem m_DriveTrain;
-  public arcadeDrive(DoubleSupplier xSpeed, DoubleSupplier rot, driveSubsystem subsystem) {
+  private driveTrain m_DriveTrain;
+  public arcadeDrive(DoubleSupplier xSpeed, DoubleSupplier rot, driveTrain subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_xSpeed = xSpeed;
     m_rot = rot;
@@ -30,6 +31,10 @@ public class arcadeDrive extends Command {
   @Override
   public void execute() {
     m_DriveTrain.arcadeDrive(m_xSpeed.getAsDouble(), m_rot.getAsDouble());
+    SmartDashboard.putNumber("Right Encoder Value", m_DriveTrain.getRightEncoder().getPosition());
+    SmartDashboard.putNumber("Left Encoder Value", m_DriveTrain.getLeftEncoder().getPosition());
+    SmartDashboard.putNumber("Right Conversion Factor", m_DriveTrain.getRightEncoder().getPositionConversionFactor());
+    SmartDashboard.putNumber("Left Conversion Factor", m_DriveTrain.getLeftEncoder().getPositionConversionFactor());
   }
 
   // Called once the command ends or is interrupted.
