@@ -9,7 +9,6 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.driveTrain;
-import frc.robot.Constants.DriveConstants;;
 
 public class arcadeDrive extends Command {
   /** Creates a new arcadeDrive. */
@@ -36,8 +35,6 @@ public class arcadeDrive extends Command {
     SmartDashboard.putNumber("Left Encoder Value", m_DriveTrain.getLeftEncoder().getPosition());
     SmartDashboard.putNumber("Right Conversion Factor", m_DriveTrain.getRightEncoder().getPositionConversionFactor());
     SmartDashboard.putNumber("Left Conversion Factor", m_DriveTrain.getLeftEncoder().getPositionConversionFactor());
-    SmartDashboard.putNumber("Right Distance", m_DriveTrain.getRightEncoderDistance());
-    SmartDashboard.putNumber("Left Distance", m_DriveTrain.getLeftEncoderDistance());
   }
 
   // Called once the command ends or is interrupted.
