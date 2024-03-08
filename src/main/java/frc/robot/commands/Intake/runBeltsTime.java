@@ -6,6 +6,7 @@ package frc.robot.commands.Intake;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Robot;
 import frc.robot.subsystems.beltSubsystem;
 import frc.robot.subsystems.intakeSubsystem;
 
@@ -17,7 +18,7 @@ public class runBeltsTime extends Command {
   private Timer timer;
   public runBeltsTime(double speed, double time) {
     // Use addRequirements() here to declare subsystem dependencies.m_speed = speed;
-    m_BeltSubsystem = new beltSubsystem();
+    m_BeltSubsystem = Robot.m_BeltSubsystem;
     m_time = time;
     m_speed = speed;
     addRequirements(m_BeltSubsystem);

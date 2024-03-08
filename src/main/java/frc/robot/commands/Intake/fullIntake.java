@@ -5,6 +5,7 @@
 package frc.robot.commands.Intake;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Robot;
 import frc.robot.subsystems.beltSubsystem;
 import frc.robot.subsystems.intakeSubsystem;
 
@@ -14,12 +15,12 @@ public class fullIntake extends Command {
   private beltSubsystem m_BeltSubsystem;
   private double m_flySpeed;
   private double m_beltSpeed;
-  public fullIntake(double flySpeed, double beltSpeed, intakeSubsystem intake, beltSubsystem belt) {
+  public fullIntake(double flySpeed, double beltSpeed) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_flySpeed = flySpeed;
     m_beltSpeed = beltSpeed;
-    m_IntakeSystem = intake;
-    m_BeltSubsystem = belt;
+    m_IntakeSystem = Robot.m_IntakeSubsystem;
+    m_BeltSubsystem = Robot.m_BeltSubsystem;
     addRequirements(m_IntakeSystem, m_BeltSubsystem);
   }
 

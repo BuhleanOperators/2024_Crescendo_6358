@@ -7,7 +7,7 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.ShooterConstants;
 
-import frc.robot.commands.arcadeDrive;
+import frc.robot.commands.Drive.arcadeDrive;
 import frc.robot.commands.Intake.fullIntake;
 import frc.robot.commands.Intake.runBelts;
 import frc.robot.commands.Intake.runFlyWheels;
@@ -33,11 +33,6 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final driveTrain m_DriveTrain = new driveTrain();
-  private final shooterSubsystem m_ShooterSystem = new shooterSubsystem();
-  private final pneumaticSubsystem m_pneumatics = new pneumaticSubsystem();
-  private final intakeSubsystem m_IntakeSystem = new intakeSubsystem();
-  private final beltSubsystem m_BeltSubsystem = new beltSubsystem();
 
   private double deadbandreturn;
 
@@ -51,7 +46,7 @@ public class RobotContainer {
     configureBindings();
     smartDashboard();
     
-    m_DriveTrain.setDefaultCommand(new arcadeDrive(() -> deadband(getXDriver().getLeftY() * Constants.DriveConstants.maxSpeed, OperatorConstants.deadbandCutoffDrive), () -> deadband(getXDriver().getRightX() * Constants.DriveConstants.maxAngularSpeed, OperatorConstants.deadbandCutoffRot), m_DriveTrain));
+    Robot.m_DriveTrain.setDefaultCommand(new arcadeDrive(() -> deadband(getXDriver().getLeftY() * Constants.DriveConstants.maxSpeed, OperatorConstants.deadbandCutoffDrive), () -> deadband(getXDriver().getRightX() * Constants.DriveConstants.maxAngularSpeed, OperatorConstants.deadbandCutoffRot)));
   }
 
   /**
@@ -71,18 +66,18 @@ public class RobotContainer {
     JoystickButton intakeIn = new JoystickButton(xDriver, OperatorConstants.intakeIn);
     JoystickButton intakeOut = new JoystickButton(xDriver, OperatorConstants.intakeOut);
     // intakeIn.onTrue(new runFlyWheels(0.75, m_IntakeSystem)).onFalse(new runFlyWheels(0, m_IntakeSystem));
-    intakeOut.onTrue(new runFlyWheels(-0.75, m_IntakeSystem)).onFalse(new runFlyWheels(0, m_IntakeSystem));
-    intakeIn.onTrue(new fullIntake(0.75, 1, m_IntakeSystem, m_BeltSubsystem)).onFalse(new fullIntake(0, 0, m_IntakeSystem, m_BeltSubsystem));
+    // intakeOut.onTrue(new runFlyWheels(-0.75)).onFalse(new runFlyWheels(0));
+    intakeIn.onTrue(new fullIntake(0.75, 1)).onFalse(new fullIntake(0, 0));
 
     //new JoystickButton(xDriver, OperatorConstants.intakeButton).toggleOnTrue(new shooterRun(ShooterConstants.speed, m_ShooterSystem));
-    new JoystickButton(xDriver, OperatorConstants.BUTTON_shooterSpeaker).onTrue(new shooterRun(ShooterConstants.speakerSpeed, m_ShooterSystem))
-      .onFalse(new shooterRun(0, m_ShooterSystem));
-    new JoystickButton(xDriver, OperatorConstants.BUTTON_shooterAmp).onTrue(new shooterRun(ShooterConstants.ampSpeed, m_ShooterSystem))
-      .onFalse(new shooterRun(0, m_ShooterSystem));
-    new JoystickButton(xDriver, OperatorConstants.BUTTON_shooterAmpSlow).onTrue(new shooterRun(ShooterConstants.ampSpeedSlow, m_ShooterSystem))
-      .onFalse(new shooterRun(0, m_ShooterSystem));
-    new JoystickButton(xDriver, OperatorConstants.BUTTON_beltsOut).onTrue(new runBelts(1, m_BeltSubsystem))
-      .onFalse(new runBelts(0, m_BeltSubsystem));
+    new JoystickButton(xDriver, OperatorConstants.BUTTON_shooterSpeaker).onTrue(new shooterRun(ShooterConstants.speakerSpeed))
+      .onFalse(new shooterRun(0));
+    new JoystickButton(xDriver, OperatorConstants.BUTTON_shooterAmp).onTrue(new shooterRun(ShooterConstants.ampSpeed))
+      .onFalse(new shooterRun(0));
+    new JoystickButton(xDriver, OperatorConstants.BUTTON_shooterAmpSlow).onTrue(new shooterRun(ShooterConstants.ampSpeedSlow))
+      .onFalse(new shooterRun(0));
+    new JoystickButton(xDriver, OperatorConstants.BUTTON_beltsOut).onTrue(new runBelts(1))
+      .onFalse(new runBelts(0));
 
     // new JoystickButton(xDriver, OperatorConstants.BUTTON_belts).onTrue(new runBelts(1, m_IntakeSystem))
       // .onFalse(new runBelts(0, m_IntakeSystem));
@@ -102,11 +97,12 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     // return Autos.exampleAuto(m_exampleSubsystem);
-    return null;
+    // return null;
+    return Robot.m_SmartDashboard.getAutoCommand();
   }
 
   private void smartDashboard(){
-    SmartDashboard.putNumber("Shooter RPM", m_ShooterSystem.getShooterRPM());
+    SmartDashboard.putNumber("Shooter RPM", Robot.m_ShooterSubsytem.getShooterRPM());
   }
 
   public static XboxController getXDriver(){

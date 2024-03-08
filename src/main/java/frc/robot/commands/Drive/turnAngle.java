@@ -5,6 +5,7 @@
 package frc.robot.commands.Drive;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Robot;
 import frc.robot.subsystems.driveTrain;
 
 public class turnAngle extends Command {
@@ -12,10 +13,10 @@ public class turnAngle extends Command {
   private driveTrain m_DriveTrain;
   private double m_angle;
   private double m_speed;
-  public turnAngle(double angle, double speed, driveTrain subsystem) {
+  public turnAngle(double angle, double speed) {
     m_angle = angle;
     m_speed = speed;
-    m_DriveTrain = subsystem;
+    m_DriveTrain = Robot.m_DriveTrain;
     addRequirements(m_DriveTrain);
     // Use addRequirements() here to declare subsystem dependencies.
   }

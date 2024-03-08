@@ -25,12 +25,12 @@ public class readyToShootAmp extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new runBelts(1, m_BeltSubsystem).withTimeout(0),
-      new runBelts(-0.5, m_BeltSubsystem).withTimeout(0),
-      new runFlyWheels(0, m_IntakeSystem).until(() -> (m_ShooterSystem.getShooterRPM() >= ShooterConstants.fullRPM)),
+      new runBelts(1).withTimeout(0),
+      new runBelts(-0.5).withTimeout(0),
+      new runFlyWheels(0).until(() -> (m_ShooterSystem.getShooterRPM() >= ShooterConstants.fullRPM)),
       new ParallelCommandGroup(
-        new runFlyWheels(ShooterConstants.ampSpeed, m_IntakeSystem),
-        new runBelts(0, m_BeltSubsystem)
+        new runFlyWheels(ShooterConstants.ampSpeed),
+        new runBelts(0)
       )
     );
   }

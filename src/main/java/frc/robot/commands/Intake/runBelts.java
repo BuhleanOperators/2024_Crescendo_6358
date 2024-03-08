@@ -4,7 +4,9 @@
 
 package frc.robot.commands.Intake;
 
+import edu.wpi.first.hal.simulation.RoboRioDataJNI;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Robot;
 import frc.robot.subsystems.beltSubsystem;
 import frc.robot.subsystems.intakeSubsystem;
 
@@ -12,10 +14,10 @@ public class runBelts extends Command {
   /** Creates a new phase2. */
   private beltSubsystem m_BeltSubsystem;
   private double m_speed;
-  public runBelts(double speed, beltSubsystem subsystem) {
+  public runBelts(double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_speed = speed;
-    m_BeltSubsystem = subsystem;
+    m_BeltSubsystem = Robot.m_BeltSubsystem;
     addRequirements(m_BeltSubsystem);
   }
 

@@ -5,6 +5,7 @@
 package frc.robot.commands.Intake;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Robot;
 import frc.robot.subsystems.intakeSubsystem;
 
 public class runFlyWheels extends Command {
@@ -12,10 +13,10 @@ public class runFlyWheels extends Command {
   private intakeSubsystem m_IntakeSystem;
   private double m_speed;
   
-  public runFlyWheels(double speed, intakeSubsystem subsystem) {
+  public runFlyWheels(double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_speed = speed;
-    m_IntakeSystem = subsystem;
+    m_IntakeSystem = Robot.m_IntakeSubsystem;
     addRequirements(m_IntakeSystem);
   }
 

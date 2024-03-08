@@ -2,21 +2,14 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Shooter;
+package frc.robot.commands.Autos;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Robot;
-import frc.robot.subsystems.shooterSubsystem;
 
-public class shooterRun extends Command {
-  /** Creates a new shooterRun. */
-  private double m_speed;
-  private shooterSubsystem m_shooterSystem;
-  public shooterRun(double speed) {
+public class noAuto extends Command {
+  /** Creates a new noAuto. */
+  public noAuto() {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_speed = speed;
-    m_shooterSystem = Robot.m_ShooterSubsytem;
-    addRequirements(m_shooterSystem);
   }
 
   // Called when the command is initially scheduled.
@@ -25,15 +18,11 @@ public class shooterRun extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    m_shooterSystem.setSpeed(m_speed);
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    m_shooterSystem.setSpeed(0);
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

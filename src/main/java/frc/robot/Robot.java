@@ -7,6 +7,11 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.beltSubsystem;
+import frc.robot.subsystems.driveTrain;
+import frc.robot.subsystems.intakeSubsystem;
+import frc.robot.subsystems.pneumaticSubsystem;
+import frc.robot.subsystems.shooterSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -17,7 +22,13 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
-  private RobotContainer m_robotContainer;
+  private  RobotContainer m_robotContainer = new RobotContainer();
+  public static final smartDashboard m_SmartDashboard = new smartDashboard();
+  public static final beltSubsystem m_BeltSubsystem = new beltSubsystem();
+  public static final intakeSubsystem m_IntakeSubsystem = new intakeSubsystem();
+  public static final pneumaticSubsystem m_PneumaticSubsystem = new pneumaticSubsystem();
+  public static final shooterSubsystem m_ShooterSubsytem = new shooterSubsystem();
+  public static final driveTrain m_DriveTrain = new driveTrain();
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -27,7 +38,10 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    m_robotContainer = new RobotContainer();
+
+
+    m_SmartDashboard.AllianceColor();
+    m_SmartDashboard.AutoChooser();
   }
 
   /**
