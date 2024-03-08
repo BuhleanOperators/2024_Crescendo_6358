@@ -42,6 +42,7 @@ public class Robot extends TimedRobot {
 
     m_SmartDashboard.AllianceColor();
     m_SmartDashboard.AutoChooser();
+    m_SmartDashboard.gatherData();
   }
 
   /**

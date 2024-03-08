@@ -7,6 +7,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.Autos.ScoreAndLeave;
+import frc.robot.commands.Autos.SpeakerAndAmp;
 import frc.robot.commands.Autos.noAuto;
 import frc.robot.commands.Autos.shootOnly;
 import frc.robot.commands.Drive.driveDistance;
@@ -28,8 +30,14 @@ public class smartDashboard {
     public void AutoChooser(){
         autoChooser.setDefaultOption("No Auto", new noAuto());
             autoChooser.addOption("Shoot Only", new shootOnly());
+            autoChooser.addOption("Shoot and Leave", new ScoreAndLeave());
+            autoChooser.addOption("Speaker and Amp", new SpeakerAndAmp());
 
         SmartDashboard.putData(autoChooser);
+    }
+    public void gatherData(){
+        SmartDashboard.putNumber("Distance", Robot.m_DriveTrain.getAverageDistance());
+        SmartDashboard.putNumber("Angle", Robot.m_DriveTrain.getAngle());
     }
 
     //^ Accsessor Methods

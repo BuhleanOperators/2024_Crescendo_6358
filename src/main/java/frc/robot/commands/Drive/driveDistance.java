@@ -5,6 +5,7 @@
 package frc.robot.commands.Drive;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Robot;
 import frc.robot.subsystems.driveTrain;
 
@@ -22,6 +23,8 @@ public class driveDistance extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    driveTrain.resetEncoders();
+    new WaitCommand(1);
     m_DriveTrain.setAutoSpeeds(m_target);
   }
 

@@ -4,27 +4,23 @@
 
 package frc.robot.commands.Autos;
 
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.Robot;
-import frc.robot.Constants.ShooterConstants;
-import frc.robot.commands.Intake.runBelts;
-import frc.robot.commands.Shooter.shooterRun;
+import frc.robot.commands.Drive.driveDistance;
+import frc.robot.commands.Drive.turnAngle;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class shootOnly extends SequentialCommandGroup {
-  /** Creates a new shootOnly. */
-  public shootOnly() {
+public class ScoreAndLeave extends SequentialCommandGroup {
+  /** Creates a new ScoreAndLeave. */
+  public ScoreAndLeave() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new shooterRun(0.85).withTimeout(3),
-      new ParallelCommandGroup(
-        new runBelts(1),
-        new shooterRun(.85)
-      )
+      new shootOnly().withTimeout(5),
+      new driveDistance(1),
+      new turnAngle(62, 0.75),
+      new driveDistance(5)
     );
   }
 }

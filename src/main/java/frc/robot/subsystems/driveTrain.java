@@ -91,7 +91,7 @@ public class driveTrain extends SubsystemBase {
 
     //? Configure Kinematics
     m_kinematics = new DifferentialDriveKinematics(DriveConstants.trackWidth);
-    // m_gyro = new ADIS16448_IMU();
+    m_gyro = new ADIS16448_IMU();
   }
 
   @Override
