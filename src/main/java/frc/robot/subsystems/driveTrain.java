@@ -13,6 +13,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.ADIS16448_IMU;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 
@@ -24,9 +25,10 @@ public class driveTrain extends SubsystemBase {
   private CANSparkMax leftFollow;
   private SparkPIDController rightPID;
   private SparkPIDController leftPID;
-  private RelativeEncoder rightEncoder;
-  private RelativeEncoder leftEncoder;
+  private static RelativeEncoder rightEncoder;
+  private static RelativeEncoder leftEncoder;
   private DifferentialDriveKinematics m_kinematics;
+  private ADIS16448_IMU m_gyro;
 
   public driveTrain() {
     //~ Configure SparkMaxs
@@ -89,6 +91,7 @@ public class driveTrain extends SubsystemBase {
 
     //? Configure Kinematics
     m_kinematics = new DifferentialDriveKinematics(DriveConstants.trackWidth);
+    // m_gyro = new ADIS16448_IMU();
   }
 
   @Override
@@ -102,6 +105,20 @@ public class driveTrain extends SubsystemBase {
   public RelativeEncoder getLeftEncoder(){
     return leftEncoder;
   }
+  public static void resetEncoders(){
+    rightEncoder.setPosition(0);
+    leftEncoder.setPosition(0);
+  }
+  public double getAverageDistance(){
+    return (leftEncoder.getPosition() + rightEncoder.getPosition()) / 2;
+  }
+  public double getAngle(){
+    return m_gyro.getGyroAngleZ();
+  }
+  public void resetGyro(){
+    m_gyro.reset();
+  }
+
 
 //^ Drive Methods
 //?Is this the best way to do this?
@@ -113,12 +130,16 @@ public class driveTrain extends SubsystemBase {
     var wheelSpeeds = m_kinematics.toWheelSpeeds(new ChassisSpeeds(xSpeed, 0.0, rot));
     setSpeeds(wheelSpeeds);
   }
-  // public void arcadeDrive(double xSpeed, double rot){
-  //   DifferentialDrive.arcadeDriveIK(xSpeed, rot, false);
-  // }
-  // public void tankDrive(double right, double left){
-  //   var leftSpeed = leftPID.setReference(left, CANSparkBase.ControlType.kVelocity);
-  //   var rightSpeed = rightPID.setReference(right, CANSparkBase.ControlType.kVelocity);
-  //   DifferentialDrive.tankDriveIK(leftSpeed, rightSpeed, false);
-  // }
+  public void setAutoSpeeds(double distance){
+    rightPID.setReference(-distance, CANSparkBase.ControlType.kVoltage);
+    leftPID.setReference(-distance, CANSparkBase.ControlType.kVoltage);
+  }
+  public void setAutoTurnSpeeds(double speed){
+    rightPID.setReference(speed, CANSparkBase.ControlType.kVoltage);
+    leftPID.setReference(-speed, CANSparkBase.ControlType.kVoltage);
+  }
+  public void stop(){
+    rightLead.set(0);
+    leftLead.set(0);
+  }
 }

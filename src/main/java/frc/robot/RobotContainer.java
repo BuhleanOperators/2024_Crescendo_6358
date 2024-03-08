@@ -43,7 +43,7 @@ public class RobotContainer {
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final static XboxController xDriver = new XboxController(OperatorConstants.kDriverControllerPort);
-  private final static XboxController coPilot = new XboxController(OperatorConstants.kCoPilotControllerPort);
+  // private final static XboxController coPilot = new XboxController(OperatorConstants.kCoPilotControllerPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -91,7 +91,7 @@ public class RobotContainer {
     // cancelling on release.
   // new JoystickButton(xDriver, OperatorConstants.BUTTON_togglePiston).onTrue(new ToggleSolenoid(m_pneumatics.getFirstSolenoid(), m_pneumatics));
 
-  new JoystickButton(coPilot, OperatorConstants.BUTTON_shooterStop).onTrue(new shooterRun(0, m_ShooterSystem));
+  // new JoystickButton(coPilot, OperatorConstants.BUTTON_shooterStop).onTrue(new shooterRun(0, m_ShooterSystem));
   }
 
   /**
@@ -112,9 +112,9 @@ public class RobotContainer {
   public static XboxController getXDriver(){
     return xDriver;
   }
-  public static XboxController getCoPilot(){
-    return coPilot;
-  }
+  // public static XboxController getCoPilot(){
+  //   return coPilot;
+  // }
 
   private double deadband(double JoystickValue, double DeadbandCutOff){
     if (JoystickValue < DeadbandCutOff && JoystickValue > (DeadbandCutOff * (-1))) {
