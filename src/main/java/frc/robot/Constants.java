@@ -20,6 +20,7 @@ import edu.wpi.first.math.util.Units;
 public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
+    public static final int kCoPilotControllerPort = 1;
     public static final double deadbandCutoffDrive = 0.2;
     public static final double deadbandCutoffRot = 0.5;
 
@@ -29,10 +30,10 @@ public final class Constants {
     public static final int BUTTON_shooterSpeaker = 1;
     public static final int BUTTON_shooterAmp = 2;
     public static final int BUTTON_shooterAmpSlow = 3;
-    public static final int BUTTON_beltsOut = 4;
+    public static final int BUTTON_beltsOut = 5;
     // public static final int BUTTON_togglePiston = 2;
-    // public static final int BUTTON_extendPiston = 3;
-    // public static final int BUTTON_retractPiston = 4;
+    public static final int BUTTON_extendPiston = 1;
+    public static final int BUTTON_retractPiston = 2;
 
   }
   public static class DriveConstants{
@@ -68,12 +69,12 @@ public final class Constants {
     public static final double rightP = 0.15;
     public static final double rightI = 0;
     public static final double rightD = 0;
-    public static final double rightFF = 0.95;
+    public static final double rightFF = 0.5;
 
     public static final double leftP = 0.15;
     public static final double leftI = 0;
     public static final double leftD = 0;
-    public static final double leftFF = 0.95;
+    public static final double leftFF = 0.5;
   }
   public static class ShooterConstants{
     public static final int rightMotorID = 5;
@@ -91,10 +92,10 @@ public final class Constants {
     public static final double fullRPM = 4500;
   }
   public static class PneumaticsConstants {
-    public static final int PISTON_FIRST_FORWARD = 0;
-    public static final int PISTON_FIRST_BACK = 1;
-    public static final int PISTON_SECOND_FORWARD = 2;
-    public static final int PISTON_SECOND_BACK = 3;
+    public static final int PISTON_RIGHT_FORWARD = 0;
+    public static final int PISTON_RIGHT_BACK = 1;
+    public static final int PISTON_LEFT_FORWARD = 2;
+    public static final int PISTON_LEFT_BACK = 3;
   }
   public static class IntakeConstants{
     public static final int intakeID = 7;

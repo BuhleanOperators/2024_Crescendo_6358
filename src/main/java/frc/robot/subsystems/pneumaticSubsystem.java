@@ -4,18 +4,21 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.PneumaticsConstants;
 
 public class pneumaticSubsystem extends SubsystemBase {
   /** Creates a new pneumatics. */
-  private DoubleSolenoid firstSolenoid;
-  private DoubleSolenoid secondSolenoid;
+  private PneumaticHub m_pH = new PneumaticHub(10);
+  private DoubleSolenoid rightSolenoid;
+  private DoubleSolenoid leftSolenoid;
   public pneumaticSubsystem() {
-    firstSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, PneumaticsConstants.PISTON_FIRST_FORWARD, PneumaticsConstants.PISTON_FIRST_BACK);
-    secondSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, PneumaticsConstants.PISTON_SECOND_FORWARD, PneumaticsConstants.PISTON_SECOND_BACK);
+    rightSolenoid = m_pH.makeDoubleSolenoid(PneumaticsConstants.PISTON_RIGHT_FORWARD, PneumaticsConstants.PISTON_RIGHT_BACK);
+    leftSolenoid = m_pH.makeDoubleSolenoid(PneumaticsConstants.PISTON_LEFT_FORWARD, PneumaticsConstants.PISTON_LEFT_BACK);
   }
 
   @Override
@@ -23,11 +26,11 @@ public class pneumaticSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
   
-  public DoubleSolenoid getFirstSolenoid(){
-    return firstSolenoid;
+  public DoubleSolenoid getRightSolenoid(){
+    return rightSolenoid;
   }
-  public DoubleSolenoid getSecondSolenoid(){
-    return secondSolenoid;
+  public DoubleSolenoid getLeftSolenoid(){
+    return leftSolenoid;
   }
 
   public void fireSolenoid(DoubleSolenoid piston){
@@ -39,5 +42,8 @@ public class pneumaticSubsystem extends SubsystemBase {
 
   public void toggleSolenoid(DoubleSolenoid piston){
     piston.toggle();
+  }
+  public void compressorOn(){
+    m_pH.enableCompressorAnalog(100, 120);
   }
 }

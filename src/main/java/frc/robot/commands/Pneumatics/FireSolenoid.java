@@ -11,11 +11,11 @@ import frc.robot.subsystems.pneumaticSubsystem;
 
 public class FireSolenoid extends Command {
   /** Creates a new firePiston. */
-  private DoubleSolenoid m_piston;
+  // private DoubleSolenoid m_piston;
   private pneumaticSubsystem m_pneumatics;
-  public FireSolenoid(DoubleSolenoid piston) {
+  public FireSolenoid() {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_piston = piston;
+    // m_piston = piston;
     m_pneumatics = Robot.m_PneumaticSubsystem;
     addRequirements(m_pneumatics);
   }
@@ -23,7 +23,8 @@ public class FireSolenoid extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_pneumatics.fireSolenoid(m_piston);
+    m_pneumatics.fireSolenoid(m_pneumatics.getLeftSolenoid());
+    m_pneumatics.fireSolenoid(m_pneumatics.getRightSolenoid());
   }
 
   // Called every time the scheduler runs while the command is scheduled.

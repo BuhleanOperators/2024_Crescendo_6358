@@ -11,6 +11,8 @@ import frc.robot.commands.Drive.arcadeDrive;
 import frc.robot.commands.Intake.fullIntake;
 import frc.robot.commands.Intake.runBelts;
 import frc.robot.commands.Intake.runFlyWheels;
+import frc.robot.commands.Pneumatics.FireSolenoid;
+import frc.robot.commands.Pneumatics.RetractSolenoid;
 import frc.robot.commands.Shooter.shooterRun;
 import frc.robot.subsystems.pneumaticSubsystem;
 import frc.robot.subsystems.beltSubsystem;
@@ -21,6 +23,7 @@ import frc.robot.subsystems.shooterSubsystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -38,7 +41,7 @@ public class RobotContainer {
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final static XboxController xDriver = new XboxController(OperatorConstants.kDriverControllerPort);
-  // private final static XboxController coPilot = new XboxController(OperatorConstants.kCoPilotControllerPort);
+  private final static XboxController coPilot = new XboxController(OperatorConstants.kCoPilotControllerPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -64,7 +67,7 @@ public class RobotContainer {
     //     .onTrue(new ExampleCommand(m_exampleSubsystem));
     
     JoystickButton intakeIn = new JoystickButton(xDriver, OperatorConstants.intakeIn);
-    JoystickButton intakeOut = new JoystickButton(xDriver, OperatorConstants.intakeOut);
+    // JoystickButton intakeOut = new JoystickButton(xDriver, OperatorConstants.intakeOut);
     // intakeIn.onTrue(new runFlyWheels(0.75, m_IntakeSystem)).onFalse(new runFlyWheels(0, m_IntakeSystem));
     // intakeOut.onTrue(new runFlyWheels(-0.75)).onFalse(new runFlyWheels(0));
     intakeIn.onTrue(new fullIntake(0.75, 1)).onFalse(new fullIntake(0, 0));
@@ -76,9 +79,12 @@ public class RobotContainer {
       .onFalse(new shooterRun(0));
     new JoystickButton(xDriver, OperatorConstants.BUTTON_shooterAmpSlow).onTrue(new shooterRun(ShooterConstants.ampSpeedSlow))
       .onFalse(new shooterRun(0));
-    new JoystickButton(xDriver, OperatorConstants.BUTTON_beltsOut).onTrue(new runBelts(1))
+    new JoystickButton(xDriver, OperatorConstants.BUTTON_beltsOut).onTrue(new runBelts(-1))
       .onFalse(new runBelts(0));
 
+    
+    new JoystickButton(coPilot, OperatorConstants.BUTTON_extendPiston).onTrue(new FireSolenoid());
+    new JoystickButton(coPilot, OperatorConstants.BUTTON_retractPiston).onTrue(new RetractSolenoid());
     // new JoystickButton(xDriver, OperatorConstants.BUTTON_belts).onTrue(new runBelts(1, m_IntakeSystem))
       // .onFalse(new runBelts(0, m_IntakeSystem));
 
@@ -108,9 +114,9 @@ public class RobotContainer {
   public static XboxController getXDriver(){
     return xDriver;
   }
-  // public static XboxController getCoPilot(){
-  //   return coPilot;
-  // }
+  public static XboxController getCoPilot(){
+    return coPilot;
+  }
 
   private double deadband(double JoystickValue, double DeadbandCutOff){
     if (JoystickValue < DeadbandCutOff && JoystickValue > (DeadbandCutOff * (-1))) {
