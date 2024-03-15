@@ -101,7 +101,11 @@ public final class Constants {
     public static final int PISTON_LEFT_BACK = 3;
   }
   public static class IntakeConstants{
-    public static final int intakeID = 7;
-    public static final int beltID = 9;
+    public static final int intakeID = 1;
+    public static final int beltID = 0;
+  }
+  public static class LedConstants{
+    public static final int port = 6;
+    public static final int length = 30;
   }
 }
