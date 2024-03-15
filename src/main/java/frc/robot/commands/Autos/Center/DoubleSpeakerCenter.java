@@ -2,29 +2,35 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Autos;
+package frc.robot.commands.Autos.Center;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.Robot;
-import frc.robot.Constants.ShooterConstants;
+import frc.robot.commands.Autos.Other.shootSpeaker;
+import frc.robot.commands.Drive.driveDistance;
+import frc.robot.commands.Drive.reverseDistance;
+import frc.robot.commands.Intake.fullIntake;
 import frc.robot.commands.Intake.runBelts;
-import frc.robot.commands.Shooter.shooterRun;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class shootOnly extends SequentialCommandGroup {
-  /** Creates a new shootOnly. */
-  public shootOnly() {
+public class DoubleSpeakerCenter extends SequentialCommandGroup {
+  /** Creates a new DoubleSpeakerCenter. */
+  public DoubleSpeakerCenter() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new shooterRun(0.85).withTimeout(3),
+      new shootSpeaker(),
+      new driveDistance(2.5),
       new ParallelCommandGroup(
-        new runBelts(1),
-        new shooterRun(.85)
-      )
+        new driveDistance(0.5),
+        new fullIntake(1, 1).withTimeout(0.5)),
+      new ParallelCommandGroup(
+        new reverseDistance(3),
+        new runBelts(-1).withTimeout(1)
+      ),
+      new shootSpeaker()
     );
   }
 }

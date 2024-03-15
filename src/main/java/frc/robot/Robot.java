@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.beltSubsystem;
 import frc.robot.subsystems.driveTrain;
 import frc.robot.subsystems.intakeSubsystem;
@@ -39,10 +40,9 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
 
-
+    m_DriveTrain.initializeGyro();
     m_SmartDashboard.AllianceColor();
     m_SmartDashboard.AutoChooser();
-    m_SmartDashboard.gatherData();
   }
 
   /**
@@ -60,11 +60,17 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
     m_PneumaticSubsystem.compressorOn();
+    m_SmartDashboard.multiplier();
+    m_SmartDashboard.gatherData();
+    m_SmartDashboard.AutoChooser();
   }
+  
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    m_DriveTrain.setIdleMode(DriveConstants.idleModeDisabled);
+  }
 
   @Override
   public void disabledPeriodic() {}
@@ -72,6 +78,7 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+    m_DriveTrain.setIdleMode(DriveConstants.idleModeAuto);
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -86,6 +93,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    m_DriveTrain.resetEncoders();
+    m_DriveTrain.setIdleMode(DriveConstants.idleModeTeleop);
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove

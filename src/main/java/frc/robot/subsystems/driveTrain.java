@@ -36,14 +36,14 @@ public class driveTrain extends SubsystemBase {
     //rightLead.restoreFactoryDefaults();
     rightLead.setSmartCurrentLimit(DriveConstants.smartCurrentLimit);
     rightLead.setInverted(DriveConstants.rightLeadInvert);
-    rightLead.setIdleMode(DriveConstants.idleMode);
+    // rightLead.setIdleMode(DriveConstants.idleModeTeleop);
     rightLead.burnFlash();
 
     rightFollow = new CANSparkMax(DriveConstants.rightFollowID, MotorType.kBrushless);
     //rightFollow.restoreFactoryDefaults();
     rightFollow.setSmartCurrentLimit(DriveConstants.smartCurrentLimit);
     rightFollow.setInverted(DriveConstants.rightFollowInvert);
-    rightFollow.setIdleMode(DriveConstants.idleMode);
+    // rightFollow.setIdleMode(DriveConstants.idleModeTeleop);
     rightFollow.follow(rightLead);
     rightFollow.burnFlash();
 
@@ -51,14 +51,14 @@ public class driveTrain extends SubsystemBase {
     //leftLead.restoreFactoryDefaults();
     leftLead.setSmartCurrentLimit(DriveConstants.smartCurrentLimit);
     leftLead.setInverted(DriveConstants.leftLeadInvert);
-    leftLead.setIdleMode(DriveConstants.idleMode);
+    // leftLead.setIdleMode(DriveConstants.idleModeTeleop);
     leftLead.burnFlash();
 
     leftFollow = new CANSparkMax(DriveConstants.leftFollowID, MotorType.kBrushless);
     //leftFollow.restoreFactoryDefaults();
     leftFollow.setSmartCurrentLimit(DriveConstants.smartCurrentLimit);
     leftFollow.setInverted(DriveConstants.leftFollowInvert);
-    leftFollow.setIdleMode(DriveConstants.idleMode);
+    // leftFollow.setIdleMode(DriveConstants.idleModeTeleop);
     leftFollow.follow(leftLead);
     leftFollow.burnFlash();
 
@@ -105,7 +105,7 @@ public class driveTrain extends SubsystemBase {
   public RelativeEncoder getLeftEncoder(){
     return leftEncoder;
   }
-  public static void resetEncoders(){
+  public void resetEncoders(){
     rightEncoder.setPosition(0);
     leftEncoder.setPosition(0);
   }
@@ -118,6 +118,16 @@ public class driveTrain extends SubsystemBase {
   public void resetGyro(){
     m_gyro.reset();
   }
+  public void initializeGyro(){
+    m_gyro.calibrate();
+  }
+  public void setIdleMode(CANSparkBase.IdleMode mode){
+    rightLead.setIdleMode(mode);
+    rightFollow.setIdleMode(mode);
+    leftLead.setIdleMode(mode);
+    leftFollow.setIdleMode(mode);
+  }
+
 
 
 //^ Drive Methods
@@ -133,6 +143,10 @@ public class driveTrain extends SubsystemBase {
   public void setAutoSpeeds(double distance){
     rightPID.setReference(-distance, CANSparkBase.ControlType.kVoltage);
     leftPID.setReference(-distance, CANSparkBase.ControlType.kVoltage);
+  }
+  public void setReverseAutoSpeeds(double posDistance){
+    rightPID.setReference(posDistance, CANSparkBase.ControlType.kVoltage);
+    leftPID.setReference(posDistance, CANSparkBase.ControlType.kVoltage);
   }
   public void setAutoTurnSpeeds(double speed){
     rightPID.setReference(speed, CANSparkBase.ControlType.kVoltage);

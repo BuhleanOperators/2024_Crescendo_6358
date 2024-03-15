@@ -56,7 +56,9 @@ public final class Constants {
     public static final boolean rightFollowInvert = true;
     public static final boolean leftLeadInvert = false;
     public static final boolean leftFollowInvert = false;
-    public static final CANSparkBase.IdleMode idleMode = IdleMode.kBrake;
+    public static final CANSparkBase.IdleMode idleModeTeleop = IdleMode.kBrake;
+    public static final CANSparkBase.IdleMode idleModeAuto = IdleMode.kBrake;
+    public static final CANSparkBase.IdleMode idleModeDisabled = IdleMode.kCoast;
 
     //& Encoder Values
     //? Change to 4096?
@@ -69,12 +71,12 @@ public final class Constants {
     public static final double rightP = 0.15;
     public static final double rightI = 0;
     public static final double rightD = 0;
-    public static final double rightFF = 0.5;
+    public static final double rightFF = 0.95;
 
     public static final double leftP = 0.15;
     public static final double leftI = 0;
     public static final double leftD = 0;
-    public static final double leftFF = 0.5;
+    public static final double leftFF = 0.95;
   }
   public static class ShooterConstants{
     public static final int rightMotorID = 5;
@@ -89,7 +91,8 @@ public final class Constants {
     public static final double ampSpeed = 0.35;
     public static final double ampSpeedSlow = 0.2;
 
-    public static final double fullRPM = 4500;
+    public static final double speakerRPM = 4500;
+    public static final double ampRPM = 1900;
   }
   public static class PneumaticsConstants {
     public static final int PISTON_RIGHT_FORWARD = 0;

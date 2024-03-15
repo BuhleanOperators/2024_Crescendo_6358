@@ -2,9 +2,10 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Autos;
+package frc.robot.commands.Autos.Sides;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.Autos.Other.shootSpeaker;
 import frc.robot.commands.Drive.driveDistance;
 import frc.robot.commands.Drive.turnAngle;
 
@@ -13,13 +14,13 @@ import frc.robot.commands.Drive.turnAngle;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ScoreAndLeave extends SequentialCommandGroup {
   /** Creates a new ScoreAndLeave. */
-  public ScoreAndLeave() {
+  public ScoreAndLeave(int multiplier) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new shootOnly().withTimeout(5),
+      new shootSpeaker(),
       new driveDistance(1),
-      new turnAngle(62, 0.75),
+      new turnAngle(62 * multiplier, 0.85),
       new driveDistance(5)
     );
   }

@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Robot;
 import frc.robot.subsystems.driveTrain;
 
-public class driveDistance extends Command {
+public class reverseDistance extends Command {
   /** Creates a new DriveDistance. */
   private driveTrain m_DriveTrain;
   private double m_target;
-  public driveDistance(double target) {
+  public reverseDistance(double target) {
     m_target = target;
     m_DriveTrain = Robot.m_DriveTrain;
     addRequirements(m_DriveTrain);
@@ -24,8 +24,8 @@ public class driveDistance extends Command {
   @Override
   public void initialize() {
     Robot.m_DriveTrain.resetEncoders();
-    new WaitCommand(0.75);
-    m_DriveTrain.setAutoSpeeds(m_target);
+    new WaitCommand(1);
+    m_DriveTrain.setReverseAutoSpeeds(m_target);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
