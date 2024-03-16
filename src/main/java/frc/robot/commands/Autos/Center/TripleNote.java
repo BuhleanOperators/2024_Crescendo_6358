@@ -10,27 +10,18 @@ import frc.robot.commands.Autos.Other.shootSpeaker;
 import frc.robot.commands.Drive.driveDistance;
 import frc.robot.commands.Drive.reverseDistance;
 import frc.robot.commands.Intake.fullIntake;
-import frc.robot.commands.Intake.runBelts;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class DoubleSpeakerCenter extends SequentialCommandGroup {
-  /** Creates a new DoubleSpeakerCenter. */
-  public DoubleSpeakerCenter() {
+public class TripleNote extends SequentialCommandGroup {
+  /** Creates a new TripleNote. */
+  public TripleNote() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new shootSpeaker(),
-      new driveDistance(3.5),
-      new ParallelCommandGroup(
-        new driveDistance(0.75),
-        new fullIntake(1, 1).withTimeout(0.75)),
-      new ParallelCommandGroup(
-        new reverseDistance(4),
-        new runBelts(-1).withTimeout(1)
-      ),
-      new shootSpeaker()
+      new DoubleSpeakerCenter()
+      // new 
     );
   }
 }

@@ -27,7 +27,7 @@ public final class Constants {
     public static final int intakeIn = 6;
     public static final int intakeOut = 5;
 
-    public static final int BUTTON_shooterSpeaker = 1;
+    public static final int BUTTON_shooterSpeaker = 6;
     public static final int BUTTON_shooterAmp = 2;
     public static final int BUTTON_shooterAmpSlow = 3;
     public static final int BUTTON_beltsOut = 5;
@@ -56,7 +56,7 @@ public final class Constants {
     public static final boolean rightFollowInvert = true;
     public static final boolean leftLeadInvert = false;
     public static final boolean leftFollowInvert = false;
-    public static final CANSparkBase.IdleMode idleModeTeleop = IdleMode.kBrake;
+    public static final CANSparkBase.IdleMode idleModeTeleop = IdleMode.kCoast;
     public static final CANSparkBase.IdleMode idleModeAuto = IdleMode.kBrake;
     public static final CANSparkBase.IdleMode idleModeDisabled = IdleMode.kCoast;
 
@@ -87,11 +87,11 @@ public final class Constants {
     public static final boolean setLeftInverted = false;
     public static final IdleMode idleMode = IdleMode.kCoast;
 
-    public static final double speakerSpeed = 0.85;
+    public static final double speakerSpeed = 0.90;
     public static final double ampSpeed = 0.35;
     public static final double ampSpeedSlow = 0.2;
 
-    public static final double speakerRPM = 4500;
+    public static final double speakerRPM = 4100;
     public static final double ampRPM = 1900;
   }
   public static class PneumaticsConstants {

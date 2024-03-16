@@ -26,9 +26,10 @@ public class SpeakerAndAmp extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+      //! Not working for Blue Alliance
       new shootSpeaker(),
       new driveDistance(1.5),
-      new turnAngle(62 * multiplier, 0.1 * multiplier),
+      new turnAngle(62 * multiplier, 0.85 * multiplier),
       new driveDistance(4),
       new ParallelCommandGroup(
         new driveDistance(0.5),
@@ -38,7 +39,7 @@ public class SpeakerAndAmp extends SequentialCommandGroup {
         new runBelts(-0.5).withTimeout(1),
         new reverseDistance(2)
       ),
-      new turnAngle(90 * multiplier, 0.1 * multiplier),
+      new turnAngle(90 * multiplier, 0.85 * multiplier),
       new reverseDistance(2),
       new shootAmp()
     );

@@ -4,13 +4,19 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.commands.LEDs.Blue;
+import frc.robot.commands.LEDs.Orange;
+import frc.robot.commands.LEDs.Red;
 import frc.robot.subsystems.beltSubsystem;
 import frc.robot.subsystems.driveTrain;
 import frc.robot.subsystems.intakeSubsystem;
+import frc.robot.subsystems.ledSubsystem;
 import frc.robot.subsystems.pneumaticSubsystem;
 import frc.robot.subsystems.shooterSubsystem;
 
@@ -30,6 +36,7 @@ public class Robot extends TimedRobot {
   public static final pneumaticSubsystem m_PneumaticSubsystem = new pneumaticSubsystem();
   public static final shooterSubsystem m_ShooterSubsytem = new shooterSubsystem();
   public static final driveTrain m_DriveTrain = new driveTrain();
+  public static final ledSubsystem m_LedSubsystem = new ledSubsystem();
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -43,6 +50,7 @@ public class Robot extends TimedRobot {
     m_DriveTrain.initializeGyro();
     m_SmartDashboard.AllianceColor();
     m_SmartDashboard.AutoChooser();
+    UsbCamera camera = CameraServer.startAutomaticCapture();    
   }
 
   /**
@@ -63,6 +71,7 @@ public class Robot extends TimedRobot {
     m_SmartDashboard.multiplier();
     m_SmartDashboard.gatherData();
     m_SmartDashboard.AutoChooser();
+    m_SmartDashboard.upToSpeed();
   }
   
 
@@ -73,7 +82,9 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+    new Orange();
+  }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
@@ -89,7 +100,9 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    new Red();
+  }
 
   @Override
   public void teleopInit() {
@@ -106,7 +119,9 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    new Blue();
+  }
 
   @Override
   public void testInit() {

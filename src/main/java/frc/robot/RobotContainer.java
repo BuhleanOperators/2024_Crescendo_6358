@@ -11,6 +11,7 @@ import frc.robot.commands.Drive.arcadeDrive;
 import frc.robot.commands.Intake.fullIntake;
 import frc.robot.commands.Intake.runBelts;
 import frc.robot.commands.Intake.runFlyWheels;
+import frc.robot.commands.LEDs.Orange;
 import frc.robot.commands.Pneumatics.FireSolenoid;
 import frc.robot.commands.Pneumatics.RetractSolenoid;
 import frc.robot.commands.Shooter.shooterRun;
@@ -50,6 +51,7 @@ public class RobotContainer {
     smartDashboard();
     
     Robot.m_DriveTrain.setDefaultCommand(new arcadeDrive(() -> deadband(getXDriver().getLeftY() * Constants.DriveConstants.maxSpeed, OperatorConstants.deadbandCutoffDrive), () -> deadband(getXDriver().getRightX() * Constants.DriveConstants.maxAngularSpeed, OperatorConstants.deadbandCutoffRot)));
+    Robot.m_LedSubsystem.setDefaultCommand(new Orange());
   }
 
   /**
@@ -73,7 +75,7 @@ public class RobotContainer {
     intakeIn.onTrue(new fullIntake(0.75, 1)).onFalse(new fullIntake(0, 0));
 
     //new JoystickButton(xDriver, OperatorConstants.intakeButton).toggleOnTrue(new shooterRun(ShooterConstants.speed, m_ShooterSystem));
-    new JoystickButton(xDriver, OperatorConstants.BUTTON_shooterSpeaker).onTrue(new shooterRun(ShooterConstants.speakerSpeed))
+    new JoystickButton(coPilot, OperatorConstants.BUTTON_shooterSpeaker).onTrue(new shooterRun(ShooterConstants.speakerSpeed))
       .onFalse(new shooterRun(0));
     new JoystickButton(xDriver, OperatorConstants.BUTTON_shooterAmp).onTrue(new shooterRun(ShooterConstants.ampSpeed))
       .onFalse(new shooterRun(0));

@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.Autos.Center.DoubleSpeakerCenter;
 import frc.robot.commands.Autos.Other.ShootAndTurn;
 import frc.robot.commands.Autos.Other.noAuto;
@@ -30,7 +31,6 @@ public class smartDashboard {
         
         SmartDashboard.putData(allianceColor);
     }
-
     public void AutoChooser(){
         autoChooser.setDefaultOption("No Auto", new noAuto());
             autoChooser.addOption("Speaker Only", new shootSpeaker());
@@ -48,6 +48,8 @@ public class smartDashboard {
         SmartDashboard.putNumber("Shooter RPM", Robot.m_ShooterSubsytem.getShooterRPM());
         SmartDashboard.putNumber("Multiplier", multiplier);
     }
+    public void getLedColor(){
+    }
 
     public void multiplier(){
         if (allianceColor.getSelected().equals("red")){
@@ -58,6 +60,14 @@ public class smartDashboard {
             multiplier = 0;
         }
     }
+    public void upToSpeed(){
+        if (Robot.m_ShooterSubsytem.getShooterRPM() >= ShooterConstants.speakerRPM){
+            SmartDashboard.putBoolean("", true);
+        }else {
+            SmartDashboard.putBoolean("", false);
+        }
+    }
+
 
     //^ Accsessor Methods
     public SendableChooser getAllianceColor(){
