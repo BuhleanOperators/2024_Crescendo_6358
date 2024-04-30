@@ -2,29 +2,30 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Pneumatics;
+package frc.robot.commands.Drive;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Robot;
-import frc.robot.subsystems.pneumaticSubsystem;
+import frc.robot.subsystems.driveTrain;
 
-public class FireSolenoid extends Command {
-  /** Creates a new firePiston. */
-  // private DoubleSolenoid m_piston;
-  private pneumaticSubsystem m_pneumatics;
-  public FireSolenoid() {
+public class driveDistance extends Command {
+  /** Creates a new DriveDistance. */
+  private driveTrain m_DriveTrain;
+  private double m_target;
+  public driveDistance(double target) {
+    m_target = target;
+    m_DriveTrain = Robot.m_DriveTrain;
+    addRequirements(m_DriveTrain);
     // Use addRequirements() here to declare subsystem dependencies.
-    // m_piston = piston;
-    m_pneumatics = Robot.m_PneumaticSubsystem;
-    addRequirements(m_pneumatics);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_pneumatics.fireSolenoid(m_pneumatics.getLeftSolenoid());
-    m_pneumatics.fireSolenoid(m_pneumatics.getRightSolenoid());
+    Robot.m_DriveTrain.resetEncoders();
+    new WaitCommand(0.75);
+    m_DriveTrain.setAutoSpeeds(m_target);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -33,11 +34,13 @@ public class FireSolenoid extends Command {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_DriveTrain.stop();
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return Math.abs(m_DriveTrain.getAverageDistance()) >= Math.abs(m_target);
   }
 }

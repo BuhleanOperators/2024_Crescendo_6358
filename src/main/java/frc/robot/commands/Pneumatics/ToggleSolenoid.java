@@ -6,16 +6,17 @@ package frc.robot.commands.Pneumatics;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Robot;
 import frc.robot.subsystems.pneumaticSubsystem;
 
 public class ToggleSolenoid extends Command {
   /** Creates a new ToggleSolenoid. */
   private DoubleSolenoid m_piston;
   private pneumaticSubsystem m_pneumatics;
-  public ToggleSolenoid(DoubleSolenoid piston, pneumaticSubsystem subsystem) {
+  public ToggleSolenoid(DoubleSolenoid piston) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_piston = piston;
-    m_pneumatics = subsystem;
+    m_pneumatics = Robot.m_PneumaticSubsystem;
     addRequirements(m_pneumatics);
   }
 

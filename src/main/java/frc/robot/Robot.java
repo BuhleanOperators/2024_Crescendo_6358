@@ -4,9 +4,21 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Constants.DriveConstants;
+import frc.robot.commands.LEDs.Blue;
+import frc.robot.commands.LEDs.Orange;
+import frc.robot.commands.LEDs.Red;
+import frc.robot.subsystems.beltSubsystem;
+import frc.robot.subsystems.driveTrain;
+import frc.robot.subsystems.intakeSubsystem;
+import frc.robot.subsystems.ledSubsystem;
+import frc.robot.subsystems.pneumaticSubsystem;
+import frc.robot.subsystems.shooterSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -17,7 +29,14 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
-  private RobotContainer m_robotContainer;
+  private  RobotContainer m_robotContainer = new RobotContainer();
+  public static final smartDashboard m_SmartDashboard = new smartDashboard();
+  public static final beltSubsystem m_BeltSubsystem = new beltSubsystem();
+  public static final intakeSubsystem m_IntakeSubsystem = new intakeSubsystem();
+  public static final pneumaticSubsystem m_PneumaticSubsystem = new pneumaticSubsystem();
+  public static final shooterSubsystem m_ShooterSubsytem = new shooterSubsystem();
+  public static final driveTrain m_DriveTrain = new driveTrain();
+  public static final ledSubsystem m_LedSubsystem = new ledSubsystem();
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -27,7 +46,11 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    m_robotContainer = new RobotContainer();
+
+    m_DriveTrain.initializeGyro();
+    m_SmartDashboard.AllianceColor();
+    m_SmartDashboard.AutoChooser();
+    UsbCamera camera = CameraServer.startAutomaticCapture();    
   }
 
   /**
@@ -44,18 +67,29 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    m_PneumaticSubsystem.compressorOn();
+    m_SmartDashboard.multiplier();
+    m_SmartDashboard.gatherData();
+    m_SmartDashboard.AutoChooser();
+    m_SmartDashboard.upToSpeed();
   }
+  
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    m_DriveTrain.setIdleMode(DriveConstants.idleModeDisabled);
+  }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+    new Orange();
+  }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+    m_DriveTrain.setIdleMode(DriveConstants.idleModeAuto);
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -66,10 +100,14 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    new Red();
+  }
 
   @Override
   public void teleopInit() {
+    m_DriveTrain.resetEncoders();
+    m_DriveTrain.setIdleMode(DriveConstants.idleModeTeleop);
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -81,7 +119,9 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    new Blue();
+  }
 
   @Override
   public void testInit() {

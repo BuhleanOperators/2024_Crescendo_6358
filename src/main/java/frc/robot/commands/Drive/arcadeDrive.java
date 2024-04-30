@@ -2,12 +2,13 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.Drive;
 
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Robot;
 import frc.robot.subsystems.driveTrain;
 
 public class arcadeDrive extends Command {
@@ -15,11 +16,11 @@ public class arcadeDrive extends Command {
   private DoubleSupplier m_xSpeed;
   private DoubleSupplier m_rot;
   private driveTrain m_DriveTrain;
-  public arcadeDrive(DoubleSupplier xSpeed, DoubleSupplier rot, driveTrain subsystem) {
+  public arcadeDrive(DoubleSupplier xSpeed, DoubleSupplier rot) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_xSpeed = xSpeed;
     m_rot = rot;
-    m_DriveTrain = subsystem;
+    m_DriveTrain = Robot.m_DriveTrain;
     addRequirements(m_DriveTrain);
   }
 

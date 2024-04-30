@@ -20,19 +20,20 @@ import edu.wpi.first.math.util.Units;
 public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
+    public static final int kCoPilotControllerPort = 1;
     public static final double deadbandCutoffDrive = 0.2;
     public static final double deadbandCutoffRot = 0.5;
 
     public static final int intakeIn = 6;
     public static final int intakeOut = 5;
 
-    public static final int BUTTON_shooterSpeaker = 1;
+    public static final int BUTTON_shooterSpeaker = 6;
     public static final int BUTTON_shooterAmp = 2;
     public static final int BUTTON_shooterAmpSlow = 3;
-    public static final int BUTTON_beltsOut = 4;
+    public static final int BUTTON_beltsOut = 5;
     // public static final int BUTTON_togglePiston = 2;
-    // public static final int BUTTON_extendPiston = 3;
-    // public static final int BUTTON_retractPiston = 4;
+    public static final int BUTTON_extendPiston = 1;
+    public static final int BUTTON_retractPiston = 2;
 
   }
   public static class DriveConstants{
@@ -55,7 +56,9 @@ public final class Constants {
     public static final boolean rightFollowInvert = true;
     public static final boolean leftLeadInvert = false;
     public static final boolean leftFollowInvert = false;
-    public static final CANSparkBase.IdleMode idleMode = IdleMode.kBrake;
+    public static final CANSparkBase.IdleMode idleModeTeleop = IdleMode.kCoast;
+    public static final CANSparkBase.IdleMode idleModeAuto = IdleMode.kBrake;
+    public static final CANSparkBase.IdleMode idleModeDisabled = IdleMode.kCoast;
 
     //& Encoder Values
     //? Change to 4096?
@@ -84,20 +87,25 @@ public final class Constants {
     public static final boolean setLeftInverted = false;
     public static final IdleMode idleMode = IdleMode.kCoast;
 
-    public static final double speakerSpeed = 0.85;
+    public static final double speakerSpeed = 0.90;
     public static final double ampSpeed = 0.35;
     public static final double ampSpeedSlow = 0.2;
 
-    public static final double fullRPM = 4500;
+    public static final double speakerRPM = 4100;
+    public static final double ampRPM = 1900;
   }
   public static class PneumaticsConstants {
-    public static final int PISTON_FIRST_FORWARD = 0;
-    public static final int PISTON_FIRST_BACK = 1;
-    public static final int PISTON_SECOND_FORWARD = 2;
-    public static final int PISTON_SECOND_BACK = 3;
+    public static final int PISTON_RIGHT_FORWARD = 0;
+    public static final int PISTON_RIGHT_BACK = 1;
+    public static final int PISTON_LEFT_FORWARD = 2;
+    public static final int PISTON_LEFT_BACK = 3;
   }
   public static class IntakeConstants{
-    public static final int intakeID = 7;
-    public static final int beltID = 9;
+    public static final int intakeID = 1;
+    public static final int beltID = 0;
+  }
+  public static class LedConstants{
+    public static final int port = 6;
+    public static final int length = 30;
   }
 }

@@ -6,23 +6,25 @@ package frc.robot.commands.Pneumatics;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Robot;
 import frc.robot.subsystems.pneumaticSubsystem;
 
 public class RetractSolenoid extends Command {
   /** Creates a new retractSolenoid. */
-  private DoubleSolenoid m_piston;
+  // private DoubleSolenoid m_piston;
   private pneumaticSubsystem m_pneumatics;
-  public RetractSolenoid(DoubleSolenoid piston, pneumaticSubsystem subsystem) {
+  public RetractSolenoid() {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_piston = piston;
-    m_pneumatics = subsystem;
+    // m_piston = piston;
+    m_pneumatics = Robot.m_PneumaticSubsystem;
     addRequirements(m_pneumatics);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_pneumatics.retractSolenoid(m_piston);
+    m_pneumatics.retractSolenoid(m_pneumatics.getLeftSolenoid());
+    m_pneumatics.retractSolenoid(m_pneumatics.getRightSolenoid());
   }
 
   // Called every time the scheduler runs while the command is scheduled.
