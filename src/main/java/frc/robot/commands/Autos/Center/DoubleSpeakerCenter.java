@@ -16,10 +16,8 @@ import frc.robot.commands.Intake.runBelts;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class DoubleSpeakerCenter extends SequentialCommandGroup {
-  /** Creates a new DoubleSpeakerCenter. */
+  //^ Score preloaded NOTE, leave, pick up NOTE directily behind robot, score NOTE
   public DoubleSpeakerCenter() {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new shootSpeaker(),
       new driveDistance(3.5),

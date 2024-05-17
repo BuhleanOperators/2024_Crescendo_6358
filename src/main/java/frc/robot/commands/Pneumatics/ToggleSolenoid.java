@@ -10,11 +10,11 @@ import frc.robot.Robot;
 import frc.robot.subsystems.pneumaticSubsystem;
 
 public class ToggleSolenoid extends Command {
-  /** Creates a new ToggleSolenoid. */
+  //^ Toggle between forward and reverse for the climb solinoids
+  //! DOESN'T WORK
   private DoubleSolenoid m_piston;
   private pneumaticSubsystem m_pneumatics;
   public ToggleSolenoid(DoubleSolenoid piston) {
-    // Use addRequirements() here to declare subsystem dependencies.
     m_piston = piston;
     m_pneumatics = Robot.m_PneumaticSubsystem;
     addRequirements(m_pneumatics);
@@ -23,6 +23,7 @@ public class ToggleSolenoid extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    //Toggle the position of the solinoids
     m_pneumatics.toggleSolenoid(m_piston);
   }
 

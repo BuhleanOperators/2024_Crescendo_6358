@@ -31,13 +31,11 @@ public final class Constants {
     public static final int BUTTON_shooterAmp = 2;
     public static final int BUTTON_shooterAmpSlow = 3;
     public static final int BUTTON_beltsOut = 5;
-    // public static final int BUTTON_togglePiston = 2;
     public static final int BUTTON_extendPiston = 1;
     public static final int BUTTON_retractPiston = 2;
 
   }
   public static class DriveConstants{
-    //TODO set all values
     //! Odomotry Values
     public static final double trackWidth = Units.inchesToMeters(22.5); //meters
     public static final double wheelRadius = Units.inchesToMeters(3); //meters
@@ -61,8 +59,6 @@ public final class Constants {
     public static final CANSparkBase.IdleMode idleModeDisabled = IdleMode.kCoast;
 
     //& Encoder Values
-    //? Change to 4096?
-    //Was 42
     public static final int countsPerRev = 42;
     
     //* PID Controller Values

@@ -5,9 +5,7 @@
 package frc.robot.commands.Autos.Sides;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.Autos.Other.shootAmp;
 import frc.robot.commands.Autos.Other.shootSpeaker;
 import frc.robot.commands.Drive.driveDistance;
@@ -15,18 +13,16 @@ import frc.robot.commands.Drive.reverseDistance;
 import frc.robot.commands.Drive.turnAngle;
 import frc.robot.commands.Intake.fullIntake;
 import frc.robot.commands.Intake.runBelts;
-import frc.robot.commands.Shooter.shooterRun;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class SpeakerAndAmp extends SequentialCommandGroup {
-  /** Creates a new SpeakerAndAmp. */
+  //^ Score preloaded NOTE, leave, gather NOTE behind robot, move toward AMP, score NOTE
+  //! INCONSITSANT
+  //! DOES NOT WORK FOR BLUE ALLIANCE
   public SpeakerAndAmp(int multiplier) {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      //! Not working for Blue Alliance
       new shootSpeaker(),
       new driveDistance(1.5),
       new turnAngle(62 * multiplier, 0.85 * multiplier),

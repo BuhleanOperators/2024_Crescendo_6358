@@ -9,21 +9,15 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.Intake.runBelts;
 import frc.robot.commands.Intake.runFlyWheels;
-import frc.robot.subsystems.beltSubsystem;
-import frc.robot.subsystems.intakeSubsystem;
 import frc.robot.subsystems.shooterSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class readyToShootAmp extends SequentialCommandGroup {
-  /** Creates a new readyToShoot. */
-  private intakeSubsystem m_IntakeSystem;
+  //^ Auto help that sets up for scoring in the AMP
   private shooterSubsystem m_ShooterSystem;
-  private beltSubsystem m_BeltSubsystem;
   public readyToShootAmp() {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new runBelts(1).withTimeout(0),
       new runBelts(-0.5).withTimeout(0),

@@ -10,7 +10,7 @@ import frc.robot.Robot;
 import frc.robot.subsystems.intakeSubsystem;
 
 public class runFlyWheelsTime extends Command {
-  /** Creates a new runFlyWheelsTime. */
+  //^ Auto helper that runs the Flywheel system for a given time at a given speed
   private intakeSubsystem m_IntakeSystem;
   private Timer timer;
   private double m_time;
@@ -20,18 +20,19 @@ public class runFlyWheelsTime extends Command {
     addRequirements(m_IntakeSystem);
     m_time = time;
     m_speed = speed;
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    //Start a timer
     timer.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    //Set the flywheel speeds
     m_IntakeSystem.setFlyWheelSpeeds(m_speed);
   }
 
@@ -44,6 +45,7 @@ public class runFlyWheelsTime extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    //End if the timer has passed the given time
     return timer.hasElapsed(m_time);
   }
 }

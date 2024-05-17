@@ -10,7 +10,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LedConstants;
 
 public class ledSubsystem extends SubsystemBase {
-  /** Creates a new ledSubsystem. */
+  //^ Initialization and methods for the LEDs
+  //! DOESN'T WORK
   private AddressableLED m_Led;
   private AddressableLEDBuffer m_Buffer;
   public ledSubsystem() {
@@ -29,35 +30,41 @@ public class ledSubsystem extends SubsystemBase {
   
   //^ Accsessor Methods
   public AddressableLED getLed(){
+    //Get the LEDs
     return m_Led;
   }
 
   //^ Solid Color Set 
   public void off(){
+    //Turn off the LED strip
     for (var i = 0; i < m_Buffer.getLength(); i++){
       m_Buffer.setRGB(i, 0, 0, 0);
     }
     m_Led.setData(m_Buffer);
   }
   public void setRed(){
+    //Set the LED strip to red
     for (var i = 0; i < m_Buffer.getLength(); i++){
       m_Buffer.setRGB(i, 255, 0, 0);
     }
     m_Led.setData(m_Buffer);
   }
   public void setBlue(){
+    //Set the LED strip to blue
     for (var i = 0; i < m_Buffer.getLength(); i++){
       m_Buffer.setRGB(i, 0, 0, 255);
     }
     m_Led.setData(m_Buffer);
   }
   public void setGreen(){
+    //Set the LED strip to green
     for (var i = 0; i < m_Buffer.getLength(); i++){
       m_Buffer.setRGB(i, 0, 255, 0);
     }
     m_Led.setData(m_Buffer);
   }
   public void setOrange(){
+    //Set the LED strip to orange
     for (var i = 0; i < m_Buffer.getLength(); i++){
       m_Buffer.setRGB(i, 253, 120, 0);
     }

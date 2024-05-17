@@ -9,7 +9,7 @@ import frc.robot.Robot;
 import frc.robot.subsystems.driveTrain;
 
 public class turnAngle extends Command {
-  /** Creates a new TurnAngle. */
+  //^ Auto helper to turn to a target angle
   private driveTrain m_DriveTrain;
   private double m_angle;
   private double m_speed;
@@ -18,13 +18,12 @@ public class turnAngle extends Command {
     m_speed = speed;
     m_DriveTrain = Robot.m_DriveTrain;
     addRequirements(m_DriveTrain);
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // m_DriveTrain.
+    //Reset the gyro then set the target angle
     m_DriveTrain.resetGyro();
     m_DriveTrain.setAutoTurnSpeeds(m_speed);
   }
@@ -42,7 +41,7 @@ public class turnAngle extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    //End if the absolute value of the current angle is greater than or equal to the target angle
     return Math.abs(m_DriveTrain.getAngle()) >= Math.abs(m_angle);
-    // return false;
   }
 }

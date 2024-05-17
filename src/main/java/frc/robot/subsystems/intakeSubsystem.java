@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
 
 public class intakeSubsystem extends SubsystemBase {
-  /** Creates a new intakeSystem. */
+  //^ Initialization and methods for Flywheels system
   private VictorSP intake;
 
   public intakeSubsystem() {
-    intake = new VictorSP(IntakeConstants.intakeID);
+    intake = new VictorSP(IntakeConstants.intakeID); //Initalize the contoller for the belts
   }
 
   @Override
@@ -22,6 +22,7 @@ public class intakeSubsystem extends SubsystemBase {
   }
 
   public void setFlyWheelSpeeds(double speed){
+    //Set the flywheels to a given speed
     intake.set(speed);
   }
 }

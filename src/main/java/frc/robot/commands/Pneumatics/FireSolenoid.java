@@ -4,18 +4,14 @@
 
 package frc.robot.commands.Pneumatics;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.pneumaticSubsystem;
 
 public class FireSolenoid extends Command {
-  /** Creates a new firePiston. */
-  // private DoubleSolenoid m_piston;
+  //^ Set position of climb soilinoids to forward
   private pneumaticSubsystem m_pneumatics;
   public FireSolenoid() {
-    // Use addRequirements() here to declare subsystem dependencies.
-    // m_piston = piston;
     m_pneumatics = Robot.m_PneumaticSubsystem;
     addRequirements(m_pneumatics);
   }
@@ -23,6 +19,7 @@ public class FireSolenoid extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    //Set the left and right solinoids to forward
     m_pneumatics.fireSolenoid(m_pneumatics.getLeftSolenoid());
     m_pneumatics.fireSolenoid(m_pneumatics.getRightSolenoid());
   }

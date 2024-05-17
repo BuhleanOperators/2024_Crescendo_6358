@@ -9,12 +9,11 @@ import frc.robot.Robot;
 import frc.robot.subsystems.intakeSubsystem;
 
 public class runFlyWheels extends Command {
-  /** Creates a new runIntake. */
+  //^ Run Flywheel System at a given speed
   private intakeSubsystem m_IntakeSystem;
   private double m_speed;
   
   public runFlyWheels(double speed) {
-    // Use addRequirements() here to declare subsystem dependencies.
     m_speed = speed;
     m_IntakeSystem = Robot.m_IntakeSubsystem;
     addRequirements(m_IntakeSystem);
@@ -27,6 +26,7 @@ public class runFlyWheels extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    //Set the Flywheel speed
     m_IntakeSystem.setFlyWheelSpeeds(m_speed);
   }
 

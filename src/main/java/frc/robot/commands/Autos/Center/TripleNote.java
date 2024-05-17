@@ -4,21 +4,15 @@
 
 package frc.robot.commands.Autos.Center;
 
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.Autos.Other.shootSpeaker;
-import frc.robot.commands.Drive.driveDistance;
-import frc.robot.commands.Drive.reverseDistance;
-import frc.robot.commands.Intake.fullIntake;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class TripleNote extends SequentialCommandGroup {
-  /** Creates a new TripleNote. */
+  //^ Score preloaded NOTE, leave, gether NOTE directly behind robot, score NOTE, turn to gather NOTE to side of robot, score NOTE
+  //! INCOMPLETE
   public TripleNote() {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new DoubleSpeakerCenter()
       // new 

@@ -10,9 +10,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.commands.LEDs.Blue;
-import frc.robot.commands.LEDs.Orange;
-import frc.robot.commands.LEDs.Red;
 import frc.robot.subsystems.beltSubsystem;
 import frc.robot.subsystems.driveTrain;
 import frc.robot.subsystems.intakeSubsystem;
@@ -29,6 +26,8 @@ import frc.robot.subsystems.shooterSubsystem;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
+  //Initilize all the subsystems
+  //! Only use subsystems by calling these
   private  RobotContainer m_robotContainer = new RobotContainer();
   public static final smartDashboard m_SmartDashboard = new smartDashboard();
   public static final beltSubsystem m_BeltSubsystem = new beltSubsystem();
@@ -46,8 +45,8 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-
-    m_DriveTrain.initializeGyro();
+    //Set up the gyro, alliance color, auto chooser and USB cammera
+    m_DriveTrain.calibrateGyro();
     m_SmartDashboard.AllianceColor();
     m_SmartDashboard.AutoChooser();
     UsbCamera camera = CameraServer.startAutomaticCapture();    
@@ -67,6 +66,7 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    //Turn on the compressor, get the multiplier, gather robot data, get the auto selection, and check if the shooter is up to speed to score in the SPEAKER
     m_PneumaticSubsystem.compressorOn();
     m_SmartDashboard.multiplier();
     m_SmartDashboard.gatherData();
@@ -78,17 +78,18 @@ public class Robot extends TimedRobot {
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
+    //Set the idle mode when the robot is disabled
     m_DriveTrain.setIdleMode(DriveConstants.idleModeDisabled);
   }
 
   @Override
   public void disabledPeriodic() {
-    new Orange();
   }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+    //Set the idle mode of the drive motors
     m_DriveTrain.setIdleMode(DriveConstants.idleModeAuto);
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
@@ -101,11 +102,11 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    new Red();
   }
 
   @Override
   public void teleopInit() {
+    //Reset the encoders and set the idle mode of the drive motors
     m_DriveTrain.resetEncoders();
     m_DriveTrain.setIdleMode(DriveConstants.idleModeTeleop);
     // This makes sure that the autonomous stops running when
@@ -120,7 +121,6 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    new Blue();
   }
 
   @Override

@@ -7,7 +7,7 @@ package frc.robot.commands.Autos.Other;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class noAuto extends Command {
-  /** Creates a new noAuto. */
+  //^ Empty command
   public noAuto() {
     // Use addRequirements() here to declare subsystem dependencies.
   }

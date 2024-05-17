@@ -9,11 +9,10 @@ import frc.robot.Robot;
 import frc.robot.subsystems.shooterSubsystem;
 
 public class shooterRun extends Command {
-  /** Creates a new shooterRun. */
+  //^ Set the shooter at given speed
   private double m_speed;
   private shooterSubsystem m_shooterSystem;
   public shooterRun(double speed) {
-    // Use addRequirements() here to declare subsystem dependencies.
     m_speed = speed;
     m_shooterSystem = Robot.m_ShooterSubsytem;
     addRequirements(m_shooterSystem);
@@ -26,6 +25,7 @@ public class shooterRun extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    //Set motors to given speed
     m_shooterSystem.setSpeed(m_speed);
   }
 
