@@ -13,10 +13,8 @@ import frc.robot.commands.Drive.turnAngle;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ScoreAndLeave extends SequentialCommandGroup {
-  /** Creates a new ScoreAndLeave. */
+  //^ Score proloaded NOTE, leave
   public ScoreAndLeave(int multiplier) {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new shootSpeaker(),
       new driveDistance(1),

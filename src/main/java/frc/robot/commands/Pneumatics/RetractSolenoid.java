@@ -4,18 +4,14 @@
 
 package frc.robot.commands.Pneumatics;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.pneumaticSubsystem;
 
 public class RetractSolenoid extends Command {
-  /** Creates a new retractSolenoid. */
-  // private DoubleSolenoid m_piston;
+  //^ Set popsition of climb solinoids to backward
   private pneumaticSubsystem m_pneumatics;
   public RetractSolenoid() {
-    // Use addRequirements() here to declare subsystem dependencies.
-    // m_piston = piston;
     m_pneumatics = Robot.m_PneumaticSubsystem;
     addRequirements(m_pneumatics);
   }
@@ -23,6 +19,7 @@ public class RetractSolenoid extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    //Set both sides to backward
     m_pneumatics.retractSolenoid(m_pneumatics.getLeftSolenoid());
     m_pneumatics.retractSolenoid(m_pneumatics.getRightSolenoid());
   }

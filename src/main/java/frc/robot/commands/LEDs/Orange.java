@@ -9,12 +9,12 @@ import frc.robot.Robot;
 import frc.robot.subsystems.ledSubsystem;
 
 public class Orange extends Command {
-  /** Creates a new Orange. */
+  //^ Set LEDs to orange
+  //! UNTESTED
   private ledSubsystem led;
   public Orange() {
     led = Robot.m_LedSubsystem;
     addRequirements(led);
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -25,6 +25,7 @@ public class Orange extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    //Set LED color to orange
     led.setOrange();
   }
 

@@ -12,17 +12,17 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
 
 public class shooterSubsystem extends SubsystemBase {
-  /** Creates a new intake. */
+  //^ Initialization and methods for the shooter system
   private CANSparkMax rightMotor;
   private CANSparkMax leftMotor;
   private RelativeEncoder rightEncoder;
 
   public shooterSubsystem() {
-    rightMotor = new CANSparkMax(ShooterConstants.rightMotorID, MotorType.kBrushless);
-    rightMotor.setSmartCurrentLimit(ShooterConstants.currentLimit);
-    rightMotor.setInverted(ShooterConstants.setRightInverted);
-    rightMotor.setIdleMode(ShooterConstants.idleMode);
-    rightMotor.burnFlash();
+    rightMotor = new CANSparkMax(ShooterConstants.rightMotorID, MotorType.kBrushless); //Create the SPARK Max
+    rightMotor.setSmartCurrentLimit(ShooterConstants.currentLimit); //Set the current limit
+    rightMotor.setInverted(ShooterConstants.setRightInverted); //Set inverted if needed
+    rightMotor.setIdleMode(ShooterConstants.idleMode); //Set the idle mode of the motors
+    rightMotor.burnFlash(); //Save all changes made
 
     leftMotor = new CANSparkMax(ShooterConstants.leftMotorID, MotorType.kBrushless);
     leftMotor.setSmartCurrentLimit(ShooterConstants.currentLimit);
@@ -30,7 +30,7 @@ public class shooterSubsystem extends SubsystemBase {
     leftMotor.setIdleMode(ShooterConstants.idleMode);
     leftMotor.burnFlash();
 
-    rightEncoder = rightMotor.getEncoder();
+    rightEncoder = rightMotor.getEncoder(); //Get the inbuilt encoder
   }
 
   @Override
@@ -43,6 +43,7 @@ public class shooterSubsystem extends SubsystemBase {
   }
   //^ Void Methods
   public void setSpeed(double speed){
+    //Set the speed of the shooter
     rightMotor.set(speed);
     leftMotor.set(speed);
   }

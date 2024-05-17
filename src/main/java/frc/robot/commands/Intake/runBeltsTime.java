@@ -8,16 +8,14 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.beltSubsystem;
-import frc.robot.subsystems.intakeSubsystem;
 
 public class runBeltsTime extends Command {
-  /** Creates a new runBeltsTime. */
+  //^ Auto helper that runs the Belt system for a given time at a given speed
   private beltSubsystem m_BeltSubsystem;
   private double m_speed;
   private double m_time;
   private Timer timer;
   public runBeltsTime(double speed, double time) {
-    // Use addRequirements() here to declare subsystem dependencies.m_speed = speed;
     m_BeltSubsystem = Robot.m_BeltSubsystem;
     m_time = time;
     m_speed = speed;
@@ -27,12 +25,14 @@ public class runBeltsTime extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    //Start a timer
     timer.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    //Set the speed of the belts
     m_BeltSubsystem.setBeltSpeeds(m_speed);
   }
 
@@ -45,6 +45,7 @@ public class runBeltsTime extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    //End if the timer has passed the given time
     return timer.hasElapsed(m_time);
   }
 }

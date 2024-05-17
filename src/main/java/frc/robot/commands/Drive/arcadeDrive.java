@@ -6,18 +6,16 @@ package frc.robot.commands.Drive;
 
 import java.util.function.DoubleSupplier;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.driveTrain;
 
 public class arcadeDrive extends Command {
-  /** Creates a new arcadeDrive. */
+  //^ Get input from controllers and use values to drive robot
   private DoubleSupplier m_xSpeed;
   private DoubleSupplier m_rot;
   private driveTrain m_DriveTrain;
   public arcadeDrive(DoubleSupplier xSpeed, DoubleSupplier rot) {
-    // Use addRequirements() here to declare subsystem dependencies.
     m_xSpeed = xSpeed;
     m_rot = rot;
     m_DriveTrain = Robot.m_DriveTrain;
@@ -31,11 +29,8 @@ public class arcadeDrive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    // Use input from contoller to set forward and rotational speeds
     m_DriveTrain.arcadeDrive(m_xSpeed.getAsDouble(), m_rot.getAsDouble());
-    SmartDashboard.putNumber("Right Encoder Value", m_DriveTrain.getRightEncoder().getPosition());
-    SmartDashboard.putNumber("Left Encoder Value", m_DriveTrain.getLeftEncoder().getPosition());
-    SmartDashboard.putNumber("Right Conversion Factor", m_DriveTrain.getRightEncoder().getPositionConversionFactor());
-    SmartDashboard.putNumber("Left Conversion Factor", m_DriveTrain.getLeftEncoder().getPositionConversionFactor());
   }
 
   // Called once the command ends or is interrupted.

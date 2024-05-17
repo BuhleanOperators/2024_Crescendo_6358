@@ -6,7 +6,6 @@ package frc.robot.commands.Autos.Other;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.Intake.runBelts;
@@ -16,10 +15,8 @@ import frc.robot.commands.Shooter.shooterRun;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class shootAmp extends SequentialCommandGroup {
-  /** Creates a new shootOnly. */
+  //^ Helper command to shoot NOTE into the AMP
   public shootAmp() {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new shooterRun(ShooterConstants.ampSpeed).until(() -> Robot.m_ShooterSubsytem.getShooterRPM() >= ShooterConstants.ampRPM),
       new ParallelCommandGroup(

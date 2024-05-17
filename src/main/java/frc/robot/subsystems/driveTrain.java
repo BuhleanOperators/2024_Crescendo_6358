@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 
 public class driveTrain extends SubsystemBase {
-  /** Creates a new driveTrain. */
+  //^ Initialization and methods for the drive base
   private CANSparkMax rightLead;
   private CANSparkMax rightFollow;
   private CANSparkMax leftLead;
@@ -32,53 +32,39 @@ public class driveTrain extends SubsystemBase {
 
   public driveTrain() {
     //~ Configure SparkMaxs
-    rightLead = new CANSparkMax(DriveConstants.rightLeadID, MotorType.kBrushless);
-    //rightLead.restoreFactoryDefaults();
-    rightLead.setSmartCurrentLimit(DriveConstants.smartCurrentLimit);
-    rightLead.setInverted(DriveConstants.rightLeadInvert);
-    // rightLead.setIdleMode(DriveConstants.idleModeTeleop);
-    rightLead.burnFlash();
+    rightLead = new CANSparkMax(DriveConstants.rightLeadID, MotorType.kBrushless); //Create the SPARK Max
+    rightLead.setSmartCurrentLimit(DriveConstants.smartCurrentLimit); //Set the current limit of the SPARK Max
+    rightLead.setInverted(DriveConstants.rightLeadInvert); //Invert the motor contoller if needed
+    rightLead.burnFlash(); //Save all changes made
 
     rightFollow = new CANSparkMax(DriveConstants.rightFollowID, MotorType.kBrushless);
-    //rightFollow.restoreFactoryDefaults();
     rightFollow.setSmartCurrentLimit(DriveConstants.smartCurrentLimit);
     rightFollow.setInverted(DriveConstants.rightFollowInvert);
-    // rightFollow.setIdleMode(DriveConstants.idleModeTeleop);
     rightFollow.follow(rightLead);
     rightFollow.burnFlash();
 
     leftLead = new CANSparkMax(DriveConstants.leftLeadID, MotorType.kBrushless);
-    //leftLead.restoreFactoryDefaults();
     leftLead.setSmartCurrentLimit(DriveConstants.smartCurrentLimit);
     leftLead.setInverted(DriveConstants.leftLeadInvert);
-    // leftLead.setIdleMode(DriveConstants.idleModeTeleop);
     leftLead.burnFlash();
 
     leftFollow = new CANSparkMax(DriveConstants.leftFollowID, MotorType.kBrushless);
-    //leftFollow.restoreFactoryDefaults();
     leftFollow.setSmartCurrentLimit(DriveConstants.smartCurrentLimit);
     leftFollow.setInverted(DriveConstants.leftFollowInvert);
-    // leftFollow.setIdleMode(DriveConstants.idleModeTeleop);
     leftFollow.follow(leftLead);
     leftFollow.burnFlash();
 
     //& Configure Encoders
-    //? Default Constructor instead?
-    rightEncoder = rightLead.getEncoder();
+    rightEncoder = rightLead.getEncoder(); //Get the inbuilt encoder from the motor
     leftEncoder = leftLead.getEncoder();
-    // rightEncoder = rightLead.getEncoder(com.revrobotics.SparkRelativeEncoder.Type.kHallSensor, DriveConstants.countsPerRev);
-
-    // leftEncoder = leftLead.getEncoder(com.revrobotics.SparkRelativeEncoder.Type.kHallSensor, DriveConstants.countsPerRev);
 
     //* Configure PID controllers
-    rightPID = rightLead.getPIDController();
-    rightPID.setP(DriveConstants.rightP);
-    rightPID.setI(DriveConstants.rightI);
-    rightPID.setD(DriveConstants.rightD);
-    rightPID.setFF(DriveConstants.rightFF);
-    rightPID.setFeedbackDevice(rightEncoder);
-    //^ Smart Motion Values
-    //rightPID.setSmartMotionMaxVelocity(DriveConstants.maxSpeed, DriveConstants.slotID);
+    rightPID = rightLead.getPIDController(); //Get the inbuilt PID controller
+    rightPID.setP(DriveConstants.rightP); //Set the P value
+    rightPID.setI(DriveConstants.rightI); //Set the I value
+    rightPID.setD(DriveConstants.rightD); //Set the D value
+    rightPID.setFF(DriveConstants.rightFF); //Set the FF (feedforward) value
+    rightPID.setFeedbackDevice(rightEncoder); //Set the feedback device to the encoder
     
     leftPID = leftLead.getPIDController();
     leftPID.setP(DriveConstants.leftP);
@@ -86,12 +72,10 @@ public class driveTrain extends SubsystemBase {
     leftPID.setD(DriveConstants.leftD);
     leftPID.setFF(DriveConstants.leftFF);
     leftPID.setFeedbackDevice(leftEncoder);
-    //^ Smart Motion Values
-    //leftPID.setSmartMotionMaxVelocity(DriveConstants.maxSpeed, DriveConstants.slotID);
 
     //? Configure Kinematics
-    m_kinematics = new DifferentialDriveKinematics(DriveConstants.trackWidth);
-    m_gyro = new ADIS16448_IMU();
+    m_kinematics = new DifferentialDriveKinematics(DriveConstants.trackWidth); //Set the trackwidth of the robot
+    m_gyro = new ADIS16448_IMU(); //Create the gyro
   }
 
   @Override
@@ -105,55 +89,62 @@ public class driveTrain extends SubsystemBase {
   public RelativeEncoder getLeftEncoder(){
     return leftEncoder;
   }
-  public void resetEncoders(){
-    rightEncoder.setPosition(0);
-    leftEncoder.setPosition(0);
-  }
   public double getAverageDistance(){
     return (leftEncoder.getPosition() + rightEncoder.getPosition()) / 2;
   }
   public double getAngle(){
     return m_gyro.getGyroAngleZ();
   }
+
+//^ Void Methods
+  public void setSpeeds(DifferentialDriveWheelSpeeds speeds){
+    //Set the PID reference to a speed
+    rightPID.setReference(speeds.rightMetersPerSecond, CANSparkBase.ControlType.kVoltage);
+    leftPID.setReference(speeds.leftMetersPerSecond, CANSparkBase.ControlType.kVoltage);
+  }
+  public void arcadeDrive(double xSpeed, double rot){
+    //Set the speeds of the drive train 
+    var wheelSpeeds = m_kinematics.toWheelSpeeds(new ChassisSpeeds(xSpeed, 0.0, rot));
+    setSpeeds(wheelSpeeds);
+  }
+  public void setAutoSpeeds(double distance){
+    //Set the desired distance to drive forward
+    rightPID.setReference(-distance, CANSparkBase.ControlType.kVoltage);
+    leftPID.setReference(-distance, CANSparkBase.ControlType.kVoltage);
+  }
+  public void setReverseAutoSpeeds(double posDistance){
+    //Set the desired distanc eto drive in reverse
+    rightPID.setReference(posDistance, CANSparkBase.ControlType.kVoltage);
+    leftPID.setReference(posDistance, CANSparkBase.ControlType.kVoltage);
+  }
+  public void setAutoTurnSpeeds(double speed){
+    //Set the speed of the drive train to turn
+    rightPID.setReference(speed, CANSparkBase.ControlType.kVoltage);
+    leftPID.setReference(-speed, CANSparkBase.ControlType.kVoltage);
+  }
+  public void stop(){
+    //Stop the drive train
+    rightLead.set(0);
+    leftLead.set(0);
+  }
   public void resetGyro(){
+    //Reset the gyro
     m_gyro.reset();
   }
-  public void initializeGyro(){
+  public void calibrateGyro(){
+    //Calibrate the gyro
     m_gyro.calibrate();
   }
   public void setIdleMode(CANSparkBase.IdleMode mode){
+    //Set the idle mode of all four drive motors
     rightLead.setIdleMode(mode);
     rightFollow.setIdleMode(mode);
     leftLead.setIdleMode(mode);
     leftFollow.setIdleMode(mode);
   }
-
-
-
-//^ Drive Methods
-//?Is this the best way to do this?
-  public void setSpeeds(DifferentialDriveWheelSpeeds speeds){
-    rightPID.setReference(speeds.rightMetersPerSecond, CANSparkBase.ControlType.kVoltage);
-    leftPID.setReference(speeds.leftMetersPerSecond, CANSparkBase.ControlType.kVoltage);
-  }
-  public void arcadeDrive(double xSpeed, double rot){
-    var wheelSpeeds = m_kinematics.toWheelSpeeds(new ChassisSpeeds(xSpeed, 0.0, rot));
-    setSpeeds(wheelSpeeds);
-  }
-  public void setAutoSpeeds(double distance){
-    rightPID.setReference(-distance, CANSparkBase.ControlType.kVoltage);
-    leftPID.setReference(-distance, CANSparkBase.ControlType.kVoltage);
-  }
-  public void setReverseAutoSpeeds(double posDistance){
-    rightPID.setReference(posDistance, CANSparkBase.ControlType.kVoltage);
-    leftPID.setReference(posDistance, CANSparkBase.ControlType.kVoltage);
-  }
-  public void setAutoTurnSpeeds(double speed){
-    rightPID.setReference(speed, CANSparkBase.ControlType.kVoltage);
-    leftPID.setReference(-speed, CANSparkBase.ControlType.kVoltage);
-  }
-  public void stop(){
-    rightLead.set(0);
-    leftLead.set(0);
+  public void resetEncoders(){
+    //Reset the encoder values
+    rightEncoder.setPosition(0);
+    leftEncoder.setPosition(0);
   }
 }

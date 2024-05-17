@@ -10,13 +10,12 @@ import frc.robot.subsystems.beltSubsystem;
 import frc.robot.subsystems.intakeSubsystem;
 
 public class fullIntake extends Command {
-  /** Creates a new fullIntake. */
+  //^ Run the Flywheel and Belt systems simultaniously at separate given speeds
   private intakeSubsystem m_IntakeSystem;
   private beltSubsystem m_BeltSubsystem;
   private double m_flySpeed;
   private double m_beltSpeed;
   public fullIntake(double flySpeed, double beltSpeed) {
-    // Use addRequirements() here to declare subsystem dependencies.
     m_flySpeed = flySpeed;
     m_beltSpeed = beltSpeed;
     m_IntakeSystem = Robot.m_IntakeSubsystem;
@@ -31,6 +30,7 @@ public class fullIntake extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    //Set the speeds of the belts and flywheels
     m_BeltSubsystem.setBeltSpeeds(m_beltSpeed);
     m_IntakeSystem.setFlyWheelSpeeds(m_flySpeed);
   }

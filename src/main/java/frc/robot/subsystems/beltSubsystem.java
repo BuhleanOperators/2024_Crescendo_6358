@@ -9,17 +9,20 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
 
 public class beltSubsystem extends SubsystemBase {
-  /** Creates a new beltSubsystem. */
+  //^ Initialization and methods for Belt system
   private VictorSP belts;
   public beltSubsystem() {
-    belts = new VictorSP(IntakeConstants.beltID);
+    //& VictorSP
+    belts = new VictorSP(IntakeConstants.beltID); //Create the contoller for the belts
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
+  //^ Void Methods
   public void setBeltSpeeds(double speed){
+    //Set belts to a gaven speed
     belts.set(speed);
   }
 }
