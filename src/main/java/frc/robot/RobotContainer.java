@@ -5,22 +5,30 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.Constants.ShooterConstants;
+import frc.robot.subsystems.Intake.Belt;
+import frc.robot.subsystems.Intake.BeltIO;
+import frc.robot.subsystems.Intake.BeltIOVictorSP;
+import frc.robot.subsystems.Intake.Flywheels;
+import frc.robot.subsystems.Intake.FlywheelsIO;
+import frc.robot.subsystems.Intake.FlywheelsIOVictorSP;
+import frc.robot.subsystems.Pneumatics.Pneumatics;
+import frc.robot.subsystems.Pneumatics.PneumaticsIO;
+import frc.robot.subsystems.Pneumatics.PnueumaticsIOPnueumaticsHub;
+import frc.robot.subsystems.Shooter.Shooter;
+import frc.robot.subsystems.Shooter.ShooterIO;
+import frc.robot.subsystems.Shooter.ShooterIoSparkMax;
+import frc.robot.subsystems.drive.Drive;
+import frc.robot.subsystems.drive.DriveIO;
+import frc.robot.subsystems.drive.DriveIOSparkMax;
 
-import frc.robot.commands.Drive.arcadeDrive;
-import frc.robot.commands.Intake.fullIntake;
-import frc.robot.commands.Intake.runBelts;
-import frc.robot.commands.LEDs.Orange;
-import frc.robot.commands.Pneumatics.FireSolenoid;
-import frc.robot.commands.Pneumatics.RetractSolenoid;
-import frc.robot.commands.Shooter.shooterRun;
+import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -30,21 +38,49 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   //^ Bind contoller inputs to commands
+  public final Drive drive;
+  public final Pneumatics pneumatics;
+  public final Shooter shooter;
+  public final Belt belt;
+  public final Flywheels flywheel;
 
-  private double deadbandreturn;
+  // private double deadbandreturn;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final static XboxController xDriver = new XboxController(OperatorConstants.kDriverControllerPort); //Create the driver controller
-  private final static XboxController coPilot = new XboxController(OperatorConstants.kCoPilotControllerPort); //Create the coPilot controller
+  private final static CommandXboxController xDriver = new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  private final static CommandXboxController coPilot = new CommandXboxController(OperatorConstants.kCoPilotControllerPort);
+
+  private final LoggedDashboardChooser<Command> autoChooser;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    switch (Constants.currentMode){
+      case REAL:
+        drive = new Drive(new DriveIOSparkMax());
+        pneumatics = new Pneumatics(new PnueumaticsIOPnueumaticsHub());
+        shooter = new Shooter(new ShooterIoSparkMax());
+        belt = new Belt(new BeltIOVictorSP());
+        flywheel = new Flywheels(new FlywheelsIOVictorSP());
+        break;
+      default : //REPLAY
+        drive = new Drive(new DriveIO() {});
+        pneumatics = new Pneumatics(new PneumaticsIO() {});
+        shooter = new Shooter(new ShooterIO() {});
+        belt = new Belt(new BeltIO() {});
+        flywheel = new Flywheels(new FlywheelsIO() {});
+        break;
+    }
+
+    autoChooser = new LoggedDashboardChooser<>("Auto Choices", new SendableChooser<Command>());
+
+    autoChooser.addDefaultOption("Nothing", null);
+    autoChooser.addOption("Drive SysId (Quasistatic Forward)", drive.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+    autoChooser.addOption("Drive SysId (Quasistatic Reverse)", drive.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+    autoChooser.addOption("Drive SysId (Dynamic Forward)", drive.sysIdDynamic(SysIdRoutine.Direction.kForward));
+    autoChooser.addOption("Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+
     // Configure the trigger bindings
     configureBindings();
-    smartDashboard();
-    //Set the default command for the drive train and LEDs
-    Robot.m_DriveTrain.setDefaultCommand(new arcadeDrive(() -> deadband(getXDriver().getLeftY() * Constants.DriveConstants.maxSpeed, OperatorConstants.deadbandCutoffDrive), () -> deadband(getXDriver().getRightX() * Constants.DriveConstants.maxAngularSpeed, OperatorConstants.deadbandCutoffRot)));
-    Robot.m_LedSubsystem.setDefaultCommand(new Orange());
   }
 
   /**
@@ -57,21 +93,65 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    
-    new JoystickButton(xDriver, OperatorConstants.intakeIn).onTrue(new fullIntake(0.75, 1))
-      .onFalse(new fullIntake(0, 0));
-    new JoystickButton(xDriver, OperatorConstants.BUTTON_shooterAmp).onTrue(new shooterRun(ShooterConstants.ampSpeed))
-      .onFalse(new shooterRun(0));
-    new JoystickButton(xDriver, OperatorConstants.BUTTON_shooterAmpSlow).onTrue(new shooterRun(ShooterConstants.ampSpeedSlow))
-      .onFalse(new shooterRun(0));
-    new JoystickButton(xDriver, OperatorConstants.BUTTON_beltsOut).onTrue(new runBelts(-1))
-      .onFalse(new runBelts(0));
 
+    drive.setDefaultCommand(
+      Commands.run(
+        () -> drive.arcadeDrive(xDriver.getLeftY(), xDriver.getRightX()), drive)
+    );
     
-    new JoystickButton(coPilot, OperatorConstants.BUTTON_extendPiston).onTrue(new FireSolenoid());
-    new JoystickButton(coPilot, OperatorConstants.BUTTON_retractPiston).onTrue(new RetractSolenoid());
-    new JoystickButton(coPilot, OperatorConstants.BUTTON_shooterSpeaker).onTrue(new shooterRun(ShooterConstants.speakerSpeed))
-      .onFalse(new shooterRun(0));
+    //Run shooter for amp
+    xDriver
+      .b()
+      .onTrue(
+        Commands.run(() -> shooter.runVelocity(1900), shooter))
+      .onFalse(
+        Commands.run(() -> shooter.runVelocity(0), shooter));
+
+    //Run full intake (Belts and flywheels)
+    xDriver
+      .rightBumper()
+      .onTrue(
+        Commands.parallel(
+          Commands.run(() -> belt.runSpeed(1.0), belt), 
+          Commands.run(() -> flywheel.runSpeed(0.75), flywheel)))
+      .onFalse(
+        Commands.parallel(
+          Commands.run(() -> belt.runSpeed(0.0), belt), 
+          Commands.run(() -> flywheel.runSpeed(0.0), flywheel)));
+
+    //Run belts back
+    xDriver
+      .leftBumper()
+      .onTrue(
+        Commands.run(() -> belt.runSpeed(-1.0), belt))
+      .onFalse(
+        Commands.run(() -> belt.runSpeed(0.0)));
+
+
+    //Toggle climb state
+    coPilot
+      .a()
+      .onTrue(
+        Commands.runOnce(() -> pneumatics.toggleClimb(), pneumatics)
+      );
+
+    //! If method above doesn't work try this one
+    // coPilot
+    //   .a()
+    //   .onTrue(
+    //     Commands.either(
+    //       Commands.run(() -> pneumatics.climbDown(), pneumatics), 
+    //       Commands.run(() -> pneumatics.climbUp(), pneumatics), 
+    //       () -> pneumatics.isClimbUp())
+    //   );
+
+    //Run shooter for speaker
+    coPilot
+      .b()
+      .onTrue(
+        Commands.run(() -> shooter.runVelocity(5100), shooter))
+      .onFalse(
+        Commands.run(() -> shooter.runVelocity(0), shooter));
   }
 
   /**
@@ -81,31 +161,26 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     //Get the autonoumus command
-    return Robot.m_SmartDashboard.getAutoCommand();
+    return autoChooser.get();
   }
 
-  private void smartDashboard(){
-    //Put the shooter RPM to SmartDashboard
-    SmartDashboard.putNumber("Shooter RPM", Robot.m_ShooterSubsytem.getShooterRPM());
-  }
-
-  public static XboxController getXDriver(){
+  public static CommandXboxController getXDriver(){
     return xDriver;
   }
-  public static XboxController getCoPilot(){
+  public static CommandXboxController getCoPilot(){
     return coPilot;
   }
 
-  private double deadband(double JoystickValue, double DeadbandCutOff){
-    //Create a deadband for the drive controls
-    //If the joystick isn't pushed in either direction past a certain point gove the value 0, otherwise return the value of the joystick
-    if (JoystickValue < DeadbandCutOff && JoystickValue > (DeadbandCutOff * (-1))) {
-      deadbandreturn = 0;
-      }
-      else {
-      deadbandreturn = (JoystickValue - (Math.abs(JoystickValue) / JoystickValue * DeadbandCutOff)) / (1 - DeadbandCutOff);
-      }
+  // private double deadband(double JoystickValue, double DeadbandCutOff){
+  //   //Create a deadband for the drive controls
+  //   //If the joystick isn't pushed in either direction past a certain point gove the value 0, otherwise return the value of the joystick
+  //   if (JoystickValue < DeadbandCutOff && JoystickValue > (DeadbandCutOff * (-1))) {
+  //     deadbandreturn = 0;
+  //     }
+  //     else {
+  //     deadbandreturn = (JoystickValue - (Math.abs(JoystickValue) / JoystickValue * DeadbandCutOff)) / (1 - DeadbandCutOff);
+  //     }
       
-          return deadbandreturn;
-      }
+  //         return deadbandreturn;
+  //     }
   }

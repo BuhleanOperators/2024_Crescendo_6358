@@ -11,19 +11,9 @@ import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.cscore.UsbCamera;
-import edu.wpi.first.wpilibj.PowerDistribution;
-import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.subsystems.beltSubsystem;
-import frc.robot.subsystems.driveTrain;
-import frc.robot.subsystems.intakeSubsystem;
-import frc.robot.subsystems.ledSubsystem;
-import frc.robot.subsystems.pneumaticSubsystem;
-import frc.robot.subsystems.shooterSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -31,19 +21,10 @@ import frc.robot.subsystems.shooterSubsystem;
  * the package after creating this project, you must also update the build.gradle file in the
  * project.
  */
-public class Robot extends LoggedRobot {
+public class Robot extends LoggedRobot{
   private Command m_autonomousCommand;
 
-  //Initilize all the subsystems
-  //! Only use subsystems by calling these
-  private  RobotContainer m_robotContainer = new RobotContainer();
-  public static final smartDashboard m_SmartDashboard = new smartDashboard();
-  public static final beltSubsystem m_BeltSubsystem = new beltSubsystem();
-  public static final intakeSubsystem m_IntakeSubsystem = new intakeSubsystem();
-  public static final pneumaticSubsystem m_PneumaticSubsystem = new pneumaticSubsystem();
-  public static final shooterSubsystem m_ShooterSubsytem = new shooterSubsystem();
-  public static final driveTrain m_DriveTrain = new driveTrain();
-  public static final ledSubsystem m_LedSubsystem = new ledSubsystem();
+  private  RobotContainer m_robotContainer;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -51,30 +32,44 @@ public class Robot extends LoggedRobot {
    */
   @Override
   public void robotInit() {
-    Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
+    Logger.recordMetadata("ProjectName", BuildConstants.MAVEN_NAME);
+    Logger.recordMetadata("BuildDate", BuildConstants.BUILD_DATE);
+    Logger.recordMetadata("GitSHA", BuildConstants.GIT_SHA);
+    Logger.recordMetadata("GitDate", BuildConstants.GIT_DATE);
+    Logger.recordMetadata("GitBranch", BuildConstants.GIT_BRANCH);
 
-    if (isReal()) {
-      Logger.addDataReceiver(new WPILOGWriter()); // Log to a USB stick ("/U/logs")
-      Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
-      new PowerDistribution(1, ModuleType.kRev); // Enables power distribution logging
-    } else {
-      setUseTiming(false); // Run as fast as possible
-      String logPath = LogFileUtil.findReplayLog(); // Pull the replay log from AdvantageScope (or prompt the user)
-      Logger.setReplaySource(new WPILOGReader(logPath)); // Read replay log
-      Logger.addDataReceiver(new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim"))); // Save outputs to a new log
+    switch (BuildConstants.DIRTY) {
+      case 0:
+        Logger.recordMetadata("GitDirty", "All changes commited");
+        break;
+      case 1: 
+        Logger.recordMetadata("GitDirty", "Uncommited changes");
+      default:
+        Logger.recordMetadata("GitDirty", "Unknown");
+        break;
     }
 
-    // Logger.disableDeterministicTimestamps() // See "Deterministic Timestamps" in the "Understanding Data Flow" page
-    Logger.start(); // Start logging! No more data receivers, replay sources, or metadata values may be added.
-    
-    // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
-    // autonomous chooser on the dashboard.
-    //Set up the gyro, alliance color, auto chooser and USB cammera
-    m_DriveTrain.calibrateGyro();
-    m_SmartDashboard.AllianceColor();
-    m_SmartDashboard.AutoChooser();
-    UsbCamera camera = CameraServer.startAutomaticCapture();    
+    switch (Constants.currentMode){
+      case REAL:
+        //Running on real robot, log to USB stick ("/U/Logs") 
+        Logger.addDataReceiver(new WPILOGWriter());
+        Logger.addDataReceiver(new NT4Publisher());
+        break;
+        
+      case REPLAY:
+        //Replaying a log, set up replay source
+        setUseTiming(false); //Run as fast as possible
+        String logPath = LogFileUtil.findReplayLog();
+        Logger.setReplaySource(new WPILOGReader(logPath));
+        Logger.addDataReceiver(new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim")));
+    }
+
+    Logger.start(); 
+
+    m_robotContainer = new RobotContainer();
+    m_robotContainer.pneumatics.climbDown();
   }
+  
 
   /**
    * This function is called every 20 ms, no matter the mode. Use this for items like diagnostics
@@ -90,12 +85,6 @@ public class Robot extends LoggedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    //Turn on the compressor, get the multiplier, gather robot data, get the auto selection, and check if the shooter is up to speed to score in the SPEAKER
-    m_PneumaticSubsystem.compressorOn();
-    m_SmartDashboard.multiplier();
-    m_SmartDashboard.gatherData();
-    m_SmartDashboard.AutoChooser();
-    m_SmartDashboard.upToSpeed();
   }
   
 
@@ -103,7 +92,7 @@ public class Robot extends LoggedRobot {
   @Override
   public void disabledInit() {
     //Set the idle mode when the robot is disabled
-    m_DriveTrain.setIdleMode(DriveConstants.idleModeDisabled);
+    m_robotContainer.drive.setIdleMode(DriveConstants.idleModeDisabled);
   }
 
   @Override
@@ -114,7 +103,8 @@ public class Robot extends LoggedRobot {
   @Override
   public void autonomousInit() {
     //Set the idle mode of the drive motors
-    m_DriveTrain.setIdleMode(DriveConstants.idleModeAuto);
+    m_robotContainer.drive.setIdleMode(DriveConstants.idleModeAuto);
+
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -130,9 +120,9 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void teleopInit() {
-    //Reset the encoders and set the idle mode of the drive motors
-    m_DriveTrain.resetEncoders();
-    m_DriveTrain.setIdleMode(DriveConstants.idleModeTeleop);
+    //Set the idle mode of the drive motors
+    m_robotContainer.drive.setIdleMode(DriveConstants.idleModeTeleop);
+
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove

@@ -18,6 +18,15 @@ import edu.wpi.first.math.util.Units;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+  public static final Mode currentMode = Mode.REAL;
+
+  public static enum Mode {
+    //* Running a real robot */
+    REAL,
+    //* Replaying from a log file */
+    REPLAY
+  }
+
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
     public static final int kCoPilotControllerPort = 1;
@@ -39,9 +48,12 @@ public final class Constants {
     //! Odomotry Values
     public static final double trackWidth = Units.inchesToMeters(22.5); //meters
     public static final double wheelRadius = Units.inchesToMeters(3); //meters
-    public static final double maxSpeed = 6; //volts per second
+    public static final double maxSpeed = 6.0; //volts per second
     public static final double maxAngularSpeed = Math.PI * maxSpeed; //one rotation per second
     public static final int slotID = 0;
+    public static final double gearRatio = 0.0; //TODO Change to reflect gear ratio
+    public static final boolean invertRight = true;
+    public static final boolean invertLeft = false;
 
     //~ Drive Values
     public static final int rightLeadID = 1; //Bolt: 7
@@ -65,30 +77,35 @@ public final class Constants {
     //FF values are feedForwards
     //FF = 0.5 on tile and 0.95 on carpet
     public static final double rightP = 0.15;
-    public static final double rightI = 0;
-    public static final double rightD = 0;
+    public static final double rightI = 0.0;
+    public static final double rightD = 0.0;
     public static final double rightFF = 0.95;
 
     public static final double leftP = 0.15;
-    public static final double leftI = 0;
-    public static final double leftD = 0;
+    public static final double leftI = 0.0;
+    public static final double leftD = 0.0;
     public static final double leftFF = 0.95;
+
+    //TODO retune PID and feedforward
+    public static final double KP = 0.15;
+    public static final double kD = 0.0;
+    public static final double KS = 0.0; 
+    public static final double KV = 0.0;
   }
   public static class ShooterConstants{
-    public static final int rightMotorID = 5;
-    public static final int leftMotorID = 6;
+    public static final int leadID = 5;
+    public static final int followID = 6;
 
     public static final int currentLimit = 40;
-    public static final boolean setRightInverted = true;
-    public static final boolean setLeftInverted = false;
+    public static final boolean setLeadInverted = false;
     public static final IdleMode idleMode = IdleMode.kCoast;
 
     public static final double speakerSpeed = 0.90;
     public static final double ampSpeed = 0.35;
     public static final double ampSpeedSlow = 0.2;
 
-    public static final double speakerRPM = 4100;
-    public static final double ampRPM = 1900;
+    public static final double speakerRPM = 4100.0;
+    public static final double ampRPM = 1900.0;
   }
   public static class PneumaticsConstants {
     public static final int PISTON_RIGHT_FORWARD = 0;
