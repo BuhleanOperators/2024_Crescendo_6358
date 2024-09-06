@@ -51,7 +51,7 @@ public final class Constants {
     public static final double maxSpeed = 6.0; //volts per second
     public static final double maxAngularSpeed = Math.PI * maxSpeed; //one rotation per second
     public static final int slotID = 0;
-    public static final double gearRatio = 0.0; //TODO Change to reflect gear ratio
+    public static final double gearRatio = 5.95; //TODO Change to reflect gear ratio
     public static final boolean invertRight = true;
     public static final boolean invertLeft = false;
 

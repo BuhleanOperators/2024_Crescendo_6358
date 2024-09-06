@@ -29,7 +29,7 @@ public class ShooterIoSparkMax implements ShooterIO{
         leader.setCANTimeout(250);
         follower.setCANTimeout(250);
 
-        leader.setInverted(false);
+        leader.setInverted(true);
         follower.follow(leader, true);
 
         leader.enableVoltageCompensation(12.0);

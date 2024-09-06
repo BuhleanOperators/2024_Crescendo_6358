@@ -102,10 +102,9 @@ public class RobotContainer {
     //Run shooter for amp
     xDriver
       .b()
-      .onTrue(
-        Commands.run(() -> shooter.runVelocity(1900), shooter))
-      .onFalse(
-        Commands.run(() -> shooter.runVelocity(0), shooter));
+      .whileTrue(
+        Commands.startEnd(() -> shooter.runVelocity(1900), shooter::stop, shooter)
+      );
 
     //Run full intake (Belts and flywheels)
     xDriver
@@ -135,23 +134,10 @@ public class RobotContainer {
         Commands.runOnce(() -> pneumatics.toggleClimb(), pneumatics)
       );
 
-    //! If method above doesn't work try this one
-    // coPilot
-    //   .a()
-    //   .onTrue(
-    //     Commands.either(
-    //       Commands.run(() -> pneumatics.climbDown(), pneumatics), 
-    //       Commands.run(() -> pneumatics.climbUp(), pneumatics), 
-    //       () -> pneumatics.isClimbUp())
-    //   );
-
     //Run shooter for speaker
     coPilot
       .b()
-      .onTrue(
-        Commands.run(() -> shooter.runVelocity(5100), shooter))
-      .onFalse(
-        Commands.run(() -> shooter.runVelocity(0), shooter));
+      .whileTrue(Commands.startEnd(() -> shooter.runVelocity(5100), shooter::stop, shooter));
   }
 
   /**

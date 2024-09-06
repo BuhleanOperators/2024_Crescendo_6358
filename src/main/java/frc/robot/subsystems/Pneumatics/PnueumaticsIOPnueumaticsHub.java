@@ -11,7 +11,7 @@ import frc.robot.Constants.PneumaticsConstants;
 
 /** Add your docs here. */
 public class PnueumaticsIOPnueumaticsHub implements PneumaticsIO{
-    private PneumaticHub pneumaticHub = new PneumaticHub();
+    private PneumaticHub pneumaticHub = new PneumaticHub(10);
     private DoubleSolenoid leftSolenoid;
     private DoubleSolenoid rightSolenoid;
     private Compressor compressor;

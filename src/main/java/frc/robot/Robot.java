@@ -67,7 +67,6 @@ public class Robot extends LoggedRobot{
     Logger.start(); 
 
     m_robotContainer = new RobotContainer();
-    m_robotContainer.pneumatics.climbDown();
   }
   
 
@@ -130,6 +129,7 @@ public class Robot extends LoggedRobot{
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    m_robotContainer.pneumatics.climbDown();
   }
 
   /** This function is called periodically during operator control. */
