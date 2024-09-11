@@ -105,6 +105,7 @@ public class RobotContainer {
         && DriverStation.getMatchTime() <= (Math.round(endgameAlert1.get())))
       .onTrue(
         controllerRumbleCommand()
+        .withTimeout(0.5)
       );
     new Trigger(
       () -> 
@@ -113,6 +114,7 @@ public class RobotContainer {
         && DriverStation.getMatchTime() <= (Math.round(endgameAlert2.get())))
       .onTrue(
         controllerRumbleCommand()
+        .withTimeout(0.5)
       );
   }
 
@@ -211,8 +213,8 @@ public class RobotContainer {
       () -> {xDriver.getHID().setRumble(RumbleType.kBothRumble, 1.0);
              coPilot.getHID().setRumble(RumbleType.kBothRumble, 1);
             }, 
-      () -> {xDriver.getHID().setRumble(RumbleType.kBothRumble, 1.0);
-             coPilot.getHID().setRumble(RumbleType.kBothRumble, 1);
+      () -> {xDriver.getHID().setRumble(RumbleType.kBothRumble, 0.0);
+             coPilot.getHID().setRumble(RumbleType.kBothRumble, 0.0);
             });
   }
 }
