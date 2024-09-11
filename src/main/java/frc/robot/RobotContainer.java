@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import frc.robot.Alert.AlertType;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.Intake.Belt;
 import frc.robot.subsystems.Intake.BeltIO;
@@ -21,9 +22,15 @@ import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.DriveIO;
 import frc.robot.subsystems.drive.DriveIOSparkMax;
 
-import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
+import javax.print.attribute.standard.Copies;
 
+import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
+import org.littletonrobotics.junction.networktables.LoggedDashboardNumber;
+
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -43,6 +50,15 @@ public class RobotContainer {
   public final Shooter shooter;
   public final Belt belt;
   public final Flywheels flywheel;
+
+  private final Alert driverDisconectedAlert = 
+    new Alert("Driver controller disconected (Port 0)", AlertType.WARNING);
+  private final Alert coPilotDisconectedAlert =
+    new Alert("CoPilot controller disconected (Port 1)", AlertType.WARNING);
+  private final LoggedDashboardNumber endgameAlert1 = 
+    new LoggedDashboardNumber("Endagame alert #1", 30.0);
+  private final LoggedDashboardNumber endgameAlert2 = 
+    new LoggedDashboardNumber("Engame alert #2", 15.0);
 
   // private double deadbandreturn;
 
@@ -81,6 +97,23 @@ public class RobotContainer {
 
     // Configure the trigger bindings
     configureBindings();
+
+    new Trigger(
+      () -> 
+        DriverStation.isTeleopEnabled()
+        && DriverStation.getMatchTime() > 0
+        && DriverStation.getMatchTime() <= (Math.round(endgameAlert1.get())))
+      .onTrue(
+        controllerRumbleCommand()
+      );
+    new Trigger(
+      () -> 
+        DriverStation.isTeleopEnabled()
+        && DriverStation.getMatchTime() > 0
+        && DriverStation.getMatchTime() <= (Math.round(endgameAlert2.get())))
+      .onTrue(
+        controllerRumbleCommand()
+      );
   }
 
   /**
@@ -157,16 +190,29 @@ public class RobotContainer {
     return coPilot;
   }
 
-  // private double deadband(double JoystickValue, double DeadbandCutOff){
-  //   //Create a deadband for the drive controls
-  //   //If the joystick isn't pushed in either direction past a certain point gove the value 0, otherwise return the value of the joystick
-  //   if (JoystickValue < DeadbandCutOff && JoystickValue > (DeadbandCutOff * (-1))) {
-  //     deadbandreturn = 0;
-  //     }
-  //     else {
-  //     deadbandreturn = (JoystickValue - (Math.abs(JoystickValue) / JoystickValue * DeadbandCutOff)) / (1 - DeadbandCutOff);
-  //     }
-      
-  //         return deadbandreturn;
-  //     }
+  //**Updates dashboard data */
+  public void updateDashboardOutputs(){
+    SmartDashboard.putNumber("Match Time", DriverStation.getMatchTime());
+    SmartDashboard.putBoolean("Up to Speaker Speed", shooter.getVelocityRPM() >= 5100);
   }
+
+  //**Updates alerts for disconected controllers */
+  public void checkControllers(){
+    driverDisconectedAlert.set(
+      !DriverStation.isJoystickConnected(xDriver.getHID().getPort())
+        || !DriverStation.getJoystickIsXbox(xDriver.getHID().getPort()));
+    coPilotDisconectedAlert.set(
+      !DriverStation.isJoystickConnected(coPilot.getHID().getPort())
+        || !DriverStation.getJoystickIsXbox(coPilot.getHID().getPort()));
+  }
+
+  private Command controllerRumbleCommand(){
+    return Commands.startEnd(
+      () -> {xDriver.getHID().setRumble(RumbleType.kBothRumble, 1.0);
+             coPilot.getHID().setRumble(RumbleType.kBothRumble, 1);
+            }, 
+      () -> {xDriver.getHID().setRumble(RumbleType.kBothRumble, 1.0);
+             coPilot.getHID().setRumble(RumbleType.kBothRumble, 1);
+            });
+  }
+}

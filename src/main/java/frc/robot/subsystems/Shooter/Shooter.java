@@ -89,4 +89,8 @@ public class Shooter extends SubsystemBase {
   public double getCharacterizationVelocity(){
     return inputs.VelocityRadPerSec;
   }
+
+  public double getVelocityRPM(){
+    return io.getShooterRPM();
+  }
 }

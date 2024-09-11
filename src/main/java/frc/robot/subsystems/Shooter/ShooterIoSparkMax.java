@@ -74,4 +74,9 @@ public class ShooterIoSparkMax implements ShooterIO{
         pid.setD(kD, 0);
         pid.setFF(0, 0);
     }
+
+    @Override
+    public double getShooterRPM(){
+        return encoder.getVelocity();
+    }
 }
