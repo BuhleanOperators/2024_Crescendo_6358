@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import frc.robot.Alert.AlertType;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.Intake.Belt;
 import frc.robot.subsystems.Intake.BeltIO;
@@ -21,6 +20,8 @@ import frc.robot.subsystems.Shooter.ShooterIoSparkMax;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.DriveIO;
 import frc.robot.subsystems.drive.DriveIOSparkMax;
+import frc.robot.util.Alert;
+import frc.robot.util.Alert.AlertType;
 
 import javax.print.attribute.standard.Copies;
 
